@@ -1,0 +1,83 @@
+{
+  "flutter": {
+    "platforms": {
+      "android": {
+        "default": {
+          "projectId": "parkinglink-v2",
+          "appId": "1:259032555472:android:4e1186eb1436b9d75063d5",
+          "fileOutput": "android/app/google-services.json"
+        },
+        "user": {
+          "projectId": "parkinglink-v2",
+          "appId": "1:259032555472:android:c4ef7b8321b561f45063d5",
+          "fileOutput": "android/app/src/user/google-services.json"
+        },
+        "staff": {
+          "projectId": "parkinglink-v2",
+          "appId": "1:259032555472:android:10fa5e8d7a15353b5063d5",
+          "fileOutput": "android/app/src/staff/google-services.json"
+        }
+      },
+      "ios": {
+        "default": {
+          "projectId": "parkinglink-v2",
+          "appId": "1:259032555472:ios:e444f6506e618dbf5063d5",
+          "uploadDebugSymbols": false,
+          "fileOutput": "ios/Runner/GoogleService-Info.plist"
+        }
+      },
+      "macos": {
+        "default": {
+          "projectId": "parkinglink-v2",
+          "appId": "1:259032555472:ios:e444f6506e618dbf5063d5",
+          "uploadDebugSymbols": false,
+          "fileOutput": "macos/Runner/GoogleService-Info.plist"
+        }
+      },
+      "dart": {
+        "lib/firebase_options.dart": {
+          "projectId": "parkinglink-v2",
+          "configurations": {
+            "android": "1:259032555472:android:4e1186eb1436b9d75063d5",
+            "ios": "1:259032555472:ios:e444f6506e618dbf5063d5",
+            "macos": "1:259032555472:ios:e444f6506e618dbf5063d5",
+            "web": "1:259032555472:web:56edf53dc655a1ea5063d5",
+            "windows": "1:259032555472:web:3f3c6a0d1bedf4745063d5"
+          }
+        }
+      }
+    }
+  },
+  "firestore": {
+    "database": "(default)",
+    "location": "asia-southeast1",
+    "rules": "firestore.rules",
+    "indexes": "firestore.indexes.json"
+  },
+  "storage": {
+    "rules": "storage.rules"
+  },
+  "functions": [
+    {
+      "source": "functions",
+      "codebase": "default",
+      "ignore": [
+        "node_modules",
+        ".git",
+        "firebase-debug.log",
+        "firebase-debug.*.log",
+        "*.local"
+      ]
+    }
+  ],
+  "emulators": {
+    "firestore": {
+      "port": 8080
+    },
+    "ui": {
+      "enabled": true,
+      "port": 4000
+    },
+    "singleProjectMode": true
+  }
+}

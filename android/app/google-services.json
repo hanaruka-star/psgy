@@ -1,0 +1,67 @@
+{
+  "project_info": {
+    "project_number": "259032555472",
+    "project_id": "parkinglink-v2",
+    "storage_bucket": "parkinglink-v2.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:259032555472:android:4e1186eb1436b9d75063d5",
+        "android_client_info": {
+          "package_name": "com.parkinglink"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDrnRAeuuci3q5Y0blVeY-ZYY_yIGpGsVc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:259032555472:android:c4ef7b8321b561f45063d5",
+        "android_client_info": {
+          "package_name": "com.parkinglink.user"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDrnRAeuuci3q5Y0blVeY-ZYY_yIGpGsVc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:259032555472:android:10fa5e8d7a15353b5063d5",
+        "android_client_info": {
+          "package_name": "com.parkinglink.staff"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDrnRAeuuci3q5Y0blVeY-ZYY_yIGpGsVc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

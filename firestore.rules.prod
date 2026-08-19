@@ -1,0 +1,11 @@
+ParkingLink — Production Firestore Rules (CP25)
+================================================
+
+Canonical rules file: ../firestore.rules
+(firebase.json → firestore.rules)
+
+Do NOT maintain a separate rules copy. Edit firestore.rules only.
+
+Deploy: ./scripts/deploy_firestore_rules.sh
+
+See: docs/security/FIRESTORE_RULES.md

@@ -1,0 +1,17 @@
+{
+  "name": "firestore_seed",
+  "version": "1.0.0",
+  "description": "",
+  "main": "seed_cc_dragon.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "firebase-admin": "^13.10.0",
+    "ngeohash": "^0.6.3"
+  }
+}

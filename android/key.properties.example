@@ -1,0 +1,12 @@
+# Copy to key.properties and fill in values. NEVER commit key.properties.
+#
+# Generate keystore (one-time):
+#   keytool -genkey -v \
+#     -keystore ~/parkinglink-release.jks \
+#     -keyalg RSA -keysize 2048 -validity 10000 \
+#     -alias parkinglink
+#
+storePassword=YOUR_STORE_PASSWORD
+keyPassword=YOUR_KEY_PASSWORD
+keyAlias=parkinglink
+storeFile=keystores/parkinglink-release.jks
