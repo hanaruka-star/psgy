@@ -1,6 +1,6 @@
-import 'package:parking_link/core/error/app_exception.dart';
-import 'package:parking_link/features/staff/domain/repositories/staff_repository.dart';
-import 'package:parking_link/core/contracts/i_qr_token_repository.dart';
+import 'package:psgy/core/error/app_exception.dart';
+import 'package:psgy/features/staff/domain/repositories/staff_repository.dart';
+import 'package:psgy/core/contracts/i_qr_token_repository.dart';
 
 class ScanQrAndCheckOutResult {
   final String sessionId;

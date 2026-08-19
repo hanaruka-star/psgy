@@ -1,8 +1,8 @@
 import 'dart:async';
 import 'dart:math' as math;
 
-import 'package:parking_link/core/error/app_exception.dart';
-import 'package:parking_link/core/error/error_mapper.dart';
+import 'package:psgy/core/error/app_exception.dart';
+import 'package:psgy/core/error/error_mapper.dart';
 
 typedef RetryProgressCallback = void Function(int attempt, Duration nextDelay);
 

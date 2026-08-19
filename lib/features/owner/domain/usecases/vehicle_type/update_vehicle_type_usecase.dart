@@ -1,5 +1,5 @@
-import 'package:parking_link/features/owner/domain/entities/pricing_model.dart';
-import 'package:parking_link/features/owner/domain/repositories/owner_repository.dart';
+import 'package:psgy/features/owner/domain/entities/pricing_model.dart';
+import 'package:psgy/features/owner/domain/repositories/owner_repository.dart';
 
 class UpdateVehicleTypeUseCase {
   final OwnerRepository repository;

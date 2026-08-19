@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:parking_link/core/theme/app_spacing.dart';
+import 'package:psgy/core/theme/app_spacing.dart';
 
 class LoadingShimmer extends StatefulWidget {
   final double height;

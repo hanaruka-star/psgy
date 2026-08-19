@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:parking_link/core/network/connectivity_service.dart';
-import 'package:parking_link/core/theme/app_colors.dart';
-import 'package:parking_link/core/theme/app_spacing.dart';
+import 'package:psgy/core/network/connectivity_service.dart';
+import 'package:psgy/core/theme/app_colors.dart';
+import 'package:psgy/core/theme/app_spacing.dart';
 
 class OfflineBanner extends ConsumerWidget {
   const OfflineBanner({super.key});

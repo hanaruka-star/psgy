@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:equatable/equatable.dart';
-import 'package:parking_link/features/parking/domain/entities/parking_slot_entity.dart';
+import 'package:psgy/features/parking/domain/entities/parking_slot_entity.dart';
 
 class ParkingSlotModel extends Equatable {
   final String id;

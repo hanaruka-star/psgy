@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:parking_link/core/theme/app_spacing.dart';
-import 'package:parking_link/features/user/presentation/widgets/parking_lot_marker.dart';
-import 'package:parking_link/shared/widgets/micro_interactions.dart';
+import 'package:psgy/core/theme/app_spacing.dart';
+import 'package:psgy/features/user/presentation/widgets/parking_lot_marker.dart';
+import 'package:psgy/shared/widgets/micro_interactions.dart';
 
 /// Premium bell toggle for surveying lot watchlist.
 class WatchFollowButton extends StatefulWidget {

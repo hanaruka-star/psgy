@@ -1,11 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
-import 'package:parking_link/core/error/app_exception.dart';
-import 'package:parking_link/core/error/error_mapper.dart';
-import 'package:parking_link/features/auth/data/models/staff_profile_model.dart';
-import 'package:parking_link/features/auth/domain/entities/staff_profile_entity.dart';
-import 'package:parking_link/features/auth/domain/repositories/auth_repository.dart';
+import 'package:psgy/core/error/app_exception.dart';
+import 'package:psgy/core/error/error_mapper.dart';
+import 'package:psgy/features/auth/data/models/staff_profile_model.dart';
+import 'package:psgy/features/auth/domain/entities/staff_profile_entity.dart';
+import 'package:psgy/features/auth/domain/repositories/auth_repository.dart';
 
 class AuthRepositoryImpl implements AuthRepository {
   static const bool _forceLogoutOnStartup =

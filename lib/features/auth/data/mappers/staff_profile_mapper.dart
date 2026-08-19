@@ -1,5 +1,5 @@
-import 'package:parking_link/features/auth/data/models/staff_profile_model.dart';
-import 'package:parking_link/features/auth/domain/entities/staff_profile_entity.dart';
+import 'package:psgy/features/auth/data/models/staff_profile_model.dart';
+import 'package:psgy/features/auth/domain/entities/staff_profile_entity.dart';
 
 class StaffProfileMapper {
   const StaffProfileMapper._();

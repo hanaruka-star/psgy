@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:parking_link/features/user/presentation/providers/user_profile_provider.dart';
+import 'package:psgy/features/user/presentation/providers/user_profile_provider.dart';
 
 class VehicleRegistrationScreen extends ConsumerStatefulWidget {
   const VehicleRegistrationScreen({super.key});

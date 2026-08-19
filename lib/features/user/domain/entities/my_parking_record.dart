@@ -1,4 +1,4 @@
-import 'package:parking_link/features/user/domain/entities/parking_enums.dart';
+import 'package:psgy/features/user/domain/entities/parking_enums.dart';
 
 class MyParkingRecord {
   final String id;

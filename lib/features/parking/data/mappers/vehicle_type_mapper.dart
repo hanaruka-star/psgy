@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-import 'package:parking_link/features/parking/data/models/vehicle_type_model.dart';
-import 'package:parking_link/features/parking/domain/entities/vehicle_type_entity.dart';
+import 'package:psgy/features/parking/data/models/vehicle_type_model.dart';
+import 'package:psgy/features/parking/domain/entities/vehicle_type_entity.dart';
 
 class VehicleTypeMapper {
   const VehicleTypeMapper._();

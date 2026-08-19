@@ -1,8 +1,8 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:parking_link/core/di/user_providers.dart';
-import 'package:parking_link/features/user/domain/entities/active_session_info.dart';
-import 'package:parking_link/features/user/domain/entities/my_parking_record.dart';
-import 'package:parking_link/features/user/domain/entities/parking_enums.dart';
+import 'package:psgy/core/di/user_providers.dart';
+import 'package:psgy/features/user/domain/entities/active_session_info.dart';
+import 'package:psgy/features/user/domain/entities/my_parking_record.dart';
+import 'package:psgy/features/user/domain/entities/parking_enums.dart';
 
 class MyParkingState {
   const MyParkingState({

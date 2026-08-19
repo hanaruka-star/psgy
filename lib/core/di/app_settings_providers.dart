@@ -1,6 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:parking_link/core/data/datasources/app_settings_local_datasource.dart';
-import 'package:parking_link/core/di/isar_providers.dart';
+import 'package:psgy/core/data/datasources/app_settings_local_datasource.dart';
+import 'package:psgy/core/di/isar_providers.dart';
 
 final appSettingsLocalDataSourceProvider =
     Provider<AppSettingsLocalDataSource>((ref) {

@@ -2,9 +2,9 @@ import 'dart:async';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:parking_link/core/error/app_error_handler.dart';
-import 'package:parking_link/core/error/app_error_ui.dart';
-import 'package:parking_link/shared/widgets/app_error_view.dart';
+import 'package:psgy/core/error/app_error_handler.dart';
+import 'package:psgy/core/error/app_error_ui.dart';
+import 'package:psgy/shared/widgets/app_error_view.dart';
 
 typedef GlobalErrorHandler = void Function(Object error, StackTrace stackTrace);
 

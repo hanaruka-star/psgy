@@ -1,7 +1,7 @@
-import 'package:parking_link/features/user/domain/entities/checkout_qr_token.dart';
-import 'package:parking_link/features/user/domain/entities/qr_token.dart';
-import 'package:parking_link/features/user/domain/entities/user_profile.dart';
-import 'package:parking_link/features/user/domain/entities/user_vehicle.dart';
+import 'package:psgy/features/user/domain/entities/checkout_qr_token.dart';
+import 'package:psgy/features/user/domain/entities/qr_token.dart';
+import 'package:psgy/features/user/domain/entities/user_profile.dart';
+import 'package:psgy/features/user/domain/entities/user_vehicle.dart';
 
 abstract class IUserProfileRepository {
   Future<void> sendOtp(String phoneNumber);

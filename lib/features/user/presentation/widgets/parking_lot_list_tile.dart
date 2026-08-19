@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
-import 'package:parking_link/core/theme/app_spacing.dart';
-import 'package:parking_link/features/parking/domain/entities/parking_lot_entity.dart';
-import 'package:parking_link/features/parking/domain/entities/vehicle_type_entity.dart';
-import 'package:parking_link/core/di/user_providers.dart';
-import 'package:parking_link/shared/widgets/lot_slot_summary.dart';
-import 'package:parking_link/shared/widgets/modern_card.dart';
-import 'package:parking_link/shared/widgets/status_chip.dart';
+import 'package:psgy/core/theme/app_spacing.dart';
+import 'package:psgy/features/parking/domain/entities/parking_lot_entity.dart';
+import 'package:psgy/features/parking/domain/entities/vehicle_type_entity.dart';
+import 'package:psgy/core/di/user_providers.dart';
+import 'package:psgy/shared/widgets/lot_slot_summary.dart';
+import 'package:psgy/shared/widgets/modern_card.dart';
+import 'package:psgy/shared/widgets/status_chip.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class ParkingLotListTile extends ConsumerWidget {

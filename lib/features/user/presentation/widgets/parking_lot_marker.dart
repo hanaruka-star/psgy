@@ -2,10 +2,10 @@ import 'dart:ui' as ui;
 
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:parking_link/core/utils/currency_formatter.dart';
-import 'package:parking_link/features/parking/domain/entities/parking_lot_entity.dart';
-import 'package:parking_link/features/parking/domain/entities/surveying_lot_entity.dart';
-import 'package:parking_link/features/user/domain/entities/map_lot_item.dart';
+import 'package:psgy/core/utils/currency_formatter.dart';
+import 'package:psgy/features/parking/domain/entities/parking_lot_entity.dart';
+import 'package:psgy/features/parking/domain/entities/surveying_lot_entity.dart';
+import 'package:psgy/features/user/domain/entities/map_lot_item.dart';
 
 /// Surveying lot brand color — amber/orange (#FFB300).
 const surveyingMarkerColor = Color(0xFFFFB300);

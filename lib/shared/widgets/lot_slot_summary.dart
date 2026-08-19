@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:parking_link/core/theme/app_colors.dart';
-import 'package:parking_link/core/theme/app_spacing.dart';
-import 'package:parking_link/features/parking/domain/entities/vehicle_type_entity.dart';
-import 'package:parking_link/features/user/presentation/widgets/parking_lot_list_tile.dart';
-import 'package:parking_link/shared/widgets/status_chip.dart';
-import 'package:parking_link/shared/widgets/ui_polish_widgets.dart';
+import 'package:psgy/core/theme/app_colors.dart';
+import 'package:psgy/core/theme/app_spacing.dart';
+import 'package:psgy/features/parking/domain/entities/vehicle_type_entity.dart';
+import 'package:psgy/features/user/presentation/widgets/parking_lot_list_tile.dart';
+import 'package:psgy/shared/widgets/status_chip.dart';
+import 'package:psgy/shared/widgets/ui_polish_widgets.dart';
 
 class LotSlotSummary extends StatelessWidget {
   final List<VehicleTypeEntity> vehicleTypes;

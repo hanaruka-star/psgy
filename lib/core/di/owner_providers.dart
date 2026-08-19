@@ -1,11 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:parking_link/features/auth/domain/entities/staff_profile_entity.dart';
-import 'package:parking_link/features/owner/data/repositories/owner_repository_impl.dart';
-import 'package:parking_link/features/owner/domain/repositories/owner_repository.dart';
-import 'package:parking_link/core/di/event_providers.dart';
-import 'package:parking_link/features/owner/domain/usecases/index.dart';
-import 'package:parking_link/features/parking/domain/entities/vehicle_type_entity.dart';
+import 'package:psgy/features/auth/domain/entities/staff_profile_entity.dart';
+import 'package:psgy/features/owner/data/repositories/owner_repository_impl.dart';
+import 'package:psgy/features/owner/domain/repositories/owner_repository.dart';
+import 'package:psgy/core/di/event_providers.dart';
+import 'package:psgy/features/owner/domain/usecases/index.dart';
+import 'package:psgy/features/parking/domain/entities/vehicle_type_entity.dart';
 
 final ownerRepositoryProvider = Provider<OwnerRepository>((ref) {
   return OwnerRepositoryImpl(FirebaseFirestore.instance);

@@ -1,15 +1,15 @@
 import 'package:isar/isar.dart';
-import 'package:parking_link/core/config/app_config.dart';
-import 'package:parking_link/core/config/supported_platforms.dart';
-import 'package:parking_link/core/config/firebase_config.dart';
-import 'package:parking_link/core/config/flavor.dart';
-import 'package:parking_link/core/di/firebase_providers.dart';
-import 'package:parking_link/core/di/isar_providers.dart';
-import 'package:parking_link/core/error/app_error_handler.dart';
-import 'package:parking_link/core/error/app_exception.dart';
-import 'package:parking_link/core/error/error_mapper.dart';
-import 'package:parking_link/core/error/global_error_handler.dart';
-import 'package:parking_link/core/services/monitoring_service.dart';
+import 'package:psgy/core/config/app_config.dart';
+import 'package:psgy/core/config/supported_platforms.dart';
+import 'package:psgy/core/config/firebase_config.dart';
+import 'package:psgy/core/config/flavor.dart';
+import 'package:psgy/core/di/firebase_providers.dart';
+import 'package:psgy/core/di/isar_providers.dart';
+import 'package:psgy/core/error/app_error_handler.dart';
+import 'package:psgy/core/error/app_exception.dart';
+import 'package:psgy/core/error/error_mapper.dart';
+import 'package:psgy/core/error/global_error_handler.dart';
+import 'package:psgy/core/services/monitoring_service.dart';
 
 enum AppBootstrapStatus { success, failure }
 

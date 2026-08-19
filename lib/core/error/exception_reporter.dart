@@ -1,5 +1,5 @@
-import 'package:parking_link/core/error/app_exception.dart';
-import 'package:parking_link/core/services/monitoring_service.dart';
+import 'package:psgy/core/error/app_exception.dart';
+import 'package:psgy/core/services/monitoring_service.dart';
 
 MonitoringService? _monitoringService;
 

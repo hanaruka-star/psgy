@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:parking_link/core/theme/app_spacing.dart';
-import 'package:parking_link/core/error/app_error_ui.dart';
-import 'package:parking_link/shared/widgets/app_error_view.dart';
+import 'package:psgy/core/theme/app_spacing.dart';
+import 'package:psgy/core/error/app_error_ui.dart';
+import 'package:psgy/shared/widgets/app_error_view.dart';
 
 class EmptyStateView extends StatelessWidget {
   final IconData icon;

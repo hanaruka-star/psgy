@@ -4,8 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
-import 'package:parking_link/features/user/domain/entities/my_parking_record.dart';
-import 'package:parking_link/features/user/presentation/providers/my_parking_provider.dart';
+import 'package:psgy/features/user/domain/entities/my_parking_record.dart';
+import 'package:psgy/features/user/presentation/providers/my_parking_provider.dart';
 
 class MyParkingDetailSheet extends ConsumerStatefulWidget {
   const MyParkingDetailSheet({super.key, required this.record});

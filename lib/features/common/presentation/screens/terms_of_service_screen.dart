@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:parking_link/core/config/app_config.dart';
-import 'package:parking_link/core/theme/app_spacing.dart';
-import 'package:parking_link/features/common/presentation/screens/privacy_policy_screen.dart';
+import 'package:psgy/core/config/app_config.dart';
+import 'package:psgy/core/theme/app_spacing.dart';
+import 'package:psgy/features/common/presentation/screens/privacy_policy_screen.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class TermsOfServiceScreen extends StatelessWidget {

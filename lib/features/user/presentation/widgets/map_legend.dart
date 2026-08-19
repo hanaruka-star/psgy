@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:parking_link/core/theme/app_spacing.dart';
-import 'package:parking_link/features/user/presentation/widgets/parking_lot_marker.dart';
-import 'package:parking_link/shared/widgets/micro_interactions.dart';
-import 'package:parking_link/shared/widgets/modern_card.dart';
+import 'package:psgy/core/theme/app_spacing.dart';
+import 'package:psgy/features/user/presentation/widgets/parking_lot_marker.dart';
+import 'package:psgy/shared/widgets/micro_interactions.dart';
+import 'package:psgy/shared/widgets/modern_card.dart';
 
 final mapLegendExpandedProvider = StateProvider<bool>((ref) => false);
 

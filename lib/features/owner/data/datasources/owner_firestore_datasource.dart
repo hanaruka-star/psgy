@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:parking_link/features/auth/data/models/staff_profile_model.dart';
-import 'package:parking_link/features/parking/data/models/parking_lot_model.dart';
-import 'package:parking_link/features/parking/data/models/vehicle_type_model.dart';
+import 'package:psgy/features/auth/data/models/staff_profile_model.dart';
+import 'package:psgy/features/parking/data/models/parking_lot_model.dart';
+import 'package:psgy/features/parking/data/models/vehicle_type_model.dart';
 
 class OwnerFirestoreDataSource {
   final FirebaseFirestore _firestore;

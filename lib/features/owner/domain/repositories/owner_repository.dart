@@ -1,8 +1,8 @@
-import 'package:parking_link/features/owner/domain/entities/create_lot_input.dart';
-import 'package:parking_link/features/auth/domain/entities/staff_profile_entity.dart';
-import 'package:parking_link/features/owner/domain/entities/owner_vehicle_type_edit.dart';
-import 'package:parking_link/features/parking/domain/entities/parking_lot_entity.dart';
-import 'package:parking_link/features/parking/domain/entities/vehicle_type_entity.dart';
+import 'package:psgy/features/owner/domain/entities/create_lot_input.dart';
+import 'package:psgy/features/auth/domain/entities/staff_profile_entity.dart';
+import 'package:psgy/features/owner/domain/entities/owner_vehicle_type_edit.dart';
+import 'package:psgy/features/parking/domain/entities/parking_lot_entity.dart';
+import 'package:psgy/features/parking/domain/entities/vehicle_type_entity.dart';
 
 abstract class OwnerRepository {
   Future<ParkingLotEntity> getLot(String lotId);

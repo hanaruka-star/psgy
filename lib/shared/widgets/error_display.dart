@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:parking_link/core/error/app_error_handler.dart';
-import 'package:parking_link/core/error/app_error_ui.dart';
-import 'package:parking_link/core/error/app_exception.dart';
-import 'package:parking_link/core/error/error_mapper.dart';
+import 'package:psgy/core/error/app_error_handler.dart';
+import 'package:psgy/core/error/app_error_ui.dart';
+import 'package:psgy/core/error/app_exception.dart';
+import 'package:psgy/core/error/error_mapper.dart';
 
 void showErrorSnackBar(
   BuildContext context,

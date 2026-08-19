@@ -1,5 +1,5 @@
-import 'package:parking_link/features/parking/domain/entities/vehicle_type_entity.dart';
-import 'package:parking_link/features/staff/domain/repositories/staff_repository.dart';
+import 'package:psgy/features/parking/domain/entities/vehicle_type_entity.dart';
+import 'package:psgy/features/staff/domain/repositories/staff_repository.dart';
 
 class WatchStaffVehicleTypesUseCase {
   final StaffRepository repository;

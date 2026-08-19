@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:parking_link/core/utils/currency_formatter.dart';
+import 'package:psgy/core/utils/currency_formatter.dart';
 
 class CheckoutSuccessScreen extends StatelessWidget {
   const CheckoutSuccessScreen({

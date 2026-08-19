@@ -1,6 +1,6 @@
-import 'package:parking_link/features/parking/data/models/parking_session_model.dart';
-import 'package:parking_link/features/parking/domain/entities/history_item_entity.dart';
-import 'package:parking_link/features/parking/domain/entities/parking_session_entity.dart';
+import 'package:psgy/features/parking/data/models/parking_session_model.dart';
+import 'package:psgy/features/parking/domain/entities/history_item_entity.dart';
+import 'package:psgy/features/parking/domain/entities/parking_session_entity.dart';
 
 import 'parking_session_mapper.dart';
 

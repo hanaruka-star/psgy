@@ -1,8 +1,8 @@
-import 'package:parking_link/core/events/domain_event_bus.dart';
-import 'package:parking_link/core/events/lot_status_changed_event.dart';
-import 'package:parking_link/core/events/parking_lot_created_event.dart';
-import 'package:parking_link/features/owner/domain/entities/lot_status.dart';
-import 'package:parking_link/features/owner/domain/repositories/owner_repository.dart';
+import 'package:psgy/core/events/domain_event_bus.dart';
+import 'package:psgy/core/events/lot_status_changed_event.dart';
+import 'package:psgy/core/events/parking_lot_created_event.dart';
+import 'package:psgy/features/owner/domain/entities/lot_status.dart';
+import 'package:psgy/features/owner/domain/repositories/owner_repository.dart';
 
 class UpdateLotStatusUseCase {
   final OwnerRepository repository;

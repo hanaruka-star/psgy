@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
-import 'package:parking_link/core/di/staff_providers.dart';
-import 'package:parking_link/core/utils/currency_formatter.dart';
-import 'package:parking_link/features/staff/domain/usecases/check_in_out/scan_qr_and_check_out_usecase.dart';
+import 'package:psgy/core/di/staff_providers.dart';
+import 'package:psgy/core/utils/currency_formatter.dart';
+import 'package:psgy/features/staff/domain/usecases/check_in_out/scan_qr_and_check_out_usecase.dart';
 
 class CheckoutScanScreen extends ConsumerStatefulWidget {
   const CheckoutScanScreen({

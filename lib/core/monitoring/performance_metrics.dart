@@ -1,5 +1,5 @@
-import 'package:parking_link/core/cache/cache_metrics.dart';
-import 'package:parking_link/core/cache/cache_sync_state.dart';
+import 'package:psgy/core/cache/cache_metrics.dart';
+import 'package:psgy/core/cache/cache_sync_state.dart';
 
 /// Normalized performance payload for Firebase Performance custom events.
 class PerformanceMetrics {

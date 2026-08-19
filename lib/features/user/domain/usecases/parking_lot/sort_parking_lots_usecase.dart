@@ -1,6 +1,6 @@
-import 'package:parking_link/features/parking/domain/entities/parking_lot_entity.dart';
-import 'package:parking_link/features/user/domain/entities/geo_coordinate.dart';
-import 'package:parking_link/features/user/domain/entities/geo_distance.dart';
+import 'package:psgy/features/parking/domain/entities/parking_lot_entity.dart';
+import 'package:psgy/features/user/domain/entities/geo_coordinate.dart';
+import 'package:psgy/features/user/domain/entities/geo_distance.dart';
 
 class SortParkingLotsUseCase {
   List<ParkingLotEntity> call({

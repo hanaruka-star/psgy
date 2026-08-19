@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:parking_link/core/utils/geohash_utils.dart';
+import 'package:psgy/core/utils/geohash_utils.dart';
 
 void main() {
   group('GeohashUtils.encode', () {

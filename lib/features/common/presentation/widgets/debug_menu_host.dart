@@ -3,8 +3,8 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:parking_link/core/config/app_config.dart';
-import 'package:parking_link/features/common/presentation/widgets/debug_menu_sheet.dart';
+import 'package:psgy/core/config/app_config.dart';
+import 'package:psgy/features/common/presentation/widgets/debug_menu_sheet.dart';
 
 /// Listens for debug-menu open requests and shows a dev-only FAB on device.
 class DebugMenuHost extends ConsumerStatefulWidget {

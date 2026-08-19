@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:parking_link/core/config/app_config.dart';
-import 'package:parking_link/core/config/flavor.dart';
-import 'package:parking_link/core/config/app_mode.dart';
-import 'package:parking_link/core/di/app_settings_providers.dart';
-import 'package:parking_link/features/auth/presentation/screens/login_screen.dart';
-import 'package:parking_link/features/common/presentation/screens/privacy_consent_screen.dart';
-import 'package:parking_link/features/common/presentation/screens/splash_screen.dart';
-import 'package:parking_link/features/user/presentation/screens/user_map_screen.dart';
-import 'package:parking_link/features/user/presentation/widgets/watchlist_notification_bootstrap.dart';
+import 'package:psgy/core/config/app_config.dart';
+import 'package:psgy/core/config/flavor.dart';
+import 'package:psgy/core/config/app_mode.dart';
+import 'package:psgy/core/di/app_settings_providers.dart';
+import 'package:psgy/features/auth/presentation/screens/login_screen.dart';
+import 'package:psgy/features/common/presentation/screens/privacy_consent_screen.dart';
+import 'package:psgy/features/common/presentation/screens/splash_screen.dart';
+import 'package:psgy/features/user/presentation/screens/user_map_screen.dart';
+import 'package:psgy/features/user/presentation/widgets/watchlist_notification_bootstrap.dart';
 
 enum _AppStage { splash, consent, home }
 

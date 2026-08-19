@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:parking_link/features/user/domain/entities/qr_token.dart';
+import 'package:psgy/features/user/domain/entities/qr_token.dart';
 
 QrToken _token({
   required DateTime expiresAt,

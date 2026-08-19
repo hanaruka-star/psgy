@@ -1,5 +1,5 @@
-import 'package:parking_link/features/staff/data/models/manual_adjustment_model.dart';
-import 'package:parking_link/features/staff/domain/entities/manual_adjustment_entity.dart';
+import 'package:psgy/features/staff/data/models/manual_adjustment_model.dart';
+import 'package:psgy/features/staff/domain/entities/manual_adjustment_entity.dart';
 
 class ManualAdjustmentMapper {
   const ManualAdjustmentMapper._();

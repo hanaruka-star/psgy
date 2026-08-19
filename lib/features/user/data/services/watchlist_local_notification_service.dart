@@ -1,7 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-import 'package:parking_link/core/services/fcm_notification_service.dart';
-import 'package:parking_link/features/user/domain/ports/watchlist_cloud_function_port.dart';
+import 'package:psgy/core/services/fcm_notification_service.dart';
+import 'package:psgy/features/user/domain/ports/watchlist_cloud_function_port.dart';
 
 typedef LocalNotificationTapHandler = void Function(String lotId);
 

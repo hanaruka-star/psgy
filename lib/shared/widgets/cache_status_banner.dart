@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:parking_link/core/cache/cache_sync_state.dart';
-import 'package:parking_link/core/di/firebase_providers.dart';
-import 'package:parking_link/core/di/sync_providers.dart';
-import 'package:parking_link/core/monitoring/performance_metrics.dart';
-import 'package:parking_link/core/network/connectivity_service.dart';
-import 'package:parking_link/core/theme/app_colors.dart';
-import 'package:parking_link/core/theme/app_spacing.dart';
-import 'package:parking_link/shared/widgets/micro_interactions.dart';
-import 'package:parking_link/shared/widgets/status_chip.dart';
+import 'package:psgy/core/cache/cache_sync_state.dart';
+import 'package:psgy/core/di/firebase_providers.dart';
+import 'package:psgy/core/di/sync_providers.dart';
+import 'package:psgy/core/monitoring/performance_metrics.dart';
+import 'package:psgy/core/network/connectivity_service.dart';
+import 'package:psgy/core/theme/app_colors.dart';
+import 'package:psgy/core/theme/app_spacing.dart';
+import 'package:psgy/shared/widgets/micro_interactions.dart';
+import 'package:psgy/shared/widgets/status_chip.dart';
 
 enum CacheBannerLevel { good, stale, offline }
 

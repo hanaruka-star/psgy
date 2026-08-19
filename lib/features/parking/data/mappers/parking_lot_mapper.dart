@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-import 'package:parking_link/features/parking/data/models/parking_lot_model.dart';
-import 'package:parking_link/features/parking/domain/entities/parking_lot_entity.dart';
+import 'package:psgy/features/parking/data/models/parking_lot_model.dart';
+import 'package:psgy/features/parking/domain/entities/parking_lot_entity.dart';
 
 class ParkingLotMapper {
   const ParkingLotMapper._();

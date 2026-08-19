@@ -1,4 +1,4 @@
-import 'package:parking_link/core/events/domain_event.dart';
+import 'package:psgy/core/events/domain_event.dart';
 
 /// Emitted when an owner changes lot operational status.
 class LotStatusChangedEvent extends DomainEvent {

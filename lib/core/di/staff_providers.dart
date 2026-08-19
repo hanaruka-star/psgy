@@ -1,20 +1,20 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:parking_link/core/di/auth_providers.dart';
-import 'package:parking_link/core/di/parking_providers.dart';
-import 'package:parking_link/core/di/user_providers.dart';
-import 'package:parking_link/features/auth/domain/entities/staff_profile_entity.dart';
-import 'package:parking_link/features/parking/domain/entities/history_item_entity.dart';
-import 'package:parking_link/features/parking/domain/entities/parking_lot_entity.dart';
-import 'package:parking_link/features/parking/domain/entities/parking_session_entity.dart';
-import 'package:parking_link/features/parking/domain/entities/parking_slot_entity.dart';
-import 'package:parking_link/features/parking/domain/entities/vehicle_type_entity.dart';
-import 'package:parking_link/features/staff/data/repositories/staff_repository_impl.dart';
-import 'package:parking_link/features/staff/domain/entities/manual_adjustment_entity.dart';
-import 'package:parking_link/features/staff/domain/entities/staff_today_stats_entity.dart';
-import 'package:parking_link/features/staff/domain/repositories/staff_repository.dart';
-import 'package:parking_link/core/di/event_providers.dart';
-import 'package:parking_link/features/staff/domain/usecases/check_in_out/scan_qr_and_check_out_usecase.dart';
-import 'package:parking_link/features/staff/domain/usecases/index.dart';
+import 'package:psgy/core/di/auth_providers.dart';
+import 'package:psgy/core/di/parking_providers.dart';
+import 'package:psgy/core/di/user_providers.dart';
+import 'package:psgy/features/auth/domain/entities/staff_profile_entity.dart';
+import 'package:psgy/features/parking/domain/entities/history_item_entity.dart';
+import 'package:psgy/features/parking/domain/entities/parking_lot_entity.dart';
+import 'package:psgy/features/parking/domain/entities/parking_session_entity.dart';
+import 'package:psgy/features/parking/domain/entities/parking_slot_entity.dart';
+import 'package:psgy/features/parking/domain/entities/vehicle_type_entity.dart';
+import 'package:psgy/features/staff/data/repositories/staff_repository_impl.dart';
+import 'package:psgy/features/staff/domain/entities/manual_adjustment_entity.dart';
+import 'package:psgy/features/staff/domain/entities/staff_today_stats_entity.dart';
+import 'package:psgy/features/staff/domain/repositories/staff_repository.dart';
+import 'package:psgy/core/di/event_providers.dart';
+import 'package:psgy/features/staff/domain/usecases/check_in_out/scan_qr_and_check_out_usecase.dart';
+import 'package:psgy/features/staff/domain/usecases/index.dart';
 
 final staffRepositoryProvider = Provider<StaffRepository>((ref) {
   return StaffRepositoryImpl(ref.watch(parkingRepositoryProvider));

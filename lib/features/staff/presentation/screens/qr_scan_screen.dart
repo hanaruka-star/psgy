@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
-import 'package:parking_link/core/di/staff_providers.dart';
-import 'package:parking_link/features/staff/domain/entities/scan_qr_result.dart';
+import 'package:psgy/core/di/staff_providers.dart';
+import 'package:psgy/features/staff/domain/entities/scan_qr_result.dart';
 
 class QrScanScreen extends ConsumerStatefulWidget {
   const QrScanScreen({

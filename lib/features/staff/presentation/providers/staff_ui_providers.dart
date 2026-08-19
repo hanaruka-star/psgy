@@ -1,11 +1,11 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:parking_link/core/di/staff_providers.dart';
-import 'package:parking_link/features/staff/domain/entities/staff_history_filter.dart';
-import 'package:parking_link/features/parking/domain/entities/history_item_entity.dart';
-import 'package:parking_link/features/parking/domain/entities/parking_session_entity.dart';
-import 'package:parking_link/features/staff/domain/entities/manual_adjustment_entity.dart';
-import 'package:parking_link/features/staff/presentation/mappers/history_item_ui_mapper.dart';
-import 'package:parking_link/features/staff/presentation/models/history_item_ui_model.dart';
+import 'package:psgy/core/di/staff_providers.dart';
+import 'package:psgy/features/staff/domain/entities/staff_history_filter.dart';
+import 'package:psgy/features/parking/domain/entities/history_item_entity.dart';
+import 'package:psgy/features/parking/domain/entities/parking_session_entity.dart';
+import 'package:psgy/features/staff/domain/entities/manual_adjustment_entity.dart';
+import 'package:psgy/features/staff/presentation/mappers/history_item_ui_mapper.dart';
+import 'package:psgy/features/staff/presentation/models/history_item_ui_model.dart';
 
 const _historySessionPageSize = 50;
 const _historyAdjustmentPageSize = 20;

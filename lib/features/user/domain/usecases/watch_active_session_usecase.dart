@@ -1,5 +1,5 @@
-import 'package:parking_link/features/user/domain/entities/active_session_info.dart';
-import 'package:parking_link/features/user/domain/repositories/i_my_parking_repository.dart';
+import 'package:psgy/features/user/domain/entities/active_session_info.dart';
+import 'package:psgy/features/user/domain/repositories/i_my_parking_repository.dart';
 
 class WatchActiveSessionUseCase {
   const WatchActiveSessionUseCase(this._repository);

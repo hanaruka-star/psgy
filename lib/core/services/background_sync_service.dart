@@ -1,18 +1,18 @@
 import 'dart:async';
 
-import 'package:parking_link/core/cache/cache_metrics.dart';
-import 'package:parking_link/core/cache/cache_policy.dart';
-import 'package:parking_link/core/cache/cache_sync_state.dart';
-import 'package:parking_link/core/monitoring/performance_metrics.dart';
-import 'package:parking_link/core/network/connectivity_service.dart';
-import 'package:parking_link/core/services/cache_invalidation_service.dart';
-import 'package:parking_link/core/services/monitoring_service.dart';
-import 'package:parking_link/core/services/sync_logger.dart';
-import 'package:parking_link/features/parking/data/datasources/parking_local_datasource.dart';
-import 'package:parking_link/features/parking/domain/entities/parking_lot_entity.dart';
-import 'package:parking_link/features/parking/domain/repositories/parking_repository.dart';
-import 'package:parking_link/features/user/domain/entities/geo_coordinate.dart';
-import 'package:parking_link/features/user/domain/repositories/user_repository.dart';
+import 'package:psgy/core/cache/cache_metrics.dart';
+import 'package:psgy/core/cache/cache_policy.dart';
+import 'package:psgy/core/cache/cache_sync_state.dart';
+import 'package:psgy/core/monitoring/performance_metrics.dart';
+import 'package:psgy/core/network/connectivity_service.dart';
+import 'package:psgy/core/services/cache_invalidation_service.dart';
+import 'package:psgy/core/services/monitoring_service.dart';
+import 'package:psgy/core/services/sync_logger.dart';
+import 'package:psgy/features/parking/data/datasources/parking_local_datasource.dart';
+import 'package:psgy/features/parking/domain/entities/parking_lot_entity.dart';
+import 'package:psgy/features/parking/domain/repositories/parking_repository.dart';
+import 'package:psgy/features/user/domain/entities/geo_coordinate.dart';
+import 'package:psgy/features/user/domain/repositories/user_repository.dart';
 
 typedef CacheSyncStateListener = void Function(CacheSyncState state);
 typedef GeoCoordinateProvider = GeoCoordinate? Function();

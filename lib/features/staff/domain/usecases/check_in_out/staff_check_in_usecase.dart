@@ -1,6 +1,6 @@
-import 'package:parking_link/core/events/domain_event_bus.dart';
-import 'package:parking_link/core/events/session_checked_in_event.dart';
-import 'package:parking_link/features/staff/domain/repositories/staff_repository.dart';
+import 'package:psgy/core/events/domain_event_bus.dart';
+import 'package:psgy/core/events/session_checked_in_event.dart';
+import 'package:psgy/features/staff/domain/repositories/staff_repository.dart';
 
 class StaffCheckInUseCase {
   static final RegExp _plateAllowedRegex = RegExp(r'^[A-Z0-9\-]{6,12}$');

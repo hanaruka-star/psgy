@@ -1,8 +1,8 @@
 import 'dart:async';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:parking_link/core/di/user_providers.dart';
-import 'package:parking_link/features/user/domain/entities/checkout_qr_token.dart';
+import 'package:psgy/core/di/user_providers.dart';
+import 'package:psgy/features/user/domain/entities/checkout_qr_token.dart';
 
 class CheckoutQrTokenState {
   const CheckoutQrTokenState({

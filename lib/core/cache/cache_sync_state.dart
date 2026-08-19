@@ -1,4 +1,4 @@
-import 'package:parking_link/core/cache/cache_metrics.dart';
+import 'package:psgy/core/cache/cache_metrics.dart';
 
 enum SyncTrigger {
   manual,

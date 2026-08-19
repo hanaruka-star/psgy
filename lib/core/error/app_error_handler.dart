@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:parking_link/core/error/app_error_ui.dart';
-import 'package:parking_link/core/error/app_exception.dart';
-import 'package:parking_link/core/error/error_mapper.dart';
-import 'package:parking_link/core/error/exception_reporter.dart';
-import 'package:parking_link/core/error/retry_policy.dart';
-import 'package:parking_link/core/services/monitoring_service.dart';
-import 'package:parking_link/shared/widgets/app_error_view.dart';
+import 'package:psgy/core/error/app_error_ui.dart';
+import 'package:psgy/core/error/app_exception.dart';
+import 'package:psgy/core/error/error_mapper.dart';
+import 'package:psgy/core/error/exception_reporter.dart';
+import 'package:psgy/core/error/retry_policy.dart';
+import 'package:psgy/core/services/monitoring_service.dart';
+import 'package:psgy/shared/widgets/app_error_view.dart';
 
 /// Central error handling: monitoring, user messaging, retry orchestration.
 class AppErrorHandler {

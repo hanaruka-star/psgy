@@ -2,15 +2,15 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:parking_link/core/di/auth_providers.dart';
-import 'package:parking_link/core/error/app_error_handler.dart';
-import 'package:parking_link/core/error/error_mapper.dart';
-import 'package:parking_link/core/theme/app_spacing.dart';
-import 'package:parking_link/features/auth/domain/entities/staff_profile_entity.dart';
-import 'package:parking_link/features/auth/presentation/screens/login_screen.dart';
-import 'package:parking_link/features/owner/presentation/screens/owner_dashboard_screen.dart';
-import 'package:parking_link/shared/widgets/micro_interactions.dart';
-import 'package:parking_link/shared/widgets/modern_card.dart';
+import 'package:psgy/core/di/auth_providers.dart';
+import 'package:psgy/core/error/app_error_handler.dart';
+import 'package:psgy/core/error/error_mapper.dart';
+import 'package:psgy/core/theme/app_spacing.dart';
+import 'package:psgy/features/auth/domain/entities/staff_profile_entity.dart';
+import 'package:psgy/features/auth/presentation/screens/login_screen.dart';
+import 'package:psgy/features/owner/presentation/screens/owner_dashboard_screen.dart';
+import 'package:psgy/shared/widgets/micro_interactions.dart';
+import 'package:psgy/shared/widgets/modern_card.dart';
 
 class RegisterScreen extends ConsumerStatefulWidget {
   const RegisterScreen({super.key});

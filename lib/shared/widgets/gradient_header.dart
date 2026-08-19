@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:parking_link/core/theme/app_colors.dart';
-import 'package:parking_link/core/theme/app_spacing.dart';
+import 'package:psgy/core/theme/app_colors.dart';
+import 'package:psgy/core/theme/app_spacing.dart';
 
 class GradientHeader extends StatelessWidget {
   final String title;

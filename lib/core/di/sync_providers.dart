@@ -1,13 +1,13 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:parking_link/core/cache/cache_sync_state.dart';
-import 'package:parking_link/core/di/firebase_providers.dart';
-import 'package:parking_link/core/di/isar_providers.dart';
-import 'package:parking_link/core/di/parking_providers.dart';
-import 'package:parking_link/core/di/user_providers.dart';
-import 'package:parking_link/core/network/connectivity_service.dart';
-import 'package:parking_link/core/services/background_sync_service.dart';
-import 'package:parking_link/core/services/cache_invalidation_service.dart';
-import 'package:parking_link/features/user/domain/entities/geo_coordinate.dart';
+import 'package:psgy/core/cache/cache_sync_state.dart';
+import 'package:psgy/core/di/firebase_providers.dart';
+import 'package:psgy/core/di/isar_providers.dart';
+import 'package:psgy/core/di/parking_providers.dart';
+import 'package:psgy/core/di/user_providers.dart';
+import 'package:psgy/core/network/connectivity_service.dart';
+import 'package:psgy/core/services/background_sync_service.dart';
+import 'package:psgy/core/services/cache_invalidation_service.dart';
+import 'package:psgy/features/user/domain/entities/geo_coordinate.dart';
 
 final cacheSyncStateProvider =
     StateProvider<CacheSyncState>((ref) => const CacheSyncState());

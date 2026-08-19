@@ -1,14 +1,14 @@
 import 'dart:convert';
 
-import 'package:parking_link/features/parking/data/local/parking_lot_isar.dart';
-import 'package:parking_link/features/parking/data/local/parking_session_isar.dart';
-import 'package:parking_link/features/parking/data/local/surveying_lot_isar.dart';
-import 'package:parking_link/features/parking/data/local/vehicle_type_isar.dart';
-import 'package:parking_link/features/parking/domain/entities/parking_lot_entity.dart';
-import 'package:parking_link/features/parking/domain/entities/parking_session_entity.dart';
-import 'package:parking_link/features/parking/domain/entities/surveying_lot_entity.dart';
-import 'package:parking_link/features/parking/domain/entities/vehicle_type_entity.dart';
-import 'package:parking_link/core/utils/geohash_utils.dart';
+import 'package:psgy/features/parking/data/local/parking_lot_isar.dart';
+import 'package:psgy/features/parking/data/local/parking_session_isar.dart';
+import 'package:psgy/features/parking/data/local/surveying_lot_isar.dart';
+import 'package:psgy/features/parking/data/local/vehicle_type_isar.dart';
+import 'package:psgy/features/parking/domain/entities/parking_lot_entity.dart';
+import 'package:psgy/features/parking/domain/entities/parking_session_entity.dart';
+import 'package:psgy/features/parking/domain/entities/surveying_lot_entity.dart';
+import 'package:psgy/features/parking/domain/entities/vehicle_type_entity.dart';
+import 'package:psgy/core/utils/geohash_utils.dart';
 
 class IsarMappers {
   const IsarMappers._();

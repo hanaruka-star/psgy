@@ -1,5 +1,5 @@
-import 'package:parking_link/features/parking/domain/entities/history_item_entity.dart';
-import 'package:parking_link/features/staff/presentation/models/history_item_ui_model.dart';
+import 'package:psgy/features/parking/domain/entities/history_item_entity.dart';
+import 'package:psgy/features/staff/presentation/models/history_item_ui_model.dart';
 
 class HistoryItemUiMapper {
   const HistoryItemUiMapper._();

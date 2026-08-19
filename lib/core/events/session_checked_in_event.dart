@@ -1,4 +1,4 @@
-import 'package:parking_link/core/events/domain_event.dart';
+import 'package:psgy/core/events/domain_event.dart';
 
 /// Emitted after a vehicle is successfully checked in.
 class SessionCheckedInEvent extends DomainEvent {

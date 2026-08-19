@@ -1,7 +1,7 @@
 import 'dart:developer';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:parking_link/features/user/domain/entities/active_session_info.dart';
+import 'package:psgy/features/user/domain/entities/active_session_info.dart';
 
 abstract class IMyParkingRemoteDatasource {
   Stream<ActiveSessionInfo?> watchActiveSession(String userId);

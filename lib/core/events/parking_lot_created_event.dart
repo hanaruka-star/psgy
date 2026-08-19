@@ -1,4 +1,4 @@
-import 'package:parking_link/core/events/domain_event.dart';
+import 'package:psgy/core/events/domain_event.dart';
 
 /// Emitted when a new parking lot is registered in the system.
 class ParkingLotCreatedEvent extends DomainEvent {

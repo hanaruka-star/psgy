@@ -1,8 +1,8 @@
-import 'package:parking_link/features/parking/domain/entities/parking_lot_entity.dart';
-import 'package:parking_link/features/parking/domain/entities/vehicle_type_entity.dart';
-import 'package:parking_link/features/user/domain/entities/geo_coordinate.dart';
-import 'package:parking_link/features/user/domain/entities/user_nearby_lots_snapshot.dart';
-import 'package:parking_link/features/user/domain/entities/user_surveying_lots_snapshot.dart';
+import 'package:psgy/features/parking/domain/entities/parking_lot_entity.dart';
+import 'package:psgy/features/parking/domain/entities/vehicle_type_entity.dart';
+import 'package:psgy/features/user/domain/entities/geo_coordinate.dart';
+import 'package:psgy/features/user/domain/entities/user_nearby_lots_snapshot.dart';
+import 'package:psgy/features/user/domain/entities/user_surveying_lots_snapshot.dart';
 
 abstract class UserRepository {
   Stream<List<ParkingLotEntity>> watchAllLots();

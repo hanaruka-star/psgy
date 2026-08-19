@@ -1,11 +1,11 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:parking_link/core/config/flavor.dart';
-import 'package:parking_link/core/di/fcm_providers.dart';
-import 'package:parking_link/core/di/watchlist_providers.dart';
-import 'package:parking_link/core/services/fcm_notification_service.dart';
-import 'package:parking_link/features/user/presentation/handlers/watchlist_event_handlers.dart';
+import 'package:psgy/core/config/flavor.dart';
+import 'package:psgy/core/di/fcm_providers.dart';
+import 'package:psgy/core/di/watchlist_providers.dart';
+import 'package:psgy/core/services/fcm_notification_service.dart';
+import 'package:psgy/features/user/presentation/handlers/watchlist_event_handlers.dart';
 
 /// Initializes FCM + local notifications for User flavor watchlist.
 class WatchlistNotificationBootstrap extends ConsumerStatefulWidget {

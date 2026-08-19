@@ -1,7 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:parking_link/core/di/owner_providers.dart';
-import 'package:parking_link/features/owner/domain/entities/owner_vehicle_type_edit.dart';
-import 'package:parking_link/features/parking/domain/entities/parking_lot_entity.dart';
+import 'package:psgy/core/di/owner_providers.dart';
+import 'package:psgy/features/owner/domain/entities/owner_vehicle_type_edit.dart';
+import 'package:psgy/features/parking/domain/entities/parking_lot_entity.dart';
 
 final ownerLotStreamProvider =
     StreamProvider.family<ParkingLotEntity, String>((ref, lotId) {

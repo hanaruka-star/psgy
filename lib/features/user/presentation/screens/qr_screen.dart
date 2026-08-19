@@ -3,9 +3,9 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:qr_flutter/qr_flutter.dart';
-import 'package:parking_link/features/user/domain/entities/user_vehicle.dart';
-import 'package:parking_link/features/user/presentation/providers/qr_token_provider.dart';
-import 'package:parking_link/features/user/presentation/screens/park_card_screen.dart';
+import 'package:psgy/features/user/domain/entities/user_vehicle.dart';
+import 'package:psgy/features/user/presentation/providers/qr_token_provider.dart';
+import 'package:psgy/features/user/presentation/screens/park_card_screen.dart';
 
 class QrScreen extends ConsumerStatefulWidget {
   const QrScreen({super.key, required this.vehicle});

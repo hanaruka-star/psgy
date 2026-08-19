@@ -1,8 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:parking_link/core/di/user_providers.dart';
-import 'package:parking_link/features/user/domain/entities/user_profile.dart';
-import 'package:parking_link/features/user/domain/entities/user_vehicle.dart';
+import 'package:psgy/core/di/user_providers.dart';
+import 'package:psgy/features/user/domain/entities/user_profile.dart';
+import 'package:psgy/features/user/domain/entities/user_vehicle.dart';
 
 class UserProfileState {
   const UserProfileState({

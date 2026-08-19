@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
-import 'package:parking_link/core/cache/cache_sync_state.dart';
-import 'package:parking_link/core/config/app_config.dart';
-import 'package:parking_link/core/config/flavor.dart';
-import 'package:parking_link/core/debug/debug_providers.dart';
-import 'package:parking_link/core/di/app_settings_providers.dart';
-import 'package:parking_link/core/di/sync_providers.dart';
-import 'package:parking_link/core/di/user_providers.dart';
-import 'package:parking_link/core/di/watchlist_providers.dart';
-import 'package:parking_link/core/routes/app_navigator.dart';
-import 'package:parking_link/core/services/fcm_notification_service.dart';
-import 'package:parking_link/core/theme/app_spacing.dart';
-import 'package:parking_link/features/user/presentation/handlers/watchlist_event_handlers.dart';
+import 'package:psgy/core/cache/cache_sync_state.dart';
+import 'package:psgy/core/config/app_config.dart';
+import 'package:psgy/core/config/flavor.dart';
+import 'package:psgy/core/debug/debug_providers.dart';
+import 'package:psgy/core/di/app_settings_providers.dart';
+import 'package:psgy/core/di/sync_providers.dart';
+import 'package:psgy/core/di/user_providers.dart';
+import 'package:psgy/core/di/watchlist_providers.dart';
+import 'package:psgy/core/routes/app_navigator.dart';
+import 'package:psgy/core/services/fcm_notification_service.dart';
+import 'package:psgy/core/theme/app_spacing.dart';
+import 'package:psgy/features/user/presentation/handlers/watchlist_event_handlers.dart';
 
 /// Bottom sheet with QA tools for real-device testing (dev/staging only).
 class DebugMenuSheet extends ConsumerWidget {

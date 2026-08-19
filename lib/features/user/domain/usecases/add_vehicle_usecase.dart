@@ -1,5 +1,5 @@
-import 'package:parking_link/features/user/domain/entities/user_vehicle.dart';
-import 'package:parking_link/features/user/domain/repositories/i_user_profile_repository.dart';
+import 'package:psgy/features/user/domain/entities/user_vehicle.dart';
+import 'package:psgy/features/user/domain/repositories/i_user_profile_repository.dart';
 
 class AddVehicleUseCase {
   const AddVehicleUseCase(this._repo);

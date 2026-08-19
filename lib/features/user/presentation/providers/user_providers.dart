@@ -1,19 +1,19 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:parking_link/core/debug/debug_logger.dart';
-import 'package:parking_link/core/di/debug_providers.dart';
-import 'package:parking_link/core/di/user_providers.dart';
-import 'package:parking_link/features/parking/domain/entities/parking_lot_entity.dart';
-import 'package:parking_link/features/parking/domain/entities/surveying_lot_entity.dart';
-import 'package:parking_link/features/parking/domain/entities/vehicle_type_entity.dart';
-import 'package:parking_link/features/user/domain/entities/geo_coordinate.dart';
-import 'package:parking_link/features/user/domain/entities/geo_distance.dart';
-import 'package:parking_link/features/user/domain/entities/map_lot_item.dart';
-import 'package:parking_link/features/user/domain/entities/user_lot_filter.dart';
-import 'package:parking_link/features/user/domain/entities/surveying_lot_vehicle.dart';
-import 'package:parking_link/features/user/domain/entities/user_map_filter.dart';
-import 'package:parking_link/features/user/domain/entities/user_nearby_lots_snapshot.dart';
-import 'package:parking_link/features/user/domain/entities/user_surveying_lots_snapshot.dart';
-import 'package:parking_link/features/user/presentation/providers/vehicle_filter_providers.dart';
+import 'package:psgy/core/debug/debug_logger.dart';
+import 'package:psgy/core/di/debug_providers.dart';
+import 'package:psgy/core/di/user_providers.dart';
+import 'package:psgy/features/parking/domain/entities/parking_lot_entity.dart';
+import 'package:psgy/features/parking/domain/entities/surveying_lot_entity.dart';
+import 'package:psgy/features/parking/domain/entities/vehicle_type_entity.dart';
+import 'package:psgy/features/user/domain/entities/geo_coordinate.dart';
+import 'package:psgy/features/user/domain/entities/geo_distance.dart';
+import 'package:psgy/features/user/domain/entities/map_lot_item.dart';
+import 'package:psgy/features/user/domain/entities/user_lot_filter.dart';
+import 'package:psgy/features/user/domain/entities/surveying_lot_vehicle.dart';
+import 'package:psgy/features/user/domain/entities/user_map_filter.dart';
+import 'package:psgy/features/user/domain/entities/user_nearby_lots_snapshot.dart';
+import 'package:psgy/features/user/domain/entities/user_surveying_lots_snapshot.dart';
+import 'package:psgy/features/user/presentation/providers/vehicle_filter_providers.dart';
 
 export 'vehicle_filter_providers.dart';
 

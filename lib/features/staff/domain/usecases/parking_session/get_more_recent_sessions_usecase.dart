@@ -1,5 +1,5 @@
-import 'package:parking_link/features/parking/domain/entities/parking_session_entity.dart';
-import 'package:parking_link/features/staff/domain/repositories/staff_repository.dart';
+import 'package:psgy/features/parking/domain/entities/parking_session_entity.dart';
+import 'package:psgy/features/staff/domain/repositories/staff_repository.dart';
 
 class GetMoreRecentSessionsUseCase {
   final StaffRepository repository;

@@ -1,10 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:parking_link/core/utils/geohash_utils.dart';
-import 'package:parking_link/features/parking/data/mappers/surveying_lot_mapper.dart';
-import 'package:parking_link/features/parking/data/models/surveying_lot_model.dart';
-import 'package:parking_link/features/parking/domain/entities/surveying_lot_entity.dart';
-import 'package:parking_link/features/user/domain/entities/geo_coordinate.dart';
-import 'package:parking_link/features/user/domain/entities/geo_distance.dart';
+import 'package:psgy/core/utils/geohash_utils.dart';
+import 'package:psgy/features/parking/data/mappers/surveying_lot_mapper.dart';
+import 'package:psgy/features/parking/data/models/surveying_lot_model.dart';
+import 'package:psgy/features/parking/domain/entities/surveying_lot_entity.dart';
+import 'package:psgy/features/user/domain/entities/geo_coordinate.dart';
+import 'package:psgy/features/user/domain/entities/geo_distance.dart';
 
 class UserSurveyingDataSource {
   final FirebaseFirestore _firestore;

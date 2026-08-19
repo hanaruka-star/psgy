@@ -1,5 +1,5 @@
-import 'package:parking_link/features/parking/domain/entities/parking_session_entity.dart';
-import 'package:parking_link/features/parking/domain/entities/vehicle_type_entity.dart';
+import 'package:psgy/features/parking/domain/entities/parking_session_entity.dart';
+import 'package:psgy/features/parking/domain/entities/vehicle_type_entity.dart';
 
 /// Strategy for estimating a parking fee.
 ///

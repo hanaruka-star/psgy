@@ -1,6 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:parking_link/core/di/app_settings_providers.dart';
-import 'package:parking_link/features/user/domain/entities/vehicle_type_filter.dart';
+import 'package:psgy/core/di/app_settings_providers.dart';
+import 'package:psgy/features/user/domain/entities/vehicle_type_filter.dart';
 
 /// Smart default: `moto` on first launch, then last user choice (Isar).
 final vehicleTypeFilterProvider =

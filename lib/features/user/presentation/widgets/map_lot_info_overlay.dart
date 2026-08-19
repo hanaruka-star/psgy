@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:parking_link/core/di/user_providers.dart';
-import 'package:parking_link/core/utils/currency_formatter.dart';
-import 'package:parking_link/features/user/presentation/providers/user_providers.dart';
-import 'package:parking_link/core/theme/app_spacing.dart';
-import 'package:parking_link/features/parking/domain/entities/surveying_lot_entity.dart';
-import 'package:parking_link/features/parking/domain/entities/vehicle_type_entity.dart';
-import 'package:parking_link/features/user/domain/entities/map_lot_item.dart';
-import 'package:parking_link/features/user/presentation/widgets/map_lot_actions.dart';
-import 'package:parking_link/features/user/presentation/widgets/parking_lot_list_tile.dart';
-import 'package:parking_link/shared/widgets/micro_interactions.dart';
+import 'package:psgy/core/di/user_providers.dart';
+import 'package:psgy/core/utils/currency_formatter.dart';
+import 'package:psgy/features/user/presentation/providers/user_providers.dart';
+import 'package:psgy/core/theme/app_spacing.dart';
+import 'package:psgy/features/parking/domain/entities/surveying_lot_entity.dart';
+import 'package:psgy/features/parking/domain/entities/vehicle_type_entity.dart';
+import 'package:psgy/features/user/domain/entities/map_lot_item.dart';
+import 'package:psgy/features/user/presentation/widgets/map_lot_actions.dart';
+import 'package:psgy/features/user/presentation/widgets/parking_lot_list_tile.dart';
+import 'package:psgy/shared/widgets/micro_interactions.dart';
 
 /// Floating info card shown when a map marker is selected.
 class MapLotInfoOverlay extends ConsumerWidget {

@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
-import 'package:parking_link/core/theme/app_colors.dart';
-import 'package:parking_link/core/theme/app_spacing.dart';
-import 'package:parking_link/features/staff/domain/entities/staff_history_filter.dart';
-import 'package:parking_link/features/staff/presentation/models/history_item_ui_model.dart';
-import 'package:parking_link/features/staff/presentation/providers/staff_ui_providers.dart';
-import 'package:parking_link/shared/widgets/empty_state.dart';
-import 'package:parking_link/shared/widgets/loading_shimmer.dart';
-import 'package:parking_link/shared/widgets/micro_interactions.dart';
-import 'package:parking_link/shared/widgets/modern_card.dart';
-import 'package:parking_link/shared/widgets/status_chip.dart';
-import 'package:parking_link/shared/widgets/ui_polish_widgets.dart';
+import 'package:psgy/core/theme/app_colors.dart';
+import 'package:psgy/core/theme/app_spacing.dart';
+import 'package:psgy/features/staff/domain/entities/staff_history_filter.dart';
+import 'package:psgy/features/staff/presentation/models/history_item_ui_model.dart';
+import 'package:psgy/features/staff/presentation/providers/staff_ui_providers.dart';
+import 'package:psgy/shared/widgets/empty_state.dart';
+import 'package:psgy/shared/widgets/loading_shimmer.dart';
+import 'package:psgy/shared/widgets/micro_interactions.dart';
+import 'package:psgy/shared/widgets/modern_card.dart';
+import 'package:psgy/shared/widgets/status_chip.dart';
+import 'package:psgy/shared/widgets/ui_polish_widgets.dart';
 
 class HistoryScreen extends ConsumerStatefulWidget {
   final String lotId;

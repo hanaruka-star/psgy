@@ -2,21 +2,21 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:parking_link/core/di/auth_providers.dart';
-import 'package:parking_link/core/di/firebase_providers.dart';
-import 'package:parking_link/core/error/app_error_handler.dart';
-import 'package:parking_link/core/error/app_exception.dart';
-import 'package:parking_link/core/error/error_mapper.dart';
-import 'package:parking_link/core/theme/app_colors.dart';
-import 'package:parking_link/core/theme/app_spacing.dart';
-import 'package:parking_link/features/auth/domain/entities/staff_profile_entity.dart';
-import 'package:parking_link/features/auth/domain/usecases/sign_in_usecase.dart';
-import 'package:parking_link/features/auth/domain/usecases/watch_auth_state_usecase.dart';
-import 'package:parking_link/features/auth/presentation/screens/register_screen.dart';
-import 'package:parking_link/features/owner/presentation/screens/owner_dashboard_screen.dart';
-import 'package:parking_link/features/staff/presentation/screens/staff_dashboard_screen.dart';
-import 'package:parking_link/shared/widgets/micro_interactions.dart';
-import 'package:parking_link/shared/widgets/modern_card.dart';
+import 'package:psgy/core/di/auth_providers.dart';
+import 'package:psgy/core/di/firebase_providers.dart';
+import 'package:psgy/core/error/app_error_handler.dart';
+import 'package:psgy/core/error/app_exception.dart';
+import 'package:psgy/core/error/error_mapper.dart';
+import 'package:psgy/core/theme/app_colors.dart';
+import 'package:psgy/core/theme/app_spacing.dart';
+import 'package:psgy/features/auth/domain/entities/staff_profile_entity.dart';
+import 'package:psgy/features/auth/domain/usecases/sign_in_usecase.dart';
+import 'package:psgy/features/auth/domain/usecases/watch_auth_state_usecase.dart';
+import 'package:psgy/features/auth/presentation/screens/register_screen.dart';
+import 'package:psgy/features/owner/presentation/screens/owner_dashboard_screen.dart';
+import 'package:psgy/features/staff/presentation/screens/staff_dashboard_screen.dart';
+import 'package:psgy/shared/widgets/micro_interactions.dart';
+import 'package:psgy/shared/widgets/modern_card.dart';
 
 class LoginScreen extends ConsumerStatefulWidget {
   const LoginScreen({super.key});

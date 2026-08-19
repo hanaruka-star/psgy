@@ -1,13 +1,13 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:parking_link/core/error/app_exception.dart';
-import 'package:parking_link/features/user/data/datasources/user_profile_remote_datasource.dart';
-import 'package:parking_link/features/user/data/datasources/vehicle_photo_datasource.dart';
-import 'package:parking_link/features/user/domain/entities/checkout_qr_token.dart';
-import 'package:parking_link/features/user/domain/entities/qr_token.dart';
-import 'package:parking_link/features/user/domain/entities/user_profile.dart';
-import 'package:parking_link/features/user/domain/entities/user_vehicle.dart';
-import 'package:parking_link/core/contracts/i_qr_token_repository.dart';
-import 'package:parking_link/features/user/domain/repositories/i_user_profile_repository.dart';
+import 'package:psgy/core/error/app_exception.dart';
+import 'package:psgy/features/user/data/datasources/user_profile_remote_datasource.dart';
+import 'package:psgy/features/user/data/datasources/vehicle_photo_datasource.dart';
+import 'package:psgy/features/user/domain/entities/checkout_qr_token.dart';
+import 'package:psgy/features/user/domain/entities/qr_token.dart';
+import 'package:psgy/features/user/domain/entities/user_profile.dart';
+import 'package:psgy/features/user/domain/entities/user_vehicle.dart';
+import 'package:psgy/core/contracts/i_qr_token_repository.dart';
+import 'package:psgy/features/user/domain/repositories/i_user_profile_repository.dart';
 import 'package:uuid/uuid.dart';
 
 class UserProfileRepositoryImpl

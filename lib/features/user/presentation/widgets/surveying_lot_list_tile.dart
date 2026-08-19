@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
-import 'package:parking_link/core/di/watchlist_providers.dart';
-import 'package:parking_link/core/utils/currency_formatter.dart';
-import 'package:parking_link/core/theme/app_colors.dart';
-import 'package:parking_link/core/theme/app_spacing.dart';
-import 'package:parking_link/features/parking/domain/entities/surveying_lot_entity.dart';
-import 'package:parking_link/features/user/domain/entities/watchlist_entity.dart';
-import 'package:parking_link/features/user/presentation/widgets/parking_lot_marker.dart';
-import 'package:parking_link/features/user/presentation/widgets/watch_follow_button.dart';
-import 'package:parking_link/shared/widgets/modern_card.dart';
-import 'package:parking_link/shared/widgets/status_chip.dart';
+import 'package:psgy/core/di/watchlist_providers.dart';
+import 'package:psgy/core/utils/currency_formatter.dart';
+import 'package:psgy/core/theme/app_colors.dart';
+import 'package:psgy/core/theme/app_spacing.dart';
+import 'package:psgy/features/parking/domain/entities/surveying_lot_entity.dart';
+import 'package:psgy/features/user/domain/entities/watchlist_entity.dart';
+import 'package:psgy/features/user/presentation/widgets/parking_lot_marker.dart';
+import 'package:psgy/features/user/presentation/widgets/watch_follow_button.dart';
+import 'package:psgy/shared/widgets/modern_card.dart';
+import 'package:psgy/shared/widgets/status_chip.dart';
 
 class SurveyingLotListTile extends ConsumerWidget {
   final SurveyingLotEntity lot;

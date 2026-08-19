@@ -1,6 +1,6 @@
 import 'package:isar/isar.dart';
-import 'package:parking_link/features/user/domain/entities/my_parking_record.dart';
-import 'package:parking_link/features/user/domain/entities/parking_enums.dart';
+import 'package:psgy/features/user/domain/entities/my_parking_record.dart';
+import 'package:psgy/features/user/domain/entities/parking_enums.dart';
 
 part 'my_parking_record_isar.g.dart';
 

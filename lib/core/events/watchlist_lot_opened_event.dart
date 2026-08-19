@@ -1,4 +1,4 @@
-import 'package:parking_link/core/events/domain_event.dart';
+import 'package:psgy/core/events/domain_event.dart';
 
 /// Emitted when a surveying lot the user follows becomes active.
 class WatchlistLotOpenedEvent extends DomainEvent {

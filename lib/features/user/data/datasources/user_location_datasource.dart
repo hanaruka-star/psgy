@@ -1,5 +1,5 @@
 import 'package:geolocator/geolocator.dart';
-import 'package:parking_link/features/user/domain/entities/geo_coordinate.dart';
+import 'package:psgy/features/user/domain/entities/geo_coordinate.dart';
 
 class UserLocationDataSource {
   Future<GeoCoordinate?> getCurrentLocation() async {

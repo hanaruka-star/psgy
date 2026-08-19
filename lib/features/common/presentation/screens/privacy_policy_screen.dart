@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:parking_link/core/config/app_config.dart';
-import 'package:parking_link/core/theme/app_spacing.dart';
+import 'package:psgy/core/config/app_config.dart';
+import 'package:psgy/core/theme/app_spacing.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class LegalSectionItem {

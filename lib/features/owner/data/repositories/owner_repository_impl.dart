@@ -4,16 +4,16 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
-import 'package:parking_link/core/error/app_exception.dart';
-import 'package:parking_link/core/error/error_mapper.dart';
-import 'package:parking_link/features/auth/domain/entities/staff_profile_entity.dart';
-import 'package:parking_link/features/owner/data/datasources/owner_firestore_datasource.dart';
-import 'package:parking_link/features/owner/data/mappers/owner_entity_mappers.dart';
-import 'package:parking_link/features/owner/domain/entities/create_lot_input.dart';
-import 'package:parking_link/features/owner/domain/entities/owner_vehicle_type_edit.dart';
-import 'package:parking_link/features/owner/domain/repositories/owner_repository.dart';
-import 'package:parking_link/features/parking/domain/entities/parking_lot_entity.dart';
-import 'package:parking_link/features/parking/domain/entities/vehicle_type_entity.dart';
+import 'package:psgy/core/error/app_exception.dart';
+import 'package:psgy/core/error/error_mapper.dart';
+import 'package:psgy/features/auth/domain/entities/staff_profile_entity.dart';
+import 'package:psgy/features/owner/data/datasources/owner_firestore_datasource.dart';
+import 'package:psgy/features/owner/data/mappers/owner_entity_mappers.dart';
+import 'package:psgy/features/owner/domain/entities/create_lot_input.dart';
+import 'package:psgy/features/owner/domain/entities/owner_vehicle_type_edit.dart';
+import 'package:psgy/features/owner/domain/repositories/owner_repository.dart';
+import 'package:psgy/features/parking/domain/entities/parking_lot_entity.dart';
+import 'package:psgy/features/parking/domain/entities/vehicle_type_entity.dart';
 
 class OwnerRepositoryImpl implements OwnerRepository {
   final OwnerFirestoreDataSource _dataSource;

@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:parking_link/core/di/auth_providers.dart';
-import 'package:parking_link/core/di/owner_providers.dart';
-import 'package:parking_link/features/auth/domain/entities/staff_profile_entity.dart';
-import 'package:parking_link/features/owner/presentation/providers/owner_ui_providers.dart';
-import 'package:parking_link/features/owner/presentation/screens/add_staff_screen.dart';
-import 'package:parking_link/features/owner/presentation/screens/create_lot_screen.dart';
-import 'package:parking_link/features/owner/presentation/screens/edit_lot_screen.dart';
-import 'package:parking_link/features/owner/presentation/widgets/owner_error_message.dart';
-import 'package:parking_link/features/parking/domain/entities/parking_lot_entity.dart';
-import 'package:parking_link/features/parking/domain/entities/vehicle_type_entity.dart';
+import 'package:psgy/core/di/auth_providers.dart';
+import 'package:psgy/core/di/owner_providers.dart';
+import 'package:psgy/features/auth/domain/entities/staff_profile_entity.dart';
+import 'package:psgy/features/owner/presentation/providers/owner_ui_providers.dart';
+import 'package:psgy/features/owner/presentation/screens/add_staff_screen.dart';
+import 'package:psgy/features/owner/presentation/screens/create_lot_screen.dart';
+import 'package:psgy/features/owner/presentation/screens/edit_lot_screen.dart';
+import 'package:psgy/features/owner/presentation/widgets/owner_error_message.dart';
+import 'package:psgy/features/parking/domain/entities/parking_lot_entity.dart';
+import 'package:psgy/features/parking/domain/entities/vehicle_type_entity.dart';
 
 class OwnerDashboardScreen extends ConsumerWidget {
   final StaffProfileEntity ownerProfile;

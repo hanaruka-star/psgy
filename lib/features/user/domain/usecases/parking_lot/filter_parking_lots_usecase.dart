@@ -1,6 +1,6 @@
-import 'package:parking_link/features/parking/domain/entities/parking_lot_entity.dart';
-import 'package:parking_link/features/parking/domain/entities/vehicle_type_entity.dart';
-import 'package:parking_link/features/user/domain/entities/user_lot_filter.dart';
+import 'package:psgy/features/parking/domain/entities/parking_lot_entity.dart';
+import 'package:psgy/features/parking/domain/entities/vehicle_type_entity.dart';
+import 'package:psgy/features/user/domain/entities/user_lot_filter.dart';
 
 class FilterParkingLotsUseCase {
   List<ParkingLotEntity> call({

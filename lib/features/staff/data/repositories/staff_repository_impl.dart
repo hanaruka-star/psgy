@@ -1,15 +1,15 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:parking_link/features/parking/data/mappers/parking_session_mapper.dart';
-import 'package:parking_link/features/parking/data/models/parking_session_model.dart';
-import 'package:parking_link/features/parking/domain/entities/parking_lot_entity.dart';
-import 'package:parking_link/features/parking/domain/entities/parking_session_entity.dart';
-import 'package:parking_link/features/parking/domain/entities/vehicle_type_entity.dart';
-import 'package:parking_link/features/parking/domain/repositories/parking_repository.dart';
-import 'package:parking_link/features/staff/data/mappers/manual_adjustment_mapper.dart';
-import 'package:parking_link/features/staff/data/models/manual_adjustment_model.dart';
-import 'package:parking_link/features/staff/domain/entities/manual_adjustment_entity.dart';
-import 'package:parking_link/features/staff/domain/entities/staff_today_stats_entity.dart';
-import 'package:parking_link/features/staff/domain/repositories/staff_repository.dart';
+import 'package:psgy/features/parking/data/mappers/parking_session_mapper.dart';
+import 'package:psgy/features/parking/data/models/parking_session_model.dart';
+import 'package:psgy/features/parking/domain/entities/parking_lot_entity.dart';
+import 'package:psgy/features/parking/domain/entities/parking_session_entity.dart';
+import 'package:psgy/features/parking/domain/entities/vehicle_type_entity.dart';
+import 'package:psgy/features/parking/domain/repositories/parking_repository.dart';
+import 'package:psgy/features/staff/data/mappers/manual_adjustment_mapper.dart';
+import 'package:psgy/features/staff/data/models/manual_adjustment_model.dart';
+import 'package:psgy/features/staff/domain/entities/manual_adjustment_entity.dart';
+import 'package:psgy/features/staff/domain/entities/staff_today_stats_entity.dart';
+import 'package:psgy/features/staff/domain/repositories/staff_repository.dart';
 
 class StaffRepositoryImpl implements StaffRepository {
   final ParkingRepository _parkingRepository;

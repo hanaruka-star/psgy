@@ -1,5 +1,5 @@
-import 'package:parking_link/features/auth/domain/entities/staff_profile_entity.dart';
-import 'package:parking_link/features/owner/domain/repositories/owner_repository.dart';
+import 'package:psgy/features/auth/domain/entities/staff_profile_entity.dart';
+import 'package:psgy/features/owner/domain/repositories/owner_repository.dart';
 
 class WatchStaffListUseCase {
   final OwnerRepository repository;

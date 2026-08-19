@@ -1,7 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
-import 'package:parking_link/firebase_options.dart';
+import 'package:psgy/firebase_options.dart';
 
 /// Background FCM handler — must be a top-level function.
 ///

@@ -1,5 +1,5 @@
-import 'package:parking_link/features/user/domain/entities/active_session_info.dart';
-import 'package:parking_link/features/user/domain/entities/my_parking_record.dart';
+import 'package:psgy/features/user/domain/entities/active_session_info.dart';
+import 'package:psgy/features/user/domain/entities/my_parking_record.dart';
 
 abstract class IMyParkingRepository {
   Future<void> saveRecord(MyParkingRecord record);

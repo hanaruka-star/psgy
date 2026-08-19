@@ -1,4 +1,4 @@
-import 'package:parking_link/features/auth/domain/repositories/auth_repository.dart';
+import 'package:psgy/features/auth/domain/repositories/auth_repository.dart';
 
 class SignOutUseCase {
   final AuthRepository _repository;

@@ -1,12 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:parking_link/core/di/event_providers.dart';
-import 'package:parking_link/core/di/firebase_providers.dart';
-import 'package:parking_link/core/di/isar_providers.dart';
-import 'package:parking_link/core/network/connectivity_service.dart';
-import 'package:parking_link/features/parking/data/repositories/parking_repository_impl.dart';
-import 'package:parking_link/features/parking/domain/repositories/parking_repository.dart';
-import 'package:parking_link/features/parking/domain/usecases/index.dart';
+import 'package:psgy/core/di/event_providers.dart';
+import 'package:psgy/core/di/firebase_providers.dart';
+import 'package:psgy/core/di/isar_providers.dart';
+import 'package:psgy/core/network/connectivity_service.dart';
+import 'package:psgy/features/parking/data/repositories/parking_repository_impl.dart';
+import 'package:psgy/features/parking/domain/repositories/parking_repository.dart';
+import 'package:psgy/features/parking/domain/usecases/index.dart';
 
 final parkingRepositoryProvider = Provider<ParkingRepository>((ref) {
   return ParkingRepositoryImpl(

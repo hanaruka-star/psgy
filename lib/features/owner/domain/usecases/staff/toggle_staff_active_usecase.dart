@@ -1,4 +1,4 @@
-import 'package:parking_link/features/owner/domain/repositories/owner_repository.dart';
+import 'package:psgy/features/owner/domain/repositories/owner_repository.dart';
 
 class ToggleStaffActiveUseCase {
   final OwnerRepository repository;

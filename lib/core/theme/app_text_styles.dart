@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:parking_link/core/theme/app_colors.dart';
+import 'package:psgy/core/theme/app_colors.dart';
 
 abstract final class AppTextStyles {
   static TextTheme textTheme({required bool isDark}) {

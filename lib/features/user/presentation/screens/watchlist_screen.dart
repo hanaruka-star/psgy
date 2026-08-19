@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
-import 'package:parking_link/core/di/watchlist_providers.dart';
-import 'package:parking_link/core/theme/app_spacing.dart';
-import 'package:parking_link/features/user/domain/entities/watchlist_entity.dart';
-import 'package:parking_link/features/user/presentation/screens/user_notification_settings_screen.dart';
-import 'package:parking_link/features/user/presentation/widgets/parking_lot_marker.dart';
-import 'package:parking_link/shared/widgets/empty_state.dart';
-import 'package:parking_link/shared/widgets/modern_card.dart';
-import 'package:parking_link/shared/widgets/status_chip.dart';
+import 'package:psgy/core/di/watchlist_providers.dart';
+import 'package:psgy/core/theme/app_spacing.dart';
+import 'package:psgy/features/user/domain/entities/watchlist_entity.dart';
+import 'package:psgy/features/user/presentation/screens/user_notification_settings_screen.dart';
+import 'package:psgy/features/user/presentation/widgets/parking_lot_marker.dart';
+import 'package:psgy/shared/widgets/empty_state.dart';
+import 'package:psgy/shared/widgets/modern_card.dart';
+import 'package:psgy/shared/widgets/status_chip.dart';
 
 class WatchlistScreen extends ConsumerStatefulWidget {
   const WatchlistScreen({super.key});

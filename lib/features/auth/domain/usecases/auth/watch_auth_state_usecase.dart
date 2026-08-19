@@ -1,5 +1,5 @@
-import 'package:parking_link/features/auth/domain/entities/staff_profile_entity.dart';
-import 'package:parking_link/features/auth/domain/repositories/auth_repository.dart';
+import 'package:psgy/features/auth/domain/entities/staff_profile_entity.dart';
+import 'package:psgy/features/auth/domain/repositories/auth_repository.dart';
 
 class WatchAuthStateUseCase {
   final AuthRepository _repository;

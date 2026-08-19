@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:parking_link/core/config/app_config.dart';
-import 'package:parking_link/core/theme/app_colors.dart';
-import 'package:parking_link/core/theme/app_spacing.dart';
-import 'package:parking_link/features/common/presentation/widgets/debug_menu_host.dart';
+import 'package:psgy/core/config/app_config.dart';
+import 'package:psgy/core/theme/app_colors.dart';
+import 'package:psgy/core/theme/app_spacing.dart';
+import 'package:psgy/features/common/presentation/widgets/debug_menu_host.dart';
 
 class SplashScreen extends ConsumerStatefulWidget {
   final VoidCallback onFinished;

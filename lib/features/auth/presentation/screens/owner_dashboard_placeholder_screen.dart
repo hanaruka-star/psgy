@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:parking_link/core/di/auth_providers.dart';
+import 'package:psgy/core/di/auth_providers.dart';
 
 class OwnerDashboardPlaceholderScreen extends ConsumerWidget {
   const OwnerDashboardPlaceholderScreen({super.key});

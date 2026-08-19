@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:equatable/equatable.dart';
-import 'package:parking_link/features/auth/data/mappers/staff_profile_mapper.dart';
-import 'package:parking_link/features/auth/domain/entities/staff_profile_entity.dart';
+import 'package:psgy/features/auth/data/mappers/staff_profile_mapper.dart';
+import 'package:psgy/features/auth/domain/entities/staff_profile_entity.dart';
 
 class StaffProfileModel extends Equatable {
   final String uid;

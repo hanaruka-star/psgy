@@ -1,5 +1,5 @@
 import 'package:isar/isar.dart';
-import 'package:parking_link/core/data/local/app_settings_isar.dart';
+import 'package:psgy/core/data/local/app_settings_isar.dart';
 
 class AppSettingsLocalDataSource {
   final Isar _isar;

@@ -5,20 +5,20 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:parking_link/core/cache/cache_sync_state.dart';
-import 'package:parking_link/core/di/firebase_providers.dart';
-import 'package:parking_link/core/di/sync_providers.dart';
-import 'package:parking_link/core/di/user_providers.dart';
-import 'package:parking_link/core/monitoring/performance_metrics.dart';
-import 'package:parking_link/features/parking/domain/entities/vehicle_type_entity.dart';
-import 'package:parking_link/features/user/domain/entities/geo_coordinate.dart';
-import 'package:parking_link/features/user/domain/entities/map_lot_item.dart';
-import 'package:parking_link/features/user/domain/entities/surveying_lot_vehicle.dart';
-import 'package:parking_link/features/user/domain/entities/vehicle_type_filter.dart';
-import 'package:parking_link/features/user/presentation/providers/user_providers.dart';
-import 'package:parking_link/features/user/presentation/widgets/map_dark_style.dart';
-import 'package:parking_link/features/user/presentation/widgets/parking_cluster_manager.dart';
-import 'package:parking_link/features/user/presentation/widgets/parking_lot_marker.dart';
+import 'package:psgy/core/cache/cache_sync_state.dart';
+import 'package:psgy/core/di/firebase_providers.dart';
+import 'package:psgy/core/di/sync_providers.dart';
+import 'package:psgy/core/di/user_providers.dart';
+import 'package:psgy/core/monitoring/performance_metrics.dart';
+import 'package:psgy/features/parking/domain/entities/vehicle_type_entity.dart';
+import 'package:psgy/features/user/domain/entities/geo_coordinate.dart';
+import 'package:psgy/features/user/domain/entities/map_lot_item.dart';
+import 'package:psgy/features/user/domain/entities/surveying_lot_vehicle.dart';
+import 'package:psgy/features/user/domain/entities/vehicle_type_filter.dart';
+import 'package:psgy/features/user/presentation/providers/user_providers.dart';
+import 'package:psgy/features/user/presentation/widgets/map_dark_style.dart';
+import 'package:psgy/features/user/presentation/widgets/parking_cluster_manager.dart';
+import 'package:psgy/features/user/presentation/widgets/parking_lot_marker.dart';
 
 /// Map camera / sync tuning — keep in sync with product perf notes.
 abstract final class MapPerformanceConfig {

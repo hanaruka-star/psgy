@@ -3,8 +3,8 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:parking_link/core/di/user_providers.dart';
-import 'package:parking_link/features/user/presentation/providers/my_parking_provider.dart';
+import 'package:psgy/core/di/user_providers.dart';
+import 'package:psgy/features/user/presentation/providers/my_parking_provider.dart';
 
 class SaveParkingBottomSheet extends ConsumerStatefulWidget {
   const SaveParkingBottomSheet({super.key});

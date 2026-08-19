@@ -3,7 +3,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
-import 'package:parking_link/features/parking/data/repositories/parking_repository_impl.dart';
+import 'package:psgy/features/parking/data/repositories/parking_repository_impl.dart';
 
 class MockFirebaseFirestore extends Mock implements FirebaseFirestore {}
 

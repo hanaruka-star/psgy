@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:parking_link/features/owner/domain/entities/lot_status.dart';
-import 'package:parking_link/features/owner/domain/entities/owner_vehicle_type_edit.dart';
-import 'package:parking_link/features/owner/presentation/models/vehicle_type_edit_form_model.dart';
-import 'package:parking_link/features/owner/presentation/providers/owner_ui_providers.dart';
-import 'package:parking_link/features/owner/presentation/widgets/owner_error_message.dart';
-import 'package:parking_link/features/parking/domain/entities/parking_lot_entity.dart';
-import 'package:parking_link/features/parking/domain/entities/vehicle_type_entity.dart';
+import 'package:psgy/features/owner/domain/entities/lot_status.dart';
+import 'package:psgy/features/owner/domain/entities/owner_vehicle_type_edit.dart';
+import 'package:psgy/features/owner/presentation/models/vehicle_type_edit_form_model.dart';
+import 'package:psgy/features/owner/presentation/providers/owner_ui_providers.dart';
+import 'package:psgy/features/owner/presentation/widgets/owner_error_message.dart';
+import 'package:psgy/features/parking/domain/entities/parking_lot_entity.dart';
+import 'package:psgy/features/parking/domain/entities/vehicle_type_entity.dart';
 
 class EditLotScreen extends ConsumerStatefulWidget {
   final ParkingLotEntity lot;

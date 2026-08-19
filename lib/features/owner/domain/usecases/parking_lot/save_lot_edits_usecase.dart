@@ -1,7 +1,7 @@
-import 'package:parking_link/features/owner/domain/entities/lot_status.dart';
-import 'package:parking_link/features/owner/domain/entities/owner_vehicle_type_edit.dart';
-import 'package:parking_link/features/owner/domain/entities/pricing_model.dart';
-import 'package:parking_link/features/owner/domain/repositories/owner_repository.dart';
+import 'package:psgy/features/owner/domain/entities/lot_status.dart';
+import 'package:psgy/features/owner/domain/entities/owner_vehicle_type_edit.dart';
+import 'package:psgy/features/owner/domain/entities/pricing_model.dart';
+import 'package:psgy/features/owner/domain/repositories/owner_repository.dart';
 
 class SaveLotEditsUseCase {
   final OwnerRepository repository;

@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:parking_link/core/di/staff_providers.dart';
-import 'package:parking_link/core/error/app_error_handler.dart';
-import 'package:parking_link/core/error/app_exception.dart';
-import 'package:parking_link/core/error/error_mapper.dart';
-import 'package:parking_link/features/parking/domain/entities/vehicle_type_entity.dart';
-import 'package:parking_link/features/staff/presentation/widgets/staff_error_message.dart';
+import 'package:psgy/core/di/staff_providers.dart';
+import 'package:psgy/core/error/app_error_handler.dart';
+import 'package:psgy/core/error/app_exception.dart';
+import 'package:psgy/core/error/error_mapper.dart';
+import 'package:psgy/features/parking/domain/entities/vehicle_type_entity.dart';
+import 'package:psgy/features/staff/presentation/widgets/staff_error_message.dart';
 
 class CheckInScreen extends ConsumerStatefulWidget {
   final VehicleTypeEntity vehicleType;

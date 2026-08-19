@@ -1,8 +1,8 @@
 import 'dart:math' as math;
 
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:parking_link/features/user/domain/entities/map_lot_item.dart';
-import 'package:parking_link/features/user/presentation/widgets/parking_lot_marker.dart';
+import 'package:psgy/features/user/domain/entities/map_lot_item.dart';
+import 'package:psgy/features/user/presentation/widgets/parking_lot_marker.dart';
 
 class MapLotClusterItem {
   final MapLotItem item;

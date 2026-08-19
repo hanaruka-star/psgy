@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:parking_link/core/error/app_error_handler.dart';
-import 'package:parking_link/shared/widgets/app_error_view.dart';
+import 'package:psgy/core/error/app_error_handler.dart';
+import 'package:psgy/shared/widgets/app_error_view.dart';
 
 /// Displays a calm recovery UI when [error] is set; otherwise renders [child].
 ///

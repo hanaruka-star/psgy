@@ -1,6 +1,6 @@
-import 'package:parking_link/core/events/domain_event_bus.dart';
-import 'package:parking_link/core/events/session_checked_in_event.dart';
-import 'package:parking_link/features/parking/domain/repositories/parking_repository.dart';
+import 'package:psgy/core/events/domain_event_bus.dart';
+import 'package:psgy/core/events/session_checked_in_event.dart';
+import 'package:psgy/features/parking/domain/repositories/parking_repository.dart';
 
 class CheckInUseCase {
   final ParkingRepository repository;

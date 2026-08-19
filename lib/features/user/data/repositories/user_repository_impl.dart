@@ -1,22 +1,22 @@
 import 'dart:async';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:parking_link/core/debug/debug_logger.dart';
-import 'package:parking_link/core/monitoring/performance_metrics.dart';
-import 'package:parking_link/core/network/connectivity_service.dart';
-import 'package:parking_link/core/services/monitoring_service.dart';
-import 'package:parking_link/features/parking/data/datasources/parking_local_datasource.dart';
-import 'package:parking_link/features/parking/domain/entities/parking_lot_entity.dart';
-import 'package:parking_link/features/parking/domain/entities/surveying_lot_entity.dart';
-import 'package:parking_link/features/parking/domain/entities/vehicle_type_entity.dart';
-import 'package:parking_link/features/parking/domain/repositories/parking_repository.dart';
-import 'package:parking_link/features/user/data/datasources/user_parking_datasource.dart';
-import 'package:parking_link/features/user/data/datasources/user_surveying_datasource.dart';
-import 'package:parking_link/features/user/domain/entities/geo_coordinate.dart';
-import 'package:parking_link/features/user/domain/entities/user_geo_query_config.dart';
-import 'package:parking_link/features/user/domain/entities/user_nearby_lots_snapshot.dart';
-import 'package:parking_link/features/user/domain/entities/user_surveying_lots_snapshot.dart';
-import 'package:parking_link/features/user/domain/repositories/user_repository.dart';
+import 'package:psgy/core/debug/debug_logger.dart';
+import 'package:psgy/core/monitoring/performance_metrics.dart';
+import 'package:psgy/core/network/connectivity_service.dart';
+import 'package:psgy/core/services/monitoring_service.dart';
+import 'package:psgy/features/parking/data/datasources/parking_local_datasource.dart';
+import 'package:psgy/features/parking/domain/entities/parking_lot_entity.dart';
+import 'package:psgy/features/parking/domain/entities/surveying_lot_entity.dart';
+import 'package:psgy/features/parking/domain/entities/vehicle_type_entity.dart';
+import 'package:psgy/features/parking/domain/repositories/parking_repository.dart';
+import 'package:psgy/features/user/data/datasources/user_parking_datasource.dart';
+import 'package:psgy/features/user/data/datasources/user_surveying_datasource.dart';
+import 'package:psgy/features/user/domain/entities/geo_coordinate.dart';
+import 'package:psgy/features/user/domain/entities/user_geo_query_config.dart';
+import 'package:psgy/features/user/domain/entities/user_nearby_lots_snapshot.dart';
+import 'package:psgy/features/user/domain/entities/user_surveying_lots_snapshot.dart';
+import 'package:psgy/features/user/domain/repositories/user_repository.dart';
 
 class UserRepositoryImpl implements UserRepository {
   final ParkingRepository _parkingRepository;

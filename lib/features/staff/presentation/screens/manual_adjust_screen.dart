@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:parking_link/features/parking/domain/entities/vehicle_type_entity.dart';
-import 'package:parking_link/core/di/staff_providers.dart';
+import 'package:psgy/features/parking/domain/entities/vehicle_type_entity.dart';
+import 'package:psgy/core/di/staff_providers.dart';
 
 class ManualAdjustScreen extends ConsumerStatefulWidget {
   final VehicleTypeEntity vehicleType;

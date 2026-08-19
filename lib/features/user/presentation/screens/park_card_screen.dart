@@ -2,13 +2,13 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
-import 'package:parking_link/core/di/parking_providers.dart';
-import 'package:parking_link/core/di/user_providers.dart';
-import 'package:parking_link/core/utils/currency_formatter.dart';
-import 'package:parking_link/features/parking/domain/entities/parking_session_entity.dart';
-import 'package:parking_link/features/parking/domain/entities/vehicle_type_entity.dart';
-import 'package:parking_link/features/parking/domain/pricing/pricing_strategy_factory.dart';
-import 'package:parking_link/features/user/presentation/screens/checkout_qr_screen.dart';
+import 'package:psgy/core/di/parking_providers.dart';
+import 'package:psgy/core/di/user_providers.dart';
+import 'package:psgy/core/utils/currency_formatter.dart';
+import 'package:psgy/features/parking/domain/entities/parking_session_entity.dart';
+import 'package:psgy/features/parking/domain/entities/vehicle_type_entity.dart';
+import 'package:psgy/features/parking/domain/pricing/pricing_strategy_factory.dart';
+import 'package:psgy/features/user/presentation/screens/checkout_qr_screen.dart';
 
 /// Realtime stream of a single parking session via [WatchParkingSessionUseCase].
 final parkCardSessionProvider =

@@ -1,10 +1,10 @@
-import 'package:parking_link/features/user/data/datasources/watchlist_local_datasource.dart';
-import 'package:parking_link/features/user/data/datasources/watchlist_remote_datasource.dart';
-import 'package:parking_link/features/user/data/services/fcm_watchlist_notification_port.dart';
-import 'package:parking_link/features/user/data/services/watchlist_auth_service.dart';
-import 'package:parking_link/features/user/domain/entities/watchlist_entity.dart';
-import 'package:parking_link/features/user/domain/ports/watchlist_notification_port.dart';
-import 'package:parking_link/features/user/domain/repositories/user_watchlist_repository.dart';
+import 'package:psgy/features/user/data/datasources/watchlist_local_datasource.dart';
+import 'package:psgy/features/user/data/datasources/watchlist_remote_datasource.dart';
+import 'package:psgy/features/user/data/services/fcm_watchlist_notification_port.dart';
+import 'package:psgy/features/user/data/services/watchlist_auth_service.dart';
+import 'package:psgy/features/user/domain/entities/watchlist_entity.dart';
+import 'package:psgy/features/user/domain/ports/watchlist_notification_port.dart';
+import 'package:psgy/features/user/domain/repositories/user_watchlist_repository.dart';
 
 class WatchlistRepositoryImpl implements UserWatchlistRepository {
   final WatchlistLocalDataSource localDataSource;

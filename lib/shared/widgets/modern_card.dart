@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:parking_link/core/theme/app_spacing.dart';
-import 'package:parking_link/shared/widgets/micro_interactions.dart';
+import 'package:psgy/core/theme/app_spacing.dart';
+import 'package:psgy/shared/widgets/micro_interactions.dart';
 
 class ModernCard extends StatelessWidget {
   final Widget child;

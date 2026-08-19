@@ -1,6 +1,6 @@
-import 'package:parking_link/core/services/fcm_notification_service.dart';
-import 'package:parking_link/features/user/domain/ports/watchlist_notification_port.dart';
-import 'package:parking_link/features/user/domain/ports/watchlist_cloud_function_port.dart';
+import 'package:psgy/core/services/fcm_notification_service.dart';
+import 'package:psgy/features/user/domain/ports/watchlist_notification_port.dart';
+import 'package:psgy/features/user/domain/ports/watchlist_cloud_function_port.dart';
 
 /// Registers FCM topic interest for a watched lot (token-based via topics).
 class FcmWatchlistNotificationPort implements WatchlistNotificationPort {

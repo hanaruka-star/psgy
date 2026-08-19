@@ -1,6 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:parking_link/core/error/exception_reporter.dart';
-import 'package:parking_link/core/services/monitoring_service.dart';
+import 'package:psgy/core/error/exception_reporter.dart';
+import 'package:psgy/core/services/monitoring_service.dart';
 
 final monitoringServiceProvider = Provider<MonitoringService>((ref) {
   throw StateError(

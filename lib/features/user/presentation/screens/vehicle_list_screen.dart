@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:parking_link/features/user/domain/entities/user_vehicle.dart';
-import 'package:parking_link/features/user/presentation/providers/user_profile_provider.dart';
-import 'package:parking_link/features/user/presentation/screens/vehicle_registration_screen.dart';
+import 'package:psgy/features/user/domain/entities/user_vehicle.dart';
+import 'package:psgy/features/user/presentation/providers/user_profile_provider.dart';
+import 'package:psgy/features/user/presentation/screens/vehicle_registration_screen.dart';
 
 class VehicleListScreen extends ConsumerWidget {
   const VehicleListScreen({super.key});

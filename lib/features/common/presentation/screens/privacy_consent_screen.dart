@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:parking_link/core/config/app_config.dart';
-import 'package:parking_link/core/di/app_settings_providers.dart';
-import 'package:parking_link/core/theme/app_spacing.dart';
-import 'package:parking_link/features/common/presentation/screens/privacy_policy_screen.dart';
-import 'package:parking_link/features/common/presentation/screens/terms_of_service_screen.dart';
-import 'package:parking_link/shared/widgets/modern_card.dart';
+import 'package:psgy/core/config/app_config.dart';
+import 'package:psgy/core/di/app_settings_providers.dart';
+import 'package:psgy/core/theme/app_spacing.dart';
+import 'package:psgy/features/common/presentation/screens/privacy_policy_screen.dart';
+import 'package:psgy/features/common/presentation/screens/terms_of_service_screen.dart';
+import 'package:psgy/shared/widgets/modern_card.dart';
 
 class PrivacyConsentScreen extends ConsumerWidget {
   final VoidCallback onAccepted;

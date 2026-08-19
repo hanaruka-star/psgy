@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:parking_link/features/owner/domain/entities/pricing_model.dart';
-import 'package:parking_link/features/parking/domain/entities/vehicle_type_entity.dart';
+import 'package:psgy/features/owner/domain/entities/pricing_model.dart';
+import 'package:psgy/features/parking/domain/entities/vehicle_type_entity.dart';
 
 class VehicleTypeEditFormModel {
   final VehicleTypeEntity vehicleType;

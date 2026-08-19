@@ -1,5 +1,5 @@
 import 'package:isar/isar.dart';
-import 'package:parking_link/features/user/data/local/my_parking_record_isar.dart';
+import 'package:psgy/features/user/data/local/my_parking_record_isar.dart';
 
 abstract class IMyParkingLocalDatasource {
   Future<void> saveRecord(MyParkingRecordIsar record);

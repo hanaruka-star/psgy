@@ -1,7 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:isar/isar.dart';
-import 'package:parking_link/core/data/local/app_settings_isar.dart';
-import 'package:parking_link/features/parking/data/local/surveying_lot_isar.dart';
+import 'package:psgy/core/data/local/app_settings_isar.dart';
+import 'package:psgy/features/parking/data/local/surveying_lot_isar.dart';
 
 /// Centralized schema-aware migration runner for local Isar cache.
 ///

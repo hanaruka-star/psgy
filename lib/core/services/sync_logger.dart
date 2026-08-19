@@ -1,6 +1,6 @@
 import 'package:flutter/foundation.dart';
-import 'package:parking_link/core/cache/cache_metrics.dart';
-import 'package:parking_link/core/cache/cache_sync_state.dart';
+import 'package:psgy/core/cache/cache_metrics.dart';
+import 'package:psgy/core/cache/cache_sync_state.dart';
 
 class SyncLogger {
   const SyncLogger._();

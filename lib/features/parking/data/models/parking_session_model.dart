@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:equatable/equatable.dart';
-import 'package:parking_link/features/parking/data/mappers/parking_session_mapper.dart';
-import 'package:parking_link/features/parking/domain/entities/parking_session_entity.dart';
+import 'package:psgy/features/parking/data/mappers/parking_session_mapper.dart';
+import 'package:psgy/features/parking/domain/entities/parking_session_entity.dart';
 
 class ParkingSessionModel extends Equatable {
   final String id;

@@ -1,10 +1,10 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:parking_link/core/di/app_settings_providers.dart';
-import 'package:parking_link/core/di/watchlist_providers.dart';
-import 'package:parking_link/core/events/domain_event_bus.dart';
-import 'package:parking_link/core/events/watchlist_lot_opened_event.dart';
-import 'package:parking_link/core/services/fcm_notification_service.dart';
-import 'package:parking_link/features/user/presentation/providers/watchlist_notification_providers.dart';
+import 'package:psgy/core/di/app_settings_providers.dart';
+import 'package:psgy/core/di/watchlist_providers.dart';
+import 'package:psgy/core/events/domain_event_bus.dart';
+import 'package:psgy/core/events/watchlist_lot_opened_event.dart';
+import 'package:psgy/core/services/fcm_notification_service.dart';
+import 'package:psgy/features/user/presentation/providers/watchlist_notification_providers.dart';
 
 /// Registers domain-event listeners for watchlist side effects.
 void registerWatchlistEventHandlers(Ref ref, DomainEventBus bus) {

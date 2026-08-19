@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:parking_link/core/di/owner_providers.dart';
-import 'package:parking_link/core/error/error_mapper.dart';
+import 'package:psgy/core/di/owner_providers.dart';
+import 'package:psgy/core/error/error_mapper.dart';
 
 class AddStaffScreen extends ConsumerStatefulWidget {
   final String lotId;

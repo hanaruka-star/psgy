@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:parking_link/core/utils/currency_formatter.dart';
+import 'package:psgy/core/utils/currency_formatter.dart';
 
 void main() {
   group('formatVnd', () {

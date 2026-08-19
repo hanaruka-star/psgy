@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:parking_link/core/theme/app_spacing.dart';
-import 'package:parking_link/shared/widgets/loading_shimmer.dart';
+import 'package:psgy/core/theme/app_spacing.dart';
+import 'package:psgy/shared/widgets/loading_shimmer.dart';
 
 /// Amber-tinted shimmer for surveying lot cards while data loads.
 class SurveyLoadingShimmer extends StatelessWidget {

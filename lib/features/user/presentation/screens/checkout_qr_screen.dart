@@ -3,10 +3,10 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:qr_flutter/qr_flutter.dart';
-import 'package:parking_link/core/utils/currency_formatter.dart';
-import 'package:parking_link/features/user/domain/entities/checkout_qr_token.dart';
-import 'package:parking_link/features/user/presentation/providers/checkout_qr_token_provider.dart';
-import 'package:parking_link/features/user/presentation/screens/checkout_success_screen.dart';
+import 'package:psgy/core/utils/currency_formatter.dart';
+import 'package:psgy/features/user/domain/entities/checkout_qr_token.dart';
+import 'package:psgy/features/user/presentation/providers/checkout_qr_token_provider.dart';
+import 'package:psgy/features/user/presentation/screens/checkout_success_screen.dart';
 
 class CheckoutQrScreen extends ConsumerStatefulWidget {
   const CheckoutQrScreen({

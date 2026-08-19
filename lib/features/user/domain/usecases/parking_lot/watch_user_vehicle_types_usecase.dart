@@ -1,5 +1,5 @@
-import 'package:parking_link/features/parking/domain/entities/vehicle_type_entity.dart';
-import 'package:parking_link/features/user/domain/repositories/user_repository.dart';
+import 'package:psgy/features/parking/domain/entities/vehicle_type_entity.dart';
+import 'package:psgy/features/user/domain/repositories/user_repository.dart';
 
 class WatchUserVehicleTypesUseCase {
   final UserRepository repository;

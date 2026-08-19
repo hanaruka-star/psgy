@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:parking_link/core/di/sync_providers.dart';
+import 'package:psgy/core/di/sync_providers.dart';
 
 class SyncBootstrap extends ConsumerStatefulWidget {
   final Widget child;

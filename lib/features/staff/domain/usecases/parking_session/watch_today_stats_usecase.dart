@@ -1,7 +1,7 @@
 import 'dart:async';
 
-import 'package:parking_link/features/staff/domain/entities/staff_today_stats_entity.dart';
-import 'package:parking_link/features/staff/domain/repositories/staff_repository.dart';
+import 'package:psgy/features/staff/domain/entities/staff_today_stats_entity.dart';
+import 'package:psgy/features/staff/domain/repositories/staff_repository.dart';
 
 class WatchTodayStatsUseCase {
   static const _vietnamUtcOffset = Duration(hours: 7);

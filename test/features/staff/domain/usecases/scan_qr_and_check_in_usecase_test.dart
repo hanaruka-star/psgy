@@ -1,10 +1,10 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
-import 'package:parking_link/core/contracts/i_qr_token_repository.dart';
-import 'package:parking_link/core/error/app_exception.dart';
-import 'package:parking_link/features/staff/domain/repositories/staff_repository.dart';
-import 'package:parking_link/features/staff/domain/usecases/check_in_out/scan_qr_and_check_in_usecase.dart';
-import 'package:parking_link/features/user/domain/entities/qr_token.dart';
+import 'package:psgy/core/contracts/i_qr_token_repository.dart';
+import 'package:psgy/core/error/app_exception.dart';
+import 'package:psgy/features/staff/domain/repositories/staff_repository.dart';
+import 'package:psgy/features/staff/domain/usecases/check_in_out/scan_qr_and_check_in_usecase.dart';
+import 'package:psgy/features/user/domain/entities/qr_token.dart';
 
 class MockQrTokenRepository extends Mock implements IQrTokenRepository {}
 

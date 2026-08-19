@@ -1,5 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:parking_link/core/debug/debug_logger.dart';
+import 'package:psgy/core/debug/debug_logger.dart';
 
 final debugLogLevelProvider =
     StateProvider<DebugLogLevel>((ref) => DebugLogLevel.normal);

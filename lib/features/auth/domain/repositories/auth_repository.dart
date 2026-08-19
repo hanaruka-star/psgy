@@ -1,4 +1,4 @@
-import 'package:parking_link/features/auth/domain/entities/staff_profile_entity.dart';
+import 'package:psgy/features/auth/domain/entities/staff_profile_entity.dart';
 
 abstract class AuthRepository {
   Future<StaffProfileEntity> signIn({

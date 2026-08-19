@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:firebase_performance/firebase_performance.dart';
 import 'package:flutter/foundation.dart';
-import 'package:parking_link/core/error/app_exception.dart';
+import 'package:psgy/core/error/app_exception.dart';
 
 abstract class MonitoringService {
   Future<void> initialize();

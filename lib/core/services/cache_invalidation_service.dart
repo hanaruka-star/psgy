@@ -1,6 +1,6 @@
-import 'package:parking_link/core/cache/cache_policy.dart';
-import 'package:parking_link/core/services/sync_logger.dart';
-import 'package:parking_link/features/parking/data/datasources/parking_local_datasource.dart';
+import 'package:psgy/core/cache/cache_policy.dart';
+import 'package:psgy/core/services/sync_logger.dart';
+import 'package:psgy/features/parking/data/datasources/parking_local_datasource.dart';
 
 typedef CacheInvalidationListener = void Function();
 

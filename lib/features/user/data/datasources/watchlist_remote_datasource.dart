@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:parking_link/features/user/domain/entities/watchlist_entity.dart';
+import 'package:psgy/features/user/domain/entities/watchlist_entity.dart';
 
 class WatchlistRemoteDataSource {
   final FirebaseFirestore _firestore;

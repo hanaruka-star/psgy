@@ -1,4 +1,4 @@
-import 'package:parking_link/features/user/domain/entities/watchlist_entity.dart';
+import 'package:psgy/features/user/domain/entities/watchlist_entity.dart';
 
 typedef WatchlistRepository = UserWatchlistRepository;
 

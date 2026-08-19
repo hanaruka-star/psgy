@@ -1,4 +1,4 @@
-import 'package:parking_link/features/staff/domain/repositories/staff_repository.dart';
+import 'package:psgy/features/staff/domain/repositories/staff_repository.dart';
 
 class StaffCheckOutUseCase {
   final StaffRepository repository;

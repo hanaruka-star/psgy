@@ -1,5 +1,5 @@
-import 'package:parking_link/features/parking/domain/entities/parking_lot_entity.dart';
-import 'package:parking_link/features/parking/domain/entities/surveying_lot_entity.dart';
+import 'package:psgy/features/parking/domain/entities/parking_lot_entity.dart';
+import 'package:psgy/features/parking/domain/entities/surveying_lot_entity.dart';
 
 enum MapLotKind { active, surveying }
 

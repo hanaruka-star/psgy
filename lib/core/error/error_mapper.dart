@@ -1,6 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:parking_link/core/error/app_exception.dart';
-import 'package:parking_link/core/error/exception_reporter.dart';
+import 'package:psgy/core/error/app_exception.dart';
+import 'package:psgy/core/error/exception_reporter.dart';
 
 AppException mapFirebaseException(dynamic e, [StackTrace? stackTrace]) {
   if (e is AppException) {

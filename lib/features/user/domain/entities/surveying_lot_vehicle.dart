@@ -1,7 +1,7 @@
-import 'package:parking_link/features/parking/domain/entities/vehicle_type_entity.dart';
-import 'package:parking_link/features/parking/domain/entities/surveying_lot_entity.dart';
-import 'package:parking_link/features/user/domain/entities/vehicle_type_filter.dart';
-import 'package:parking_link/features/user/presentation/widgets/parking_lot_marker.dart';
+import 'package:psgy/features/parking/domain/entities/vehicle_type_entity.dart';
+import 'package:psgy/features/parking/domain/entities/surveying_lot_entity.dart';
+import 'package:psgy/features/user/domain/entities/vehicle_type_filter.dart';
+import 'package:psgy/features/user/presentation/widgets/parking_lot_marker.dart';
 
 /// Vehicle-type helpers for static (surveying) lots.
 abstract final class SurveyingLotVehicle {

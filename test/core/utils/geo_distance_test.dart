@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:parking_link/core/utils/geo_distance.dart';
+import 'package:psgy/core/utils/geo_distance.dart';
 
 void main() {
   group('GeoDistance.kmBetweenCoordinates', () {

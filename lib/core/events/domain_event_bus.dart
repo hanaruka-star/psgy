@@ -1,4 +1,4 @@
-import 'package:parking_link/core/events/domain_event.dart';
+import 'package:psgy/core/events/domain_event.dart';
 
 typedef DomainEventListener<T extends DomainEvent> = void Function(T event);
 

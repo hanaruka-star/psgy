@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:parking_link/core/error/app_error_ui.dart';
-import 'package:parking_link/core/error/app_exception.dart';
-import 'package:parking_link/core/theme/app_colors.dart';
-import 'package:parking_link/core/theme/app_spacing.dart';
-import 'package:parking_link/shared/widgets/micro_interactions.dart';
+import 'package:psgy/core/error/app_error_ui.dart';
+import 'package:psgy/core/error/app_exception.dart';
+import 'package:psgy/core/theme/app_colors.dart';
+import 'package:psgy/core/theme/app_spacing.dart';
+import 'package:psgy/shared/widgets/micro_interactions.dart';
 
 class AppErrorView extends StatelessWidget {
   final AppErrorPresentation presentation;

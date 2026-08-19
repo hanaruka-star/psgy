@@ -1,6 +1,6 @@
 import 'package:isar/isar.dart';
-import 'package:parking_link/features/user/data/local/watched_lot_isar.dart';
-import 'package:parking_link/features/user/domain/entities/watchlist_entity.dart';
+import 'package:psgy/features/user/data/local/watched_lot_isar.dart';
+import 'package:psgy/features/user/domain/entities/watchlist_entity.dart';
 
 class WatchlistLocalDataSource {
   final Isar _isar;
