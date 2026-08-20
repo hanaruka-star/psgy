@@ -2,7 +2,7 @@ import 'app_config.dart';
 
 enum AppFlavor {
   user,
-  staff,
+  coach,
 }
 
 class FlavorConfig {
@@ -15,16 +15,16 @@ class FlavorConfig {
 
     switch (f) {
       case AppFlavor.user:
-        appName = AppConfig.displayAppName('Parking Link - User');
-        bundleId = 'com.parkinglink.user';
+        appName = AppConfig.displayAppName('PSgy');
+        bundleId = 'com.psgy.user';
         break;
-      case AppFlavor.staff:
-        appName = AppConfig.displayAppName('Parking Link - Staff');
-        bundleId = 'com.parkinglink.staff';
+      case AppFlavor.coach:
+        appName = AppConfig.displayAppName('PSgy Coach');
+        bundleId = 'com.psgy.coach';
         break;
     }
   }
 
   static bool get isUser => flavor == AppFlavor.user;
-  static bool get isStaff => flavor == AppFlavor.staff;
+  static bool get isCoach => flavor == AppFlavor.coach;
 }

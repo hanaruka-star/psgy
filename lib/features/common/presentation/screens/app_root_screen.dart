@@ -82,14 +82,14 @@ class ModeSwitcherScreen extends ConsumerWidget {
           TextButton.icon(
             onPressed: () {
               if (modeController.isUser) {
-                modeController.switchToStaff();
+                modeController.switchToCoach();
               } else {
                 modeController.switchToUser();
               }
             },
             icon: Icon(modeController.isUser ? Icons.person : Icons.engineering),
             label: Text(
-              modeController.isUser ? 'Chuyen sang Staff' : 'Chuyen sang User',
+              modeController.isUser ? 'Chuyen sang Coach' : 'Chuyen sang User',
               style: const TextStyle(color: Colors.white),
             ),
           ),

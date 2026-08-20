@@ -50,7 +50,7 @@ List<Override> _bootstrapOverrides(AppBootstrapResult bootstrap) {
     monitoringServiceProvider.overrideWithValue(bootstrap.monitoringService!),
     appModeProvider.overrideWith((_) {
       final controller = AppModeController();
-      if (FlavorConfig.isStaff) controller.switchToStaff();
+      if (FlavorConfig.isCoach) controller.switchToCoach();
       return controller;
     }),
   ];

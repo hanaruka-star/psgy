@@ -53,7 +53,7 @@ class AppBootstrap {
 
       const flavorString = String.fromEnvironment('FLAVOR', defaultValue: 'user');
       const appFlavor =
-          flavorString == 'staff' ? AppFlavor.staff : AppFlavor.user;
+          flavorString == 'coach' ? AppFlavor.coach : AppFlavor.user;
       FlavorConfig.initialize(appFlavor);
 
       installGlobalErrorHandlers();

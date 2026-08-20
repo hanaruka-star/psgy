@@ -87,14 +87,14 @@ void main() {
 
   testWidgets('staff flavor renders LoginScreen', (tester) async {
     AppConfig.initialize();
-    FlavorConfig.initialize(AppFlavor.staff);
+    FlavorConfig.initialize(AppFlavor.coach);
 
     await tester.pumpWidget(
       ProviderScope(
         overrides: [
           monitoringServiceProvider.overrideWithValue(NoOpMonitoringService()),
           appModeProvider.overrideWith((ref) {
-            final controller = AppModeController()..switchToStaff();
+            final controller = AppModeController()..switchToCoach();
             return controller;
           }),
           authRepositoryProvider.overrideWithValue(_FakeAuthRepository()),

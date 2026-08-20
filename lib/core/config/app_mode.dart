@@ -3,7 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 enum AppMode {
   user,
-  staff,
+  coach,
 }
 
 // Bien toan cuc de switch mode de dang
@@ -17,13 +17,13 @@ class AppModeController extends ChangeNotifier {
     notifyListeners();
   }
 
-  void switchToStaff() {
-    _currentMode = AppMode.staff;
+  void switchToCoach() {
+    _currentMode = AppMode.coach;
     notifyListeners();
   }
 
   bool get isUser => _currentMode == AppMode.user;
-  bool get isStaff => _currentMode == AppMode.staff;
+  bool get isCoach => _currentMode == AppMode.coach;
 }
 
 // Provider don gian (se dung Riverpod sau)

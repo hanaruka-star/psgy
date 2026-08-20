@@ -3,17 +3,17 @@
 <plist version="1.0">
 <dict>
 	<key>API_KEY</key>
-	<string>AIzaSyDZR0rs3Ifzuo3TBf8Ua7nTXioC3ToB5iE</string>
+	<string>AIzaSyDGLuhSd_Tr6UkO0a27XQ7yZN_6XmRVxF4</string>
 	<key>GCM_SENDER_ID</key>
-	<string>259032555472</string>
+	<string>656165291904</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.parkinglink.parkingLink</string>
+	<string>com.psgy.user</string>
 	<key>PROJECT_ID</key>
-	<string>parkinglink-v2</string>
+	<string>psgy-app</string>
 	<key>STORAGE_BUCKET</key>
-	<string>parkinglink-v2.firebasestorage.app</string>
+	<string>psgy-app.firebasestorage.app</string>
 	<key>IS_ADS_ENABLED</key>
 	<false></false>
 	<key>IS_ANALYTICS_ENABLED</key>
@@ -25,6 +25,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:259032555472:ios:e444f6506e618dbf5063d5</string>
+	<string>1:656165291904:ios:c1d28b926b942d7541e365</string>
 </dict>
 </plist>

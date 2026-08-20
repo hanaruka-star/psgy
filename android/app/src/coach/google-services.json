@@ -7,6 +7,25 @@
   "client": [
     {
       "client_info": {
+        "mobilesdk_app_id": "1:656165291904:android:6566064ff773778841e365",
+        "android_client_info": {
+          "package_name": "com.psgy.coach"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBznGpf-NWcx3-1d1h8l3YAsoHkZrRAHQI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
         "mobilesdk_app_id": "1:656165291904:android:497dadb4986c505a41e365",
         "android_client_info": {
           "package_name": "com.psgy.user"

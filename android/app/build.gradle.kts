@@ -19,7 +19,7 @@ if (keystorePropertiesFile.exists()) {
 }
 
 android {
-    namespace = "com.parkinglink"
+    namespace = "com.psgy"
     compileSdk = flutter.compileSdkVersion
     ndkVersion = flutter.ndkVersion
 
@@ -33,7 +33,7 @@ android {
     }
 
     defaultConfig {
-        applicationId = "com.parkinglink"
+        applicationId = "com.psgy"
         minSdk = flutter.minSdkVersion
         targetSdk = flutter.targetSdkVersion
         versionCode = flutter.versionCode
@@ -61,15 +61,15 @@ android {
         create("user") {
             dimension = "default"
             applicationIdSuffix = ".user"
-            resValue("string", "app_name", "Parking Link")
+            resValue("string", "app_name", "PSgy")
             signingConfig = signingConfigs.getByName(
                 if (keystorePropertiesFile.exists()) "release" else "debug"
             )
         }
-        create("staff") {
+        create("coach") {
             dimension = "default"
-            applicationIdSuffix = ".staff"
-            resValue("string", "app_name", "Parking Link Staff")
+            applicationIdSuffix = ".coach"
+            resValue("string", "app_name", "PSgy Coach")
             signingConfig = signingConfigs.getByName(
                 if (keystorePropertiesFile.exists()) "release" else "debug"
             )

@@ -118,7 +118,7 @@ class MapHeaderBar extends ConsumerWidget {
                       tooltip: 'Chuyển sang Staff',
                       icon: Icons.engineering_outlined,
                       onTap: () {
-                        ref.read(appModeProvider).switchToStaff();
+                        ref.read(appModeProvider).switchToCoach();
                         (context as Element).markNeedsBuild();
                       },
                     ),
