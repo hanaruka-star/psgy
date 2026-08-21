@@ -21,90 +21,61 @@ class DefaultFirebaseOptions {
   static FirebaseOptions get currentPlatform {
     if (kIsWeb) {
       throw UnsupportedError(
-        'ParkingLink does not support Web. Build for iOS or Android only.',
+        'PSgy does not support Web. Build for iOS or Android only.',
       );
     }
     switch (defaultTargetPlatform) {
       case TargetPlatform.android:
-        return _flavor == 'staff' ? androidStaff : androidUser;
+        return _flavor == 'coach' ? androidCoach : androidUser;
       case TargetPlatform.iOS:
-        return _flavor == 'staff' ? iosStaff : iosUser;
+        return _flavor == 'coach' ? iosCoach : iosUser;
       case TargetPlatform.macOS:
       case TargetPlatform.windows:
       case TargetPlatform.linux:
         throw UnsupportedError(
-          'ParkingLink supports iOS and Android only.',
+          'PSgy supports iOS and Android only.',
         );
       default:
         throw UnsupportedError(
-          'ParkingLink supports iOS and Android only.',
+          'PSgy supports iOS and Android only.',
         );
     }
   }
 
-  static const FirebaseOptions web = FirebaseOptions(
-    apiKey: 'AIzaSyDNCSiApiP9BPpbfOts1Elk52AqBsnSQVk',
-    appId: '1:259032555472:web:56edf53dc655a1ea5063d5',
-    messagingSenderId: '259032555472',
-    projectId: 'parkinglink-v2',
-    authDomain: 'parkinglink-v2.firebaseapp.com',
-    storageBucket: 'parkinglink-v2.firebasestorage.app',
-    measurementId: 'G-M5RFPSL4NQ',
-  );
-
   static const FirebaseOptions androidUser = FirebaseOptions(
-    apiKey: 'AIzaSyDrnRAeuuci3q5Y0blVeY-ZYY_yIGpGsVc',
-    appId: '1:259032555472:android:c4ef7b8321b561f45063d5',
-    messagingSenderId: '259032555472',
-    projectId: 'parkinglink-v2',
-    storageBucket: 'parkinglink-v2.firebasestorage.app',
+    apiKey: 'AIzaSyBznGpf-NWcx3-1d1h8l3YAsoHkZrRAHQI',
+    appId: '1:656165291904:android:497dadb4986c505a41e365',
+    messagingSenderId: '656165291904',
+    projectId: 'psgy-app',
+    storageBucket: 'psgy-app.firebasestorage.app',
   );
 
-  static const FirebaseOptions androidStaff = FirebaseOptions(
-    apiKey: 'AIzaSyDrnRAeuuci3q5Y0blVeY-ZYY_yIGpGsVc',
-    appId: '1:259032555472:android:10fa5e8d7a15353b5063d5',
-    messagingSenderId: '259032555472',
-    projectId: 'parkinglink-v2',
-    storageBucket: 'parkinglink-v2.firebasestorage.app',
+  static const FirebaseOptions androidCoach = FirebaseOptions(
+    apiKey: 'AIzaSyBznGpf-NWcx3-1d1h8l3YAsoHkZrRAHQI',
+    appId: '1:656165291904:android:6566064ff773778841e365',
+    messagingSenderId: '656165291904',
+    projectId: 'psgy-app',
+    storageBucket: 'psgy-app.firebasestorage.app',
   );
 
-  /// Legacy single-app Android config (com.parkinglink).
+  /// Legacy single-app Android config (com.psgy.user).
   static const FirebaseOptions android = androidUser;
 
   static const FirebaseOptions iosUser = FirebaseOptions(
-    apiKey: 'AIzaSyDZR0rs3Ifzuo3TBf8Ua7nTXioC3ToB5iE',
-    appId: '1:259032555472:ios:ba0ac2791012cc805063d5',
-    messagingSenderId: '259032555472',
-    projectId: 'parkinglink-v2',
-    storageBucket: 'parkinglink-v2.firebasestorage.app',
-    iosBundleId: 'com.parkinglink.user',
+    apiKey: 'AIzaSyDGLuhSd_Tr6UkO0a27XQ7yZN_6XmRVxF4',
+    appId: '1:656165291904:ios:c1d28b926b942d7541e365',
+    messagingSenderId: '656165291904',
+    projectId: 'psgy-app',
+    storageBucket: 'psgy-app.firebasestorage.app',
+    iosBundleId: 'com.psgy.user',
   );
 
-  static const FirebaseOptions iosStaff = FirebaseOptions(
-    apiKey: 'AIzaSyDZR0rs3Ifzuo3TBf8Ua7nTXioC3ToB5iE',
-    appId: '1:259032555472:ios:2ecc96250348c4955063d5',
-    messagingSenderId: '259032555472',
-    projectId: 'parkinglink-v2',
-    storageBucket: 'parkinglink-v2.firebasestorage.app',
-    iosBundleId: 'com.parkinglink.staff',
-  );
-
-  static const FirebaseOptions macos = FirebaseOptions(
-    apiKey: 'AIzaSyDZR0rs3Ifzuo3TBf8Ua7nTXioC3ToB5iE',
-    appId: '1:259032555472:ios:e444f6506e618dbf5063d5',
-    messagingSenderId: '259032555472',
-    projectId: 'parkinglink-v2',
-    storageBucket: 'parkinglink-v2.firebasestorage.app',
-    iosBundleId: 'com.parkinglink.parkingLink',
-  );
-
-  static const FirebaseOptions windows = FirebaseOptions(
-    apiKey: 'AIzaSyDNCSiApiP9BPpbfOts1Elk52AqBsnSQVk',
-    appId: '1:259032555472:web:3f3c6a0d1bedf4745063d5',
-    messagingSenderId: '259032555472',
-    projectId: 'parkinglink-v2',
-    authDomain: 'parkinglink-v2.firebaseapp.com',
-    storageBucket: 'parkinglink-v2.firebasestorage.app',
-    measurementId: 'G-TVCL34S678',
+  static const FirebaseOptions iosCoach = FirebaseOptions(
+    apiKey: 'AIzaSyDGLuhSd_Tr6UkO0a27XQ7yZN_6XmRVxF4',
+    appId: '1:656165291904:ios:ba13f202ed0a08f241e365',
+    messagingSenderId: '656165291904',
+    projectId: 'psgy-app',
+    storageBucket: 'psgy-app.firebasestorage.app',
+    iosBundleId: 'com.psgy.coach',
   );
 }
