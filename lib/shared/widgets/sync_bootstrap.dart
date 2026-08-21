@@ -18,7 +18,8 @@ class _SyncBootstrapState extends ConsumerState<SyncBootstrap>
     super.initState();
     WidgetsBinding.instance.addObserver(this);
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      ref.read(backgroundSyncServiceProvider).start();
+      // TEMP: tắt cho demo pilot 2026-08-22, bật lại sau —
+      // ref.read(backgroundSyncServiceProvider).start();
     });
   }
 

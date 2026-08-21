@@ -7,7 +7,7 @@ import 'package:psgy/core/di/app_settings_providers.dart';
 import 'package:psgy/features/auth/presentation/screens/login_screen.dart';
 import 'package:psgy/features/common/presentation/screens/privacy_consent_screen.dart';
 import 'package:psgy/features/common/presentation/screens/splash_screen.dart';
-import 'package:psgy/features/user/presentation/screens/user_map_screen.dart';
+import 'package:psgy/features/pilot_demo/presentation/pilot_map_screen.dart';
 import 'package:psgy/features/user/presentation/widgets/watchlist_notification_bootstrap.dart';
 
 enum _AppStage { splash, consent, home }
@@ -61,7 +61,7 @@ class AppHomeScreen extends ConsumerWidget {
 
     return FlavorConfig.isUser
         ? const WatchlistNotificationBootstrap(
-            child: UserMapScreen(),
+            child: PilotMapScreen(), // TEMP: demo pilot 2026-08-22, revert lại UserMapScreen() sau
           )
         : const LoginScreen();
   }
@@ -96,7 +96,7 @@ class ModeSwitcherScreen extends ConsumerWidget {
         ],
       ),
       body: modeController.isUser
-          ? const WatchlistNotificationBootstrap(child: UserMapScreen())
+          ? const WatchlistNotificationBootstrap(child: PilotMapScreen()) // TEMP: demo pilot 2026-08-22, revert sau
           : const LoginScreen(),
     );
   }
