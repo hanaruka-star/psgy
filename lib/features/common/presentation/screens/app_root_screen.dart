@@ -4,9 +4,9 @@ import 'package:psgy/core/config/app_config.dart';
 import 'package:psgy/core/config/flavor.dart';
 import 'package:psgy/core/config/app_mode.dart';
 import 'package:psgy/core/di/app_settings_providers.dart';
-import 'package:psgy/features/auth/presentation/screens/login_screen.dart';
 import 'package:psgy/features/common/presentation/screens/privacy_consent_screen.dart';
 import 'package:psgy/features/common/presentation/screens/splash_screen.dart';
+import 'package:psgy/features/pilot_demo/presentation/coach/coach_home_screen.dart';
 import 'package:psgy/features/pilot_demo/presentation/pilot_map_screen.dart';
 import 'package:psgy/features/user/presentation/widgets/watchlist_notification_bootstrap.dart';
 
@@ -63,7 +63,7 @@ class AppHomeScreen extends ConsumerWidget {
         ? const WatchlistNotificationBootstrap(
             child: PilotMapScreen(), // TEMP: demo pilot 2026-08-22, revert lại UserMapScreen() sau
           )
-        : const LoginScreen();
+        : const CoachHomeScreen(); // TEMP: demo pilot 2026-08-22, revert lại LoginScreen() sau
   }
 }
 
@@ -97,7 +97,7 @@ class ModeSwitcherScreen extends ConsumerWidget {
       ),
       body: modeController.isUser
           ? const WatchlistNotificationBootstrap(child: PilotMapScreen()) // TEMP: demo pilot 2026-08-22, revert sau
-          : const LoginScreen(),
+          : const CoachHomeScreen(), // TEMP: demo pilot 2026-08-22, revert lại LoginScreen() sau
     );
   }
 }
