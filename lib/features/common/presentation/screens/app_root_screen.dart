@@ -6,8 +6,11 @@ import 'package:psgy/core/config/app_mode.dart';
 import 'package:psgy/core/di/app_settings_providers.dart';
 import 'package:psgy/features/common/presentation/screens/privacy_consent_screen.dart';
 import 'package:psgy/features/common/presentation/screens/splash_screen.dart';
+import 'package:psgy/features/pilot_demo/data/mock_user_session.dart';
 import 'package:psgy/features/pilot_demo/presentation/coach/coach_home_screen.dart';
+import 'package:psgy/features/pilot_demo/presentation/mock_phone_auth_screen.dart';
 import 'package:psgy/features/pilot_demo/presentation/pilot_map_screen.dart';
+import 'package:psgy/features/pilot_demo/presentation/user_profile_setup_screen.dart';
 import 'package:psgy/features/user/presentation/widgets/watchlist_notification_bootstrap.dart';
 
 enum _AppStage { splash, consent, home }
@@ -60,9 +63,7 @@ class AppHomeScreen extends ConsumerWidget {
     }
 
     return FlavorConfig.isUser
-        ? const WatchlistNotificationBootstrap(
-            child: PilotMapScreen(), // TEMP: demo pilot 2026-08-22, revert lại UserMapScreen() sau
-          )
+        ? const _UserPilotGate() // TEMP: demo B1 OTP → hồ sơ → Map
         : const CoachHomeScreen(); // TEMP: demo pilot 2026-08-22, revert lại LoginScreen() sau
   }
 }
@@ -96,8 +97,38 @@ class ModeSwitcherScreen extends ConsumerWidget {
         ],
       ),
       body: modeController.isUser
-          ? const WatchlistNotificationBootstrap(child: PilotMapScreen()) // TEMP: demo pilot 2026-08-22, revert sau
+          ? const _UserPilotGate() // TEMP: demo B1 OTP → hồ sơ → Map
           : const CoachHomeScreen(), // TEMP: demo pilot 2026-08-22, revert lại LoginScreen() sau
+    );
+  }
+}
+
+/// TEMP: User flavor — OTP mock → hồ sơ mock → PilotMap. Revert sau pilot.
+class _UserPilotGate extends StatefulWidget {
+  const _UserPilotGate();
+
+  @override
+  State<_UserPilotGate> createState() => _UserPilotGateState();
+}
+
+class _UserPilotGateState extends State<_UserPilotGate> {
+  bool _otpVerified = false;
+
+  @override
+  Widget build(BuildContext context) {
+    return ListenableBuilder(
+      listenable: MockUserSession.instance,
+      builder: (context, _) {
+        if (MockUserSession.instance.profile != null) {
+          return const WatchlistNotificationBootstrap(child: PilotMapScreen());
+        }
+        if (_otpVerified) {
+          return const UserProfileSetupScreen();
+        }
+        return MockPhoneAuthScreen(
+          onVerified: () => setState(() => _otpVerified = true),
+        );
+      },
     );
   }
 }

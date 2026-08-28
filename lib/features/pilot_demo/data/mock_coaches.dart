@@ -1,4 +1,5 @@
 import 'package:psgy/features/pilot_demo/models/mock_coach.dart';
+import 'package:psgy/features/pilot_demo/models/mock_package.dart';
 import 'package:psgy/features/pilot_demo/models/mock_service.dart';
 
 const _personal60 = MockService(
@@ -28,6 +29,26 @@ const _personal90 = MockService(
   priceVnd: 420000,
   durationMinutes: 90,
 );
+
+/// System catalog — shared across every Coach, not owned by one coach.
+const mockSystemPackages = [
+  MockPackage(
+    id: 'pkg_10',
+    name: 'Gói 10 buổi',
+    sessionCount: 10,
+    totalPriceVnd: 2500000,
+    description: 'Linh hoạt lịch trong 3 tháng, tiết kiệm so với tập lẻ.',
+    validityDays: 90,
+  ),
+  MockPackage(
+    id: 'pkg_20',
+    name: 'Gói 20 buổi',
+    sessionCount: 20,
+    totalPriceVnd: 4500000,
+    description: 'Ưu đãi dài hạn, kèm 1 buổi tư vấn dinh dưỡng.',
+    validityDays: 180,
+  ),
+];
 
 const List<MockCoach> mockCoaches = [
   MockCoach(

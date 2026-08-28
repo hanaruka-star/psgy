@@ -5,6 +5,8 @@ import 'package:psgy/core/theme/app_spacing.dart';
 import 'package:psgy/features/pilot_demo/data/mock_coaches.dart';
 import 'package:psgy/features/pilot_demo/models/mock_coach.dart';
 import 'package:psgy/features/pilot_demo/presentation/coach_detail_screen.dart';
+import 'package:psgy/features/pilot_demo/presentation/user_booking_history_screen.dart';
+import 'package:psgy/features/pilot_demo/presentation/user_wallet_screen.dart';
 
 class PilotMapScreen extends StatelessWidget {
   static const routeName = 'pilot_map';
@@ -82,15 +84,41 @@ class PilotMapScreen extends StatelessWidget {
                       padding: const EdgeInsets.fromLTRB(
                         AppSpacing.md,
                         AppSpacing.md,
-                        AppSpacing.md,
+                        AppSpacing.sm,
                         AppSpacing.sm,
                       ),
-                      child: Align(
-                        alignment: Alignment.centerLeft,
-                        child: Text(
-                          'Coach gần bạn',
-                          style: Theme.of(context).textTheme.titleLarge,
-                        ),
+                      child: Row(
+                        children: [
+                          Expanded(
+                            child: Text(
+                              'Coach gần bạn',
+                              style: Theme.of(context).textTheme.titleLarge,
+                            ),
+                          ),
+                          IconButton(
+                            tooltip: 'Lịch sử booking',
+                            onPressed: () {
+                              Navigator.of(context).push(
+                                MaterialPageRoute<void>(
+                                  builder: (_) =>
+                                      const UserBookingHistoryScreen(),
+                                ),
+                              );
+                            },
+                            icon: const Icon(Icons.receipt_long_outlined),
+                          ),
+                          IconButton(
+                            tooltip: 'Ví của tôi',
+                            onPressed: () {
+                              Navigator.of(context).push(
+                                MaterialPageRoute<void>(
+                                  builder: (_) => const UserWalletScreen(),
+                                ),
+                              );
+                            },
+                            icon: const Icon(Icons.account_balance_wallet_outlined),
+                          ),
+                        ],
                       ),
                     ),
                     Expanded(

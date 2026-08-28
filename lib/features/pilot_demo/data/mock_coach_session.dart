@@ -2,7 +2,6 @@ import 'package:flutter/foundation.dart';
 import 'package:psgy/features/pilot_demo/models/mock_booking_request.dart';
 import 'package:psgy/features/pilot_demo/models/mock_coach_profile.dart';
 import 'package:psgy/features/pilot_demo/models/mock_message.dart';
-import 'package:psgy/features/pilot_demo/models/mock_package.dart';
 import 'package:psgy/features/pilot_demo/models/mock_service.dart';
 
 /// In-memory coach session for the 22/08 pilot. Not persisted.
@@ -11,7 +10,6 @@ class MockCoachSession extends ChangeNotifier {
       : profile = _seedProfile,
         bookings = List<MockBookingRequest>.of(_seedBookings),
         services = List<MockService>.of(_seedServices),
-        packages = List<MockPackage>.of(_seedPackages),
         messages = {
           for (final entry in _seedMessages.entries)
             entry.key: List<MockMessage>.of(entry.value),
@@ -29,7 +27,6 @@ class MockCoachSession extends ChangeNotifier {
   MockCoachProfile profile;
   List<MockBookingRequest> bookings;
   List<MockService> services;
-  List<MockPackage> packages;
   final Map<String, List<MockMessage>> messages;
 
   List<MockBookingRequest> get pendingBookings => bookings
@@ -108,24 +105,6 @@ class MockCoachSession extends ChangeNotifier {
     services = services.where((item) => item.id != id).toList();
     notifyListeners();
   }
-
-  void upsertPackage(MockPackage package) {
-    final index = packages.indexWhere((item) => item.id == package.id);
-    if (index < 0) {
-      packages = [...packages, package];
-    } else {
-      packages = [
-        for (var i = 0; i < packages.length; i++)
-          if (i == index) package else packages[i],
-      ];
-    }
-    notifyListeners();
-  }
-
-  void removePackage(String id) {
-    packages = packages.where((item) => item.id != id).toList();
-    notifyListeners();
-  }
 }
 
 const _seedProfile = MockCoachProfile(
@@ -161,23 +140,6 @@ const _seedServices = [
     name: 'Tư vấn dinh dưỡng',
     priceVnd: 150000,
     durationMinutes: 45,
-  ),
-];
-
-const _seedPackages = [
-  MockPackage(
-    id: 'pkg_10',
-    name: 'Gói 10 buổi',
-    sessionCount: 10,
-    totalPriceVnd: 2500000,
-    description: 'Linh hoạt lịch trong 3 tháng, tiết kiệm so với tập lẻ.',
-  ),
-  MockPackage(
-    id: 'pkg_20',
-    name: 'Gói 20 buổi',
-    sessionCount: 20,
-    totalPriceVnd: 4500000,
-    description: 'Ưu đãi dài hạn, kèm 1 buổi tư vấn dinh dưỡng.',
   ),
 ];
 

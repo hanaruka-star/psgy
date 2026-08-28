@@ -44,34 +44,41 @@ class UserProfileState {
 }
 
 class UserProfileNotifier extends AsyncNotifier<UserProfileState> {
+  UserProfileState get _data =>
+      state.asData?.value ?? const UserProfileState();
+
   @override
   Future<UserProfileState> build() async {
     final user = FirebaseAuth.instance.currentUser;
     if (user == null) return const UserProfileState();
 
-    final profile =
-        await ref.read(getUserProfileUseCaseProvider).call(user.uid);
-    if (profile == null) return const UserProfileState();
+    try {
+      final profile =
+          await ref.read(getUserProfileUseCaseProvider).call(user.uid);
+      if (profile == null) return const UserProfileState();
 
-    final vehicles =
-        await ref.read(getUserVehiclesUseCaseProvider).call(user.uid);
+      final vehicles =
+          await ref.read(getUserVehiclesUseCaseProvider).call(user.uid);
 
-    return UserProfileState(profile: profile, vehicles: vehicles);
+      return UserProfileState(profile: profile, vehicles: vehicles);
+    } catch (e) {
+      return UserProfileState(error: e.toString());
+    }
   }
 
   Future<void> sendOtp(String phoneNumber) async {
-    state = AsyncData(state.value!.copyWith(
+    state = AsyncData(_data.copyWith(
       isLoading: true,
       clearError: true,
     ));
     try {
       await ref.read(sendOtpUseCaseProvider).call(phoneNumber);
-      state = AsyncData(state.value!.copyWith(
+      state = AsyncData(_data.copyWith(
         isLoading: false,
         otpSent: true,
       ));
     } catch (e) {
-      state = AsyncData(state.value!.copyWith(
+      state = AsyncData(_data.copyWith(
         isLoading: false,
         error: e.toString(),
       ));
@@ -79,7 +86,7 @@ class UserProfileNotifier extends AsyncNotifier<UserProfileState> {
   }
 
   Future<bool> verifyOtp(String code) async {
-    state = AsyncData(state.value!.copyWith(
+    state = AsyncData(_data.copyWith(
       isLoading: true,
       clearError: true,
     ));
@@ -102,7 +109,7 @@ class UserProfileNotifier extends AsyncNotifier<UserProfileState> {
       ref.invalidateSelf();
       return true;
     } catch (e) {
-      state = AsyncData(state.value!.copyWith(
+      state = AsyncData(_data.copyWith(
         isLoading: false,
         error: e.toString(),
       ));
@@ -115,13 +122,13 @@ class UserProfileNotifier extends AsyncNotifier<UserProfileState> {
     required String localPhotoPath,
     required bool isPersonal,
   }) async {
-    state = AsyncData(state.value!.copyWith(
+    state = AsyncData(_data.copyWith(
       isLoading: true,
       clearError: true,
     ));
     try {
       final userId = FirebaseAuth.instance.currentUser!.uid;
-      final isFirst = state.value!.vehicles.isEmpty;
+      final isFirst = _data.vehicles.isEmpty;
       final now = DateTime.now();
       await ref.read(addVehicleUseCaseProvider).call(
             UserVehicle(
@@ -136,10 +143,10 @@ class UserProfileNotifier extends AsyncNotifier<UserProfileState> {
               updatedAt: now,
             ),
           );
-      state = AsyncData(state.value!.copyWith(isLoading: false));
+      state = AsyncData(_data.copyWith(isLoading: false));
       ref.invalidateSelf();
     } catch (e) {
-      state = AsyncData(state.value!.copyWith(
+      state = AsyncData(_data.copyWith(
         isLoading: false,
         error: e.toString(),
       ));

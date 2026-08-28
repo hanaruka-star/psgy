@@ -2,21 +2,21 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:psgy/features/pilot_demo/data/mock_user_session.dart';
-import 'package:psgy/features/user/presentation/providers/user_profile_provider.dart';
 
-class PhoneAuthScreen extends ConsumerStatefulWidget {
-  const PhoneAuthScreen({super.key, this.onVerified});
+/// TEMP: pilot demo OTP — no Firebase. Real flow remains in PhoneAuthScreen.
+class MockPhoneAuthScreen extends StatefulWidget {
+  const MockPhoneAuthScreen({super.key, this.onVerified});
 
-  /// Pilot User gate: called instead of [Navigator.pop] after OTP succeeds.
   final VoidCallback? onVerified;
 
   @override
-  ConsumerState<PhoneAuthScreen> createState() => _PhoneAuthScreenState();
+  State<MockPhoneAuthScreen> createState() => _MockPhoneAuthScreenState();
 }
 
-class _PhoneAuthScreenState extends ConsumerState<PhoneAuthScreen> {
+class _MockPhoneAuthScreenState extends State<MockPhoneAuthScreen> {
+  static const _demoCodeHint = '123456';
+
   final _phoneController = TextEditingController();
   final _otpController = TextEditingController();
   int _resendSeconds = 0;
@@ -49,21 +49,13 @@ class _PhoneAuthScreenState extends ConsumerState<PhoneAuthScreen> {
     });
   }
 
-  void _showErrorIfNeeded(UserProfileState profileState) {
-    final error = profileState.error;
-    if (error == null || error.isEmpty) return;
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      if (!mounted) return;
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text(error),
-          backgroundColor: Colors.red.shade700,
-        ),
-      );
-    });
+  void _showDemoCodeSnackBar() {
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(content: Text('Mã demo: $_demoCodeHint')),
+    );
   }
 
-  Future<void> _sendOtp() async {
+  void _sendOtp() {
     final phone = _phoneController.text.trim();
     if (phone.length < 9) {
       ScaffoldMessenger.of(context).showSnackBar(
@@ -72,15 +64,18 @@ class _PhoneAuthScreenState extends ConsumerState<PhoneAuthScreen> {
       return;
     }
     _lastPhone = phone;
-    await ref.read(userProfileProvider.notifier).sendOtp(phone);
-    final state = ref.read(userProfileProvider).value;
-    if (state?.otpSent == true && mounted) {
-      setState(() => _otpStep = true);
-      _startResendCountdown();
-    }
+    setState(() => _otpStep = true);
+    _startResendCountdown();
+    _showDemoCodeSnackBar();
   }
 
-  Future<void> _verifyOtp() async {
+  void _resendOtp() {
+    if (_lastPhone == null) return;
+    _startResendCountdown();
+    _showDemoCodeSnackBar();
+  }
+
+  void _verifyOtp() {
     final code = _otpController.text.trim();
     if (code.length != 6) {
       ScaffoldMessenger.of(context).showSnackBar(
@@ -88,30 +83,12 @@ class _PhoneAuthScreenState extends ConsumerState<PhoneAuthScreen> {
       );
       return;
     }
-    final ok = await ref.read(userProfileProvider.notifier).verifyOtp(code);
-    if (!ok || !mounted) return;
     MockUserSession.instance.rememberVerifiedPhone(_lastPhone);
-    // TEMP: pilot B1 — flavor User gate uses onVerified; parking check-in still pops.
-    final onVerified = widget.onVerified;
-    if (onVerified != null) {
-      onVerified();
-      return;
-    }
-    Navigator.pop(context, true);
+    widget.onVerified?.call();
   }
 
   @override
   Widget build(BuildContext context) {
-    final profileAsync = ref.watch(userProfileProvider);
-    final profileState = profileAsync.valueOrNull ?? const UserProfileState();
-    if (profileAsync.hasError) {
-      _showErrorIfNeeded(
-        UserProfileState(error: profileAsync.error.toString()),
-      );
-    } else {
-      _showErrorIfNeeded(profileState);
-    }
-
     return Scaffold(
       appBar: AppBar(
         title: Text(_otpStep ? 'Nhập mã xác thực' : 'Xác thực số điện thoại'),
@@ -119,12 +96,12 @@ class _PhoneAuthScreenState extends ConsumerState<PhoneAuthScreen> {
       ),
       body: Padding(
         padding: const EdgeInsets.all(24),
-        child: _otpStep ? _buildOtpStep(profileState) : _buildPhoneStep(profileState),
+        child: _otpStep ? _buildOtpStep() : _buildPhoneStep(),
       ),
     );
   }
 
-  Widget _buildPhoneStep(UserProfileState profileState) {
+  Widget _buildPhoneStep() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
@@ -142,21 +119,16 @@ class _PhoneAuthScreenState extends ConsumerState<PhoneAuthScreen> {
         ),
         const SizedBox(height: 24),
         FilledButton(
-          onPressed: profileState.isLoading ? null : _sendOtp,
-          child: profileState.isLoading
-              ? const SizedBox(
-                  height: 22,
-                  width: 22,
-                  child: CircularProgressIndicator(strokeWidth: 2),
-                )
-              : const Text('Gửi mã OTP'),
+          onPressed: _sendOtp,
+          child: const Text('Gửi mã OTP'),
         ),
       ],
     );
   }
 
-  Widget _buildOtpStep(UserProfileState profileState) {
-    final maskedPhone = _lastPhone != null ? '+84${_lastPhone!.replaceFirst('0', '')}' : '';
+  Widget _buildOtpStep() {
+    final maskedPhone =
+        _lastPhone != null ? '+84${_lastPhone!.replaceFirst('0', '')}' : '';
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -177,14 +149,8 @@ class _PhoneAuthScreenState extends ConsumerState<PhoneAuthScreen> {
         ),
         const SizedBox(height: 24),
         FilledButton(
-          onPressed: profileState.isLoading ? null : _verifyOtp,
-          child: profileState.isLoading
-              ? const SizedBox(
-                  height: 22,
-                  width: 22,
-                  child: CircularProgressIndicator(strokeWidth: 2),
-                )
-              : const Text('Xác nhận'),
+          onPressed: _verifyOtp,
+          child: const Text('Xác nhận'),
         ),
         const SizedBox(height: 16),
         if (_resendSeconds > 0)
@@ -194,16 +160,7 @@ class _PhoneAuthScreenState extends ConsumerState<PhoneAuthScreen> {
           )
         else
           TextButton(
-            onPressed: profileState.isLoading
-                ? null
-                : () async {
-                    if (_lastPhone != null) {
-                      await ref
-                          .read(userProfileProvider.notifier)
-                          .sendOtp(_lastPhone!);
-                      _startResendCountdown();
-                    }
-                  },
+            onPressed: _resendOtp,
             child: const Text('Gửi lại OTP'),
           ),
       ],

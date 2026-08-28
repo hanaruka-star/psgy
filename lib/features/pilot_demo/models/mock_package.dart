@@ -6,6 +6,7 @@ class MockPackage {
   final int sessionCount;
   final int totalPriceVnd;
   final String description;
+  final int validityDays;
 
   const MockPackage({
     required this.id,
@@ -13,23 +14,10 @@ class MockPackage {
     required this.sessionCount,
     required this.totalPriceVnd,
     required this.description,
+    required this.validityDays,
   });
 
   String get priceLabel => formatVnd(totalPriceVnd);
 
-  MockPackage copyWith({
-    String? id,
-    String? name,
-    int? sessionCount,
-    int? totalPriceVnd,
-    String? description,
-  }) {
-    return MockPackage(
-      id: id ?? this.id,
-      name: name ?? this.name,
-      sessionCount: sessionCount ?? this.sessionCount,
-      totalPriceVnd: totalPriceVnd ?? this.totalPriceVnd,
-      description: description ?? this.description,
-    );
-  }
+  String get validityLabel => 'Hạn dùng $validityDays ngày';
 }
