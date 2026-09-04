@@ -7,7 +7,7 @@
      aria-label="gymPS coach">
   <!--
     gymPS header lockup (Coach)
-    Source: lib/shared/widgets/header_logo.dart ’ HeaderLogo(showCoachLabel: true)
+    Source: lib/shared/widgets/header_logo.dart  HeaderLogo(showCoachLabel: true)
 
     Extra line
       coach  Inter Semibold / 600

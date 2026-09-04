@@ -7,7 +7,7 @@
      aria-label="gymPS">
   <!--
     gymPS header lockup (User)
-    Source: lib/shared/widgets/header_logo.dart ’ HeaderLogo
+    Source: lib/shared/widgets/header_logo.dart  HeaderLogo
 
     Colors
       gym + mark  #1E3A8A  AppColors.gymPsNavy
