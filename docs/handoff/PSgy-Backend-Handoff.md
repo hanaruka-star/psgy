@@ -278,6 +278,13 @@ Bản mock hiện dùng **`Timer`/`setState` phía client** để giả lập au
 - **Push notification (FCM)** — CHƯA có trong bản mock, cần cho: booking mới (Coach), Coach xác nhận/từ chối (User), tin nhắn chat mới, nhắc User xác nhận hoàn thành trước khi hết 10 phút.
 - **Storage** cho ảnh: avatar Coach/User, ảnh Journal post (hiện là asset mock/placeholder trong bản demo).
 - **Kích hoạt lại Phone Auth thật cho User app** — hiện đang bypass bằng `MockPhoneAuthScreen` vì lỗi `permission-denied` từ code cũ (đọc `users/{uid}` kiểu ParkingLink, không thuộc phạm vi `pilot_demo`) khi chạy standalone với tài khoản Auth cũ còn sót trên máy test. Cần dọn/thay hẳn code đọc profile cũ đó bằng luồng `UserProfile` thật (mục 3) trước khi bật lại `PhoneAuthScreen` thật.
+
+  **Vị trí chính xác (Cursor rà 2026-09-04, chưa sửa — đội backend dọn trước khi bật lại OTP thật):**
+  - `lib/features/user/presentation/providers/user_profile_provider.dart` — class `UserProfileNotifier`, method `build()` **dòng 51–66**: nếu `FirebaseAuth.instance.currentUser != null` thì gọi `getUserProfileUseCase(uid)` rồi `getUserVehiclesUseCase(uid)`.
+  - Firestore thực tế: collection `users/{uid}` (`getProfile`) và `user_vehicles` (`getVehicles`) trong `lib/features/user/data/datasources/user_profile_remote_datasource.dart`.
+  - `PhoneAuthScreen` watch `userProfileProvider` nên luồng Auth thật sẽ đụng đoạn này. Rules hiện deny-all → `permission-denied`. `PhoneAuthScreen` **giữ nguyên**; User app TEMP vẫn vào `MockPhoneAuthScreen`.
+
+- **Credential leak ParkingLink (đã xử lý, commit `fad6b1a`):** xoá `macos/Runner/GoogleService-Info.plist` (`parkinglink-v2` / `com.parkinglink.parkingLink`) và `ios/Runner/Assets.xcassets/GoogleService-Info.plist` (`parkinglink-v2` / `com.example.m4Demo`). iOS/Android flavor config + `lib/firebase_options.dart` đang trỏ đúng project `psgy-app` (`com.psgy.user` / `com.psgy.coach`).
 - **Live tracking vị trí Coach** (khi đang di chuyển đến) — khả thi kỹ thuật, dùng lại field `Coach.lat/lng` đã có, chỉ đổi tần suất cập nhật lúc `status = confirmed`. Bắt đầu ở mức "foreground only, cập nhật thưa (15-30s hoặc di chuyển >100m)" — background tracking liên tục kiểu Uber để sau khi có traffic thật đánh giá đáng đầu tư hay không (tốn quyền vị trí nền iOS + chi phí Firestore write + pin).
 
 ---
