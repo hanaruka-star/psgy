@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:psgy/core/theme/app_colors.dart';
+import 'package:psgy/core/theme/app_shapes.dart';
 import 'package:psgy/core/theme/app_spacing.dart';
+import 'package:psgy/core/theme/app_status_colors.dart';
 import 'package:psgy/features/pilot_demo/data/mock_user_session.dart';
 import 'package:psgy/features/pilot_demo/models/mock_booking_request.dart';
 import 'package:psgy/features/pilot_demo/models/mock_coach.dart';
+import 'package:psgy/features/pilot_demo/models/mock_package.dart';
 import 'package:psgy/features/pilot_demo/models/mock_service.dart';
-import 'package:psgy/features/pilot_demo/models/mock_wallet_package.dart';
 import 'package:psgy/features/pilot_demo/presentation/booking_pending_screen.dart';
+import 'package:psgy/features/pilot_demo/presentation/user_chat_screen.dart';
 
 class BookingSummaryScreen extends StatefulWidget {
   const BookingSummaryScreen({
@@ -28,33 +30,49 @@ class _BookingSummaryScreenState extends State<BookingSummaryScreen> {
   static const _cashKey = 'cash';
 
   String _paymentKey = _cashKey;
-  bool _coverShortfallWithCash = true;
+  final _address = TextEditingController();
+  final _promo = TextEditingController();
+  final _promoFocus = FocusNode();
 
-  MockWalletPackage? _walletById(String? id) {
+  @override
+  void dispose() {
+    _address.dispose();
+    _promo.dispose();
+    _promoFocus.dispose();
+    super.dispose();
+  }
+
+  void _openCoachChat() {
+    Navigator.of(context).push(
+      MaterialPageRoute<void>(
+        builder: (_) => UserChatScreen(
+          inquiryCoachId: widget.coach.id,
+          coachName: widget.coach.name,
+        ),
+      ),
+    );
+  }
+
+  void _applyPromo() {
+    _promoFocus.unfocus();
+    FocusManager.instance.primaryFocus?.unfocus();
+  }
+
+  MockPurchasedPackage? _packageById(String? id) {
     if (id == null) return null;
-    for (final wallet in MockUserSession.instance.usableWallets) {
-      if (wallet.id == id) return wallet;
+    for (final item in MockUserSession.instance
+        .usablePackagesFor(widget.coach.id)) {
+      if (item.id == id) return item;
     }
     return null;
   }
 
   void _confirm() {
     final service = widget.service;
-    final wallet = _walletById(_paymentKey == _cashKey ? null : _paymentKey);
-    var method = MockPaymentMethod.cash;
-    var topUp = 0;
-    String? walletId;
-
-    if (wallet != null) {
-      final shortfall = service.priceVnd - wallet.remainingBalanceVnd;
-      if (shortfall > 0 && !_coverShortfallWithCash) {
-        method = MockPaymentMethod.cash;
-      } else {
-        method = MockPaymentMethod.wallet;
-        walletId = wallet.id;
-        topUp = shortfall > 0 ? shortfall : 0;
-      }
-    }
+    final owned = _packageById(_paymentKey == _cashKey ? null : _paymentKey);
+    final method = owned == null
+        ? MockPaymentMethod.cash
+        : MockPaymentMethod.package;
 
     final booking = MockUserSession.instance.placeBooking(
       coachId: widget.coach.id,
@@ -63,8 +81,7 @@ class _BookingSummaryScreenState extends State<BookingSummaryScreen> {
       priceVnd: service.priceVnd,
       requestedTimeLabel: widget.coach.nextSlotLabel,
       paymentMethod: method,
-      walletId: walletId,
-      topUpAmountVnd: topUp,
+      purchasedPackageId: owned?.id,
     );
 
     Navigator.of(context).push(
@@ -87,29 +104,32 @@ class _BookingSummaryScreenState extends State<BookingSummaryScreen> {
     return ListenableBuilder(
       listenable: session,
       builder: (context, _) {
-        final wallets = session.usableWallets;
-        final selectedWallet = _walletById(
-          _paymentKey == _cashKey ? null : _paymentKey,
+        final packages = session.usablePackagesFor(widget.coach.id);
+        final paymentKey = (_paymentKey != _cashKey &&
+                packages.any((item) => item.id == _paymentKey))
+            ? _paymentKey
+            : _cashKey;
+        final selected = _packageById(
+          paymentKey == _cashKey ? null : paymentKey,
         );
-        final usingWallet = selectedWallet != null;
-        final shortfall = usingWallet
-            ? service.priceVnd - selectedWallet.remainingBalanceVnd
-            : 0;
-        final walletShort = usingWallet && shortfall > 0;
-        final payingCashOnly = !usingWallet || (walletShort && !_coverShortfallWithCash);
+        final usingPackage = selected != null;
 
         final String payNote;
-        Color noteBg = AppColors.warningContainer;
-        Color noteFg = AppColors.onWarningContainer;
-        if (payingCashOnly) {
+        final brightness = theme.brightness;
+        late final Color noteBg;
+        late final Color noteFg;
+        if (!usingPackage) {
           payNote = 'Thanh toán tiền mặt trực tiếp với Coach';
-        } else if (shortfall <= 0) {
-          payNote = 'Thanh toán bằng ví — 0đ tiền mặt';
-          noteBg = AppColors.successContainer;
-          noteFg = AppColors.onSuccessContainer;
+          final pair = AppStatusColors.warning(brightness);
+          noteBg = pair.container;
+          noteFg = pair.onContainer;
         } else {
           payNote =
-              'Ví ${formatVnd(selectedWallet.remainingBalanceVnd)} · tiền mặt thêm ${formatVnd(shortfall)}';
+              'Thanh toán bằng gói ${selected.packageName} — trừ 1 buổi '
+              '(còn ${selected.remainingSessions} buổi)';
+          final pair = AppStatusColors.success(brightness);
+          noteBg = pair.container;
+          noteFg = pair.onContainer;
         }
 
         return Scaffold(
@@ -121,6 +141,99 @@ class _BookingSummaryScreenState extends State<BookingSummaryScreen> {
                 child: ListView(
                   padding: AppSpacing.screenPadding,
                   children: [
+                    Card(
+                      child: Padding(
+                        padding: AppSpacing.cardPadding,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text('Địa chỉ', style: theme.textTheme.titleMedium),
+                            const SizedBox(height: AppSpacing.sm),
+                            TextField(
+                              controller: _address,
+                              textCapitalization: TextCapitalization.sentences,
+                              decoration: const InputDecoration(
+                                hintText: 'Nhập địa chỉ muốn tập',
+                              ),
+                            ),
+                            const SizedBox(height: AppSpacing.sm),
+                            SizedBox(
+                              width: double.infinity,
+                              child: OutlinedButton.icon(
+                                onPressed: _openCoachChat,
+                                icon: const Icon(Icons.chat_bubble_outline),
+                                label: const Text('Trao đổi với Coach'),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                    if (packages.isNotEmpty) ...[
+                      const SizedBox(height: AppSpacing.md),
+                      Text('Thanh toán', style: theme.textTheme.titleMedium),
+                      RadioGroup<String>(
+                        groupValue: paymentKey,
+                        onChanged: (value) {
+                          if (value == null) return;
+                          setState(() => _paymentKey = value);
+                        },
+                        child: Column(
+                          children: [
+                            const RadioListTile<String>(
+                              value: _cashKey,
+                              title: Text('Tiền mặt trực tiếp với Coach'),
+                              contentPadding: EdgeInsets.zero,
+                            ),
+                            for (final item in packages)
+                              RadioListTile<String>(
+                                value: item.id,
+                                title: Text(
+                                  'Dùng gói ${item.packageName} (${item.remainingLabel})',
+                                ),
+                                contentPadding: EdgeInsets.zero,
+                              ),
+                          ],
+                        ),
+                      ),
+                    ],
+                    const SizedBox(height: AppSpacing.md),
+                    Card(
+                      child: Padding(
+                        padding: AppSpacing.cardPadding,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              'Mã giảm giá',
+                              style: theme.textTheme.titleMedium,
+                            ),
+                            const SizedBox(height: AppSpacing.sm),
+                            Row(
+                              children: [
+                                Expanded(
+                                  child: TextField(
+                                    controller: _promo,
+                                    focusNode: _promoFocus,
+                                    textCapitalization:
+                                        TextCapitalization.characters,
+                                    decoration: const InputDecoration(
+                                      hintText: 'Nhập mã',
+                                    ),
+                                  ),
+                                ),
+                                const SizedBox(width: AppSpacing.sm),
+                                FilledButton(
+                                  onPressed: _applyPromo,
+                                  child: const Text('Áp dụng'),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                    const SizedBox(height: AppSpacing.md),
                     Card(
                       child: Padding(
                         padding: AppSpacing.cardPadding,
@@ -145,93 +258,22 @@ class _BookingSummaryScreenState extends State<BookingSummaryScreen> {
                             const Divider(height: AppSpacing.lg),
                             _BillRow(
                               label: 'Tổng tiền',
-                              value: service.priceLabel,
+                              value: usingPackage
+                                  ? 'Trừ 1 buổi gói'
+                                  : service.priceLabel,
                               emphasize: true,
                             ),
                           ],
                         ),
                       ),
                     ),
-                    if (wallets.isNotEmpty) ...[
-                      const SizedBox(height: AppSpacing.md),
-                      Text('Thanh toán', style: theme.textTheme.titleMedium),
-                      RadioGroup<String>(
-                        groupValue: _paymentKey,
-                        onChanged: (value) {
-                          if (value == null) return;
-                          setState(() {
-                            _paymentKey = value;
-                            _coverShortfallWithCash = true;
-                          });
-                        },
-                        child: Column(
-                          children: [
-                            const RadioListTile<String>(
-                              value: _cashKey,
-                              title: Text('Tiền mặt trực tiếp với Coach'),
-                              activeColor: AppColors.primary,
-                              contentPadding: EdgeInsets.zero,
-                            ),
-                            for (final wallet in wallets)
-                              RadioListTile<String>(
-                                value: wallet.id,
-                                title: Text(
-                                  'Dùng ví — ${wallet.packageName} (còn lại ${formatVnd(wallet.remainingBalanceVnd)})',
-                                ),
-                                activeColor: AppColors.primary,
-                                contentPadding: EdgeInsets.zero,
-                              ),
-                          ],
-                        ),
-                      ),
-                      if (walletShort) ...[
-                        Text(
-                          'Ví không đủ cho buổi này',
-                          style: theme.textTheme.titleMedium,
-                        ),
-                        RadioGroup<bool>(
-                          groupValue: _coverShortfallWithCash,
-                          onChanged: (value) {
-                            if (value == null) return;
-                            setState(() {
-                              if (value) {
-                                _coverShortfallWithCash = true;
-                              } else {
-                                _paymentKey = _cashKey;
-                                _coverShortfallWithCash = true;
-                              }
-                            });
-                          },
-                          child: Column(
-                            children: [
-                              RadioListTile<bool>(
-                                value: true,
-                                title: Text(
-                                  'Trả thêm tiền mặt phần chênh lệch (${formatVnd(shortfall)})',
-                                ),
-                                activeColor: AppColors.primary,
-                                contentPadding: EdgeInsets.zero,
-                              ),
-                              const RadioListTile<bool>(
-                                value: false,
-                                title: Text(
-                                  'Đổi sang trả tiền mặt trực tiếp',
-                                ),
-                                activeColor: AppColors.primary,
-                                contentPadding: EdgeInsets.zero,
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
-                    ],
                     const SizedBox(height: AppSpacing.md),
                     Container(
                       width: double.infinity,
                       padding: AppSpacing.cardPadding,
-                      decoration: BoxDecoration(
+                      decoration: ShapeDecoration(
                         color: noteBg,
-                        borderRadius: AppSpacing.borderRadiusMd,
+                        shape: AppShapes.rect(radius: AppSpacing.radiusMd),
                       ),
                       child: Text(
                         payNote,

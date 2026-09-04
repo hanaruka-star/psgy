@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:psgy/core/theme/app_colors.dart';
 import 'package:psgy/core/theme/app_spacing.dart';
+import 'package:psgy/core/theme/app_status_colors.dart';
 import 'package:psgy/features/pilot_demo/data/mock_coach_session.dart';
 import 'package:psgy/features/pilot_demo/models/mock_booking_request.dart';
+import 'package:psgy/features/pilot_demo/presentation/booking_status_style.dart';
 import 'package:psgy/features/pilot_demo/presentation/coach/coach_chat_screen.dart';
 
 class ActiveBookingScreen extends StatelessWidget {
@@ -37,6 +38,7 @@ class ActiveBookingScreen extends StatelessWidget {
                   text.isEmpty ? 'Khách không đến' : text,
                 );
               },
+              style: AppStatusColors.highlightFilledButton(dialogContext),
               child: const Text('Gửi'),
             ),
           ],
@@ -63,17 +65,27 @@ class ActiveBookingScreen extends StatelessWidget {
         final booking = session.bookingById(bookingId);
         if (booking == null) {
           return Scaffold(
-            appBar: AppBar(title: const Text('Booking đang diễn ra')),
+            appBar: AppBar(
+              title: const Text('Booking đang diễn ra'),
+              titleTextStyle: AppStatusColors.headingStyle(context),
+              foregroundColor: AppStatusColors.sheetTitle(
+                Theme.of(context).brightness,
+              ),
+            ),
             body: const Center(child: Text('Không tìm thấy booking.')),
           );
         }
 
         final theme = Theme.of(context);
-        final colors = _statusColors(booking.status);
+        final pair = bookingStatusPair(context, booking.status);
 
         return Scaffold(
           backgroundColor: theme.scaffoldBackgroundColor,
-          appBar: AppBar(title: const Text('Booking đang diễn ra')),
+          appBar: AppBar(
+            title: const Text('Booking đang diễn ra'),
+            titleTextStyle: AppStatusColors.headingStyle(context),
+            foregroundColor: AppStatusColors.sheetTitle(theme.brightness),
+          ),
           body: Column(
             children: [
               Expanded(
@@ -83,11 +95,11 @@ class ActiveBookingScreen extends StatelessWidget {
                     Align(
                       alignment: Alignment.centerLeft,
                       child: Chip(
-                        backgroundColor: colors.$1,
+                        backgroundColor: pair.container,
                         side: BorderSide.none,
                         label: Text(booking.statusLabel),
                         labelStyle: theme.textTheme.labelLarge?.copyWith(
-                          color: colors.$2,
+                          color: pair.onContainer,
                         ),
                       ),
                     ),
@@ -100,7 +112,7 @@ class ActiveBookingScreen extends StatelessWidget {
                           children: [
                             Text(
                               booking.userName,
-                              style: theme.textTheme.titleLarge,
+                              style: AppStatusColors.headingStyle(context),
                             ),
                             const SizedBox(height: AppSpacing.sm),
                             Text(booking.serviceName),
@@ -113,7 +125,7 @@ class ActiveBookingScreen extends StatelessWidget {
                               Text(
                                 'Lý do hủy: ${booking.cancelReason}',
                                 style: theme.textTheme.bodySmall?.copyWith(
-                                  color: AppColors.danger,
+                                  color: theme.colorScheme.error,
                                 ),
                               ),
                             ],
@@ -151,6 +163,7 @@ class ActiveBookingScreen extends StatelessWidget {
                                 MockBookingStatus.inProgress,
                               );
                             },
+                            style: AppStatusColors.highlightFilledButton(context),
                             child: const Text('Bắt đầu buổi tập'),
                           ),
                         ),
@@ -164,6 +177,7 @@ class ActiveBookingScreen extends StatelessWidget {
                                 MockBookingStatus.awaitingUserConfirmation,
                               );
                             },
+                            style: AppStatusColors.highlightFilledButton(context),
                             child: const Text('Hoàn thành dịch vụ'),
                           ),
                         ),
@@ -196,33 +210,4 @@ class ActiveBookingScreen extends StatelessWidget {
       },
     );
   }
-}
-
-(Color, Color) _statusColors(MockBookingStatus status) {
-  return switch (status) {
-    MockBookingStatus.pending => (
-        AppColors.warningContainer,
-        AppColors.onWarningContainer,
-      ),
-    MockBookingStatus.confirmed => (
-        AppColors.primaryContainer,
-        AppColors.onPrimaryContainer,
-      ),
-    MockBookingStatus.inProgress => (
-        AppColors.successContainer,
-        AppColors.onSuccessContainer,
-      ),
-    MockBookingStatus.awaitingUserConfirmation => (
-        AppColors.warningContainer,
-        AppColors.onWarningContainer,
-      ),
-    MockBookingStatus.completed => (
-        AppColors.successContainer,
-        AppColors.onSuccessContainer,
-      ),
-    MockBookingStatus.cancelled => (
-        AppColors.dangerContainer,
-        AppColors.onDangerContainer,
-      ),
-  };
 }

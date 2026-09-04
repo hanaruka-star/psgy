@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:psgy/core/theme/app_colors.dart';
 import 'package:psgy/core/theme/app_spacing.dart';
 import 'package:psgy/features/pilot_demo/data/mock_coaches.dart';
 import 'package:psgy/features/pilot_demo/data/mock_user_session.dart';
@@ -7,6 +6,7 @@ import 'package:psgy/features/pilot_demo/models/mock_booking_request.dart';
 import 'package:psgy/features/pilot_demo/models/mock_coach.dart';
 import 'package:psgy/features/pilot_demo/models/mock_service.dart';
 import 'package:psgy/features/pilot_demo/presentation/booking_pending_screen.dart';
+import 'package:psgy/features/pilot_demo/presentation/booking_status_style.dart';
 
 class UserBookingHistoryScreen extends StatelessWidget {
   const UserBookingHistoryScreen({super.key});
@@ -74,7 +74,7 @@ class _HistoryCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final colors = _statusColors(booking.status);
+    final pair = bookingStatusPair(context, booking.status);
 
     return Card(
       clipBehavior: Clip.antiAlias,
@@ -95,11 +95,11 @@ class _HistoryCard extends StatelessWidget {
                   ),
                   Chip(
                     visualDensity: VisualDensity.compact,
-                    backgroundColor: colors.$1,
+                    backgroundColor: pair.container,
                     side: BorderSide.none,
                     label: Text(booking.statusLabel),
                     labelStyle: theme.textTheme.labelMedium?.copyWith(
-                      color: colors.$2,
+                      color: pair.onContainer,
                     ),
                   ),
                 ],
@@ -149,6 +149,8 @@ MockCoach _coachFor(MockBookingRequest booking) {
         durationMinutes: 60,
       ),
     ],
+    packages: const [],
+    bio: '',
   );
 }
 
@@ -162,33 +164,4 @@ MockService _serviceFor(MockCoach coach, MockBookingRequest booking) {
     priceVnd: booking.priceVnd,
     durationMinutes: 60,
   );
-}
-
-(Color, Color) _statusColors(MockBookingStatus status) {
-  return switch (status) {
-    MockBookingStatus.pending => (
-        AppColors.warningContainer,
-        AppColors.onWarningContainer,
-      ),
-    MockBookingStatus.confirmed => (
-        AppColors.primaryContainer,
-        AppColors.onPrimaryContainer,
-      ),
-    MockBookingStatus.inProgress => (
-        AppColors.successContainer,
-        AppColors.onSuccessContainer,
-      ),
-    MockBookingStatus.awaitingUserConfirmation => (
-        AppColors.warningContainer,
-        AppColors.onWarningContainer,
-      ),
-    MockBookingStatus.completed => (
-        AppColors.successContainer,
-        AppColors.onSuccessContainer,
-      ),
-    MockBookingStatus.cancelled => (
-        AppColors.dangerContainer,
-        AppColors.onDangerContainer,
-      ),
-  };
 }

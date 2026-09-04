@@ -1,16 +1,19 @@
 import 'package:flutter/material.dart';
-import 'package:psgy/core/theme/app_colors.dart';
+import 'package:psgy/core/theme/app_shapes.dart';
 import 'package:psgy/core/theme/app_spacing.dart';
 import 'package:psgy/features/pilot_demo/data/mock_user_session.dart';
+import 'package:psgy/features/pilot_demo/models/mock_message.dart';
 
 class UserChatScreen extends StatefulWidget {
   const UserChatScreen({
     super.key,
-    required this.bookingId,
+    this.bookingId,
+    this.inquiryCoachId,
     required this.coachName,
-  });
+  }) : assert(bookingId != null || inquiryCoachId != null);
 
-  final String bookingId;
+  final String? bookingId;
+  final String? inquiryCoachId;
   final String coachName;
 
   @override
@@ -20,6 +23,17 @@ class UserChatScreen extends StatefulWidget {
 class _UserChatScreenState extends State<UserChatScreen> {
   final _controller = TextEditingController();
   final _scrollController = ScrollController();
+
+  bool get _isInquiry => widget.inquiryCoachId != null;
+
+  @override
+  void initState() {
+    super.initState();
+    final coachId = widget.inquiryCoachId;
+    if (coachId != null) {
+      MockUserSession.instance.ensureCoachInquiry(coachId);
+    }
+  }
 
   @override
   void dispose() {
@@ -31,7 +45,13 @@ class _UserChatScreenState extends State<UserChatScreen> {
   void _send() {
     final text = _controller.text.trim();
     if (text.isEmpty) return;
-    MockUserSession.instance.addUserMessage(widget.bookingId, text);
+    final session = MockUserSession.instance;
+    final coachId = widget.inquiryCoachId;
+    if (coachId != null) {
+      session.addInquiryMessage(coachId, text);
+    } else {
+      session.addUserMessage(widget.bookingId!, text);
+    }
     _controller.clear();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (!_scrollController.hasClients) return;
@@ -43,6 +63,12 @@ class _UserChatScreenState extends State<UserChatScreen> {
     });
   }
 
+  List<MockMessage> _messages(MockUserSession session) {
+    final coachId = widget.inquiryCoachId;
+    if (coachId != null) return session.inquiryMessagesFor(coachId);
+    return session.messagesFor(widget.bookingId!);
+  }
+
   @override
   Widget build(BuildContext context) {
     final session = MockUserSession.instance;
@@ -51,11 +77,25 @@ class _UserChatScreenState extends State<UserChatScreen> {
     return ListenableBuilder(
       listenable: session,
       builder: (context, _) {
-        final messages = session.messagesFor(widget.bookingId);
+        final messages = _messages(session);
 
         return Scaffold(
           backgroundColor: theme.scaffoldBackgroundColor,
-          appBar: AppBar(title: Text(widget.coachName)),
+          appBar: AppBar(
+            title: Text(widget.coachName),
+            bottom: _isInquiry
+                ? PreferredSize(
+                    preferredSize: const Size.fromHeight(28),
+                    child: Padding(
+                      padding: const EdgeInsets.only(bottom: AppSpacing.sm),
+                      child: Text(
+                        'Trao đổi trước khi đặt lịch',
+                        style: theme.textTheme.bodySmall,
+                      ),
+                    ),
+                  )
+                : null,
+          ),
           body: Column(
             children: [
               Expanded(
@@ -79,11 +119,11 @@ class _UserChatScreenState extends State<UserChatScreen> {
                             horizontal: AppSpacing.md,
                             vertical: AppSpacing.sm + 2,
                           ),
-                          decoration: BoxDecoration(
+                          decoration: ShapeDecoration(
                             color: isMine
-                                ? AppColors.primary
-                                : theme.colorScheme.surfaceContainerHighest,
-                            borderRadius: AppSpacing.borderRadiusMd,
+                                ? theme.colorScheme.primaryContainer
+                                : theme.colorScheme.surfaceContainerHigh,
+                            shape: AppShapes.rect(radius: AppSpacing.radiusMd),
                           ),
                           child: Column(
                             crossAxisAlignment: isMine
@@ -94,7 +134,7 @@ class _UserChatScreenState extends State<UserChatScreen> {
                                 message.text,
                                 style: theme.textTheme.bodyMedium?.copyWith(
                                   color: isMine
-                                      ? Colors.white
+                                      ? theme.colorScheme.onPrimaryContainer
                                       : theme.colorScheme.onSurface,
                                 ),
                               ),
@@ -103,8 +143,9 @@ class _UserChatScreenState extends State<UserChatScreen> {
                                 message.sentAtLabel,
                                 style: theme.textTheme.bodySmall?.copyWith(
                                   color: isMine
-                                      ? Colors.white70
-                                      : theme.textTheme.bodySmall?.color,
+                                      ? theme.colorScheme.onPrimaryContainer
+                                          .withValues(alpha: 0.7)
+                                      : theme.colorScheme.onSurfaceVariant,
                                 ),
                               ),
                             ],

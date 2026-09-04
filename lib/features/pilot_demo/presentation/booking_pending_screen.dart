@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:psgy/core/theme/app_colors.dart';
 import 'package:psgy/core/theme/app_spacing.dart';
+import 'package:psgy/core/theme/app_status_colors.dart';
 import 'package:psgy/features/pilot_demo/data/mock_user_session.dart';
 import 'package:psgy/features/pilot_demo/models/mock_booking_request.dart';
 import 'package:psgy/features/pilot_demo/models/mock_coach.dart';
 import 'package:psgy/features/pilot_demo/models/mock_service.dart';
-import 'package:psgy/features/pilot_demo/presentation/pilot_map_screen.dart';
+import 'package:psgy/features/pilot_demo/presentation/create_journal_post_screen.dart';
+import 'package:psgy/features/pilot_demo/presentation/main_shell_screen.dart';
 import 'package:psgy/features/pilot_demo/presentation/user_chat_screen.dart';
 
 class BookingPendingScreen extends StatefulWidget {
@@ -83,9 +84,23 @@ class _BookingPendingScreenState extends State<BookingPendingScreen> {
     };
   }
 
+  void _openShare() {
+    final booking = widget.booking;
+    if (booking == null) return;
+    Navigator.of(context).push(
+      MaterialPageRoute<void>(
+        builder: (_) => CreateJournalPostScreen(
+          coach: widget.coach,
+          service: widget.service,
+          booking: booking,
+        ),
+      ),
+    );
+  }
+
   void _goHome() {
     Navigator.of(context).popUntil((route) {
-      return route.settings.name == PilotMapScreen.routeName || route.isFirst;
+      return route.settings.name == MainShellScreen.routeName || route.isFirst;
     });
   }
 
@@ -198,7 +213,9 @@ class _BookingPendingScreenState extends State<BookingPendingScreen> {
                                 star <= _rating
                                     ? Icons.star
                                     : Icons.star_border,
-                                color: AppColors.warning,
+                                color: AppStatusColors.highlight(
+                                  theme.brightness,
+                                ),
                               ),
                             ),
                         ],
@@ -253,7 +270,9 @@ class _BookingPendingScreenState extends State<BookingPendingScreen> {
                                         star <= live.rating!
                                             ? Icons.star
                                             : Icons.star_border,
-                                        color: AppColors.warning,
+                                        color: AppStatusColors.highlight(
+                                          theme.brightness,
+                                        ),
                                       ),
                                   ],
                                 ),
@@ -270,10 +289,10 @@ class _BookingPendingScreenState extends State<BookingPendingScreen> {
                     ],
                     if (done) ...[
                       const SizedBox(height: AppSpacing.lg),
-                      const Icon(
+                      Icon(
                         Icons.check_circle_rounded,
                         size: 64,
-                        color: AppColors.success,
+                        color: theme.colorScheme.primary,
                       ),
                       const SizedBox(height: AppSpacing.sm),
                       Text(
@@ -289,12 +308,24 @@ class _BookingPendingScreenState extends State<BookingPendingScreen> {
                 SafeArea(
                   child: Padding(
                     padding: AppSpacing.screenPadding,
-                    child: SizedBox(
-                      width: double.infinity,
-                      child: FilledButton(
-                        onPressed: _goHome,
-                        child: const Text('Về trang chủ'),
-                      ),
+                    child: Column(
+                      children: [
+                        SizedBox(
+                          width: double.infinity,
+                          child: OutlinedButton(
+                            onPressed: _openShare,
+                            child: const Text('📸 Chia sẻ buổi tập hôm nay'),
+                          ),
+                        ),
+                        const SizedBox(height: AppSpacing.sm),
+                        SizedBox(
+                          width: double.infinity,
+                          child: FilledButton(
+                            onPressed: _goHome,
+                            child: const Text('Về trang chủ'),
+                          ),
+                        ),
+                      ],
                     ),
                   ),
                 ),
@@ -381,9 +412,10 @@ class _TimelineRow extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final color = done || current ? AppColors.primary : theme.colorScheme.outline;
+    final scheme = theme.colorScheme;
+    final color = done || current ? scheme.primary : scheme.outline;
     final textStyle = current
-        ? theme.textTheme.titleMedium?.copyWith(color: AppColors.primary)
+        ? theme.textTheme.titleMedium?.copyWith(color: scheme.primary)
         : theme.textTheme.bodyMedium;
 
     return IntrinsicHeight(
@@ -408,7 +440,7 @@ class _TimelineRow extends StatelessWidget {
                     child: Container(
                       width: 2,
                       margin: const EdgeInsets.symmetric(vertical: 4),
-                      color: done ? AppColors.primary : theme.colorScheme.outline,
+                      color: done ? scheme.primary : scheme.outline,
                     ),
                   ),
               ],

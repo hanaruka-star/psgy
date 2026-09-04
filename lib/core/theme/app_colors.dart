@@ -9,6 +9,11 @@ abstract final class AppColors {
   static const Color primaryContainer = Color(0xFFDBEAFE);
   static const Color onPrimaryContainer = Color(0xFF1E3A8A);
 
+  /// gymPS lockup — navy + ink (header logo).
+  static const Color gymPsNavy = Color(0xFF1E3A8A);
+  static const Color gymPsNavyDeep = Color(0xFF0A192F);
+  static const Color gymPsInk = Color(0xFF0F172A);
+
   // Semantic
   static const Color success = Color(0xFF22C55E);
   static const Color successContainer = Color(0xFFDCFCE7);

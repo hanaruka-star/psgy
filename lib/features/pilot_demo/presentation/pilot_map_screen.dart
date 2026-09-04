@@ -1,14 +1,16 @@
+import 'dart:ui' as ui;
+
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:psgy/core/theme/app_colors.dart';
+import 'package:psgy/core/theme/app_shapes.dart';
 import 'package:psgy/core/theme/app_spacing.dart';
+import 'package:psgy/core/theme/app_status_colors.dart';
 import 'package:psgy/features/pilot_demo/data/mock_coaches.dart';
 import 'package:psgy/features/pilot_demo/models/mock_coach.dart';
 import 'package:psgy/features/pilot_demo/presentation/coach_detail_screen.dart';
-import 'package:psgy/features/pilot_demo/presentation/user_booking_history_screen.dart';
-import 'package:psgy/features/pilot_demo/presentation/user_wallet_screen.dart';
 
-class PilotMapScreen extends StatelessWidget {
+class PilotMapScreen extends StatefulWidget {
   static const routeName = 'pilot_map';
 
   const PilotMapScreen({super.key});
@@ -22,7 +24,48 @@ class PilotMapScreen extends StatelessWidget {
     );
   }
 
-  void _openCoach(BuildContext context, MockCoach coach) {
+  @override
+  State<PilotMapScreen> createState() => _PilotMapScreenState();
+}
+
+class _PilotMapScreenState extends State<PilotMapScreen> {
+  String? _mapStyle;
+  BitmapDescriptor? _coachIcon;
+  Brightness? _loadedBrightness;
+  Color? _loadedMarkerColor;
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    final brightness = Theme.of(context).brightness;
+    final markerColor = AppStatusColors.highlight(brightness);
+    final onMarker = AppStatusColors.onHighlight(brightness);
+    if (brightness != _loadedBrightness) {
+      _loadedBrightness = brightness;
+      _loadMapStyle(brightness);
+    }
+    if (markerColor != _loadedMarkerColor) {
+      _loadedMarkerColor = markerColor;
+      _loadCoachIcon(markerColor, onMarker);
+    }
+  }
+
+  Future<void> _loadMapStyle(Brightness brightness) async {
+    final asset = brightness == Brightness.dark
+        ? 'assets/map_style/map_style_dark.json'
+        : 'assets/map_style/map_style_light.json';
+    final json = await rootBundle.loadString(asset);
+    if (!mounted || Theme.of(context).brightness != brightness) return;
+    setState(() => _mapStyle = json);
+  }
+
+  Future<void> _loadCoachIcon(Color fill, Color onFill) async {
+    final icon = await _buildCoachMarkerIcon(fill, onFill);
+    if (!mounted || _loadedMarkerColor != fill) return;
+    setState(() => _coachIcon = icon);
+  }
+
+  void _openCoach(MockCoach coach) {
     Navigator.of(context).push(
       MaterialPageRoute<void>(
         builder: (_) => CoachDetailScreen(coach: coach),
@@ -32,14 +75,17 @@ class PilotMapScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final icon = _coachIcon;
     final markers = {
-      for (final coach in mockCoaches)
-        Marker(
-          markerId: MarkerId(coach.id),
-          position: LatLng(coach.lat, coach.lng),
-          infoWindow: InfoWindow(title: coach.name),
-          onTap: () => _openCoach(context, coach),
-        ),
+      if (icon != null)
+        for (final coach in mockCoaches)
+          Marker(
+            markerId: MarkerId(coach.id),
+            position: LatLng(coach.lat, coach.lng),
+            infoWindow: InfoWindow(title: coach.name),
+            icon: icon,
+            onTap: () => _openCoach(coach),
+          ),
     };
 
     return Scaffold(
@@ -48,9 +94,10 @@ class PilotMapScreen extends StatelessWidget {
         children: [
           GoogleMap(
             initialCameraPosition: const CameraPosition(
-              target: _hcmcCenter,
+              target: PilotMapScreen._hcmcCenter,
               zoom: 13,
             ),
+            style: _mapStyle,
             markers: markers,
             myLocationButtonEnabled: false,
             zoomControlsEnabled: false,
@@ -62,13 +109,11 @@ class PilotMapScreen extends StatelessWidget {
             maxChildSize: 0.78,
             builder: (context, scrollController) {
               return Material(
-                color: Theme.of(context).colorScheme.surface,
-                elevation: 0,
-                shape: const RoundedRectangleBorder(
-                  borderRadius: BorderRadius.vertical(
-                    top: Radius.circular(AppSpacing.radiusXl),
-                  ),
+                color: AppStatusColors.sheetBackground(
+                  Theme.of(context).brightness,
                 ),
+                elevation: 0,
+                shape: AppShapes.sheetTop(),
                 child: Column(
                   children: [
                     const SizedBox(height: AppSpacing.sm),
@@ -84,41 +129,19 @@ class PilotMapScreen extends StatelessWidget {
                       padding: const EdgeInsets.fromLTRB(
                         AppSpacing.md,
                         AppSpacing.md,
-                        AppSpacing.sm,
+                        AppSpacing.md,
                         AppSpacing.sm,
                       ),
-                      child: Row(
-                        children: [
-                          Expanded(
-                            child: Text(
-                              'Coach gần bạn',
-                              style: Theme.of(context).textTheme.titleLarge,
-                            ),
-                          ),
-                          IconButton(
-                            tooltip: 'Lịch sử booking',
-                            onPressed: () {
-                              Navigator.of(context).push(
-                                MaterialPageRoute<void>(
-                                  builder: (_) =>
-                                      const UserBookingHistoryScreen(),
+                      child: Align(
+                        alignment: Alignment.centerLeft,
+                        child: Text(
+                          'Coach gần bạn',
+                          style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                                color: AppStatusColors.sheetTitle(
+                                  Theme.of(context).brightness,
                                 ),
-                              );
-                            },
-                            icon: const Icon(Icons.receipt_long_outlined),
-                          ),
-                          IconButton(
-                            tooltip: 'Ví của tôi',
-                            onPressed: () {
-                              Navigator.of(context).push(
-                                MaterialPageRoute<void>(
-                                  builder: (_) => const UserWalletScreen(),
-                                ),
-                              );
-                            },
-                            icon: const Icon(Icons.account_balance_wallet_outlined),
-                          ),
-                        ],
+                              ),
+                        ),
                       ),
                     ),
                     Expanded(
@@ -137,7 +160,7 @@ class PilotMapScreen extends StatelessWidget {
                           final coach = mockCoaches[index];
                           return _CoachCard(
                             coach: coach,
-                            onTap: () => _openCoach(context, coach),
+                            onTap: () => _openCoach(coach),
                           );
                         },
                       ),
@@ -172,12 +195,12 @@ class _CoachCard extends StatelessWidget {
             children: [
               CircleAvatar(
                 radius: 28,
-                backgroundColor: AppColors.primaryContainer,
-                foregroundColor: AppColors.onPrimaryContainer,
+                backgroundColor: theme.colorScheme.primaryContainer,
+                foregroundColor: theme.colorScheme.onPrimaryContainer,
                 child: Text(
                   coach.initials,
                   style: theme.textTheme.titleMedium?.copyWith(
-                    color: AppColors.onPrimaryContainer,
+                    color: theme.colorScheme.onPrimaryContainer,
                   ),
                 ),
               ),
@@ -188,20 +211,13 @@ class _CoachCard extends StatelessWidget {
                   children: [
                     Text(coach.name, style: theme.textTheme.titleMedium),
                     const SizedBox(height: AppSpacing.xs),
-                    Text(
-                      '⭐ ${coach.rating.toStringAsFixed(1)}  ·  ${coach.distanceKm.toStringAsFixed(1)} km',
-                      style: theme.textTheme.bodySmall,
+                    AppRating(
+                      value: coach.rating,
+                      suffix:
+                          '${coach.distanceKm.toStringAsFixed(1)} km',
                     ),
                     const SizedBox(height: AppSpacing.sm),
-                    Chip(
-                      visualDensity: VisualDensity.compact,
-                      label: Text(coach.nextSlotLabel),
-                      backgroundColor: AppColors.primaryContainer,
-                      side: BorderSide.none,
-                      labelStyle: theme.textTheme.labelMedium?.copyWith(
-                        color: AppColors.onPrimaryContainer,
-                      ),
-                    ),
+                    AppTag(label: coach.nextSlotLabel, highlight: true),
                   ],
                 ),
               ),
@@ -211,4 +227,28 @@ class _CoachCard extends StatelessWidget {
       ),
     );
   }
+}
+
+Future<BitmapDescriptor> _buildCoachMarkerIcon(
+  Color fill,
+  Color onFill,
+) async {
+  const width = 36;
+  const height = 48;
+  final recorder = ui.PictureRecorder();
+  final canvas = Canvas(recorder);
+  const circleCenter = Offset(width / 2, width / 2);
+  final path = Path()
+    ..addOval(
+      Rect.fromCircle(center: circleCenter, radius: width / 2),
+    )
+    ..moveTo(width * 0.24, width * 0.58)
+    ..lineTo(width * 0.76, width * 0.58)
+    ..lineTo(width / 2, height.toDouble())
+    ..close();
+  canvas.drawPath(path, Paint()..color = fill);
+  canvas.drawCircle(circleCenter, 6, Paint()..color = onFill);
+  final image = await recorder.endRecording().toImage(width, height);
+  final byteData = await image.toByteData(format: ui.ImageByteFormat.png);
+  return BitmapDescriptor.bytes(byteData!.buffer.asUint8List());
 }

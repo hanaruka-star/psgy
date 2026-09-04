@@ -9,10 +9,14 @@ abstract final class AppSpacing {
   static const double xl = 32;
   static const double xxl = 48;
 
+  /// Chip / input.
   static const double radiusSm = 12;
+  /// Button / card.
   static const double radiusMd = 16;
-  static const double radiusLg = 20;
-  static const double radiusXl = 24;
+  /// Dialog.
+  static const double radiusLg = 24;
+  /// Bottom sheet.
+  static const double radiusXl = 28;
 
   static const BorderRadius borderRadiusSm =
       BorderRadius.all(Radius.circular(radiusSm));

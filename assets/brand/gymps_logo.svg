@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg"
+     viewBox="0 0 220 48"
+     width="220"
+     height="48"
+     role="img"
+     aria-label="gymPS">
+  <!--
+    gymPS header lockup (User)
+    Source: lib/shared/widgets/header_logo.dart ’ HeaderLogo
+
+    Colors
+      gym + mark  #1E3A8A  AppColors.gymPsNavy
+      PS          #0F172A  AppColors.gymPsInk
+
+    Type
+      gym  Inter ExtraBold / 800  letter-spacing -0.5
+      PS   Inter Black / 900      letter-spacing 0.5
+  -->
+  <title>gymPS</title>
+
+  <text id="gym"
+        x="0"
+        y="38"
+        font-family="Inter, system-ui, sans-serif"
+        font-size="40"
+        font-weight="800"
+        letter-spacing="-0.9"
+        fill="#1E3A8A">gym</text>
+
+  <!-- Mark sits after "gym". Translate matches Flutter: fontSize icon + 2px pad. -->
+  <g id="mark" transform="translate(92 4) scale(1.6667)">
+    <rect id="plate-left" x="2" y="8" width="3" height="8" rx="1" fill="#1E3A8A"/>
+    <rect id="plate-right" x="19" y="8" width="3" height="8" rx="1" fill="#1E3A8A"/>
+    <path id="pulse"
+          d="M5 12 H8 L10 8 L13 16 L15 12 H19"
+          fill="none"
+          stroke="#1E3A8A"
+          stroke-width="2.5"
+          stroke-linecap="round"
+          stroke-linejoin="round"/>
+  </g>
+
+  <text id="PS"
+        x="140"
+        y="38"
+        font-family="Inter, system-ui, sans-serif"
+        font-size="40"
+        font-weight="900"
+        letter-spacing="0.9"
+        fill="#0F172A">PS</text>
+</svg>

@@ -30,25 +30,23 @@ const _personal90 = MockService(
   durationMinutes: 90,
 );
 
-/// System catalog — shared across every Coach, not owned by one coach.
-const mockSystemPackages = [
-  MockPackage(
-    id: 'pkg_10',
-    name: 'Gói 10 buổi',
-    sessionCount: 10,
-    totalPriceVnd: 2500000,
-    description: 'Linh hoạt lịch trong 3 tháng, tiết kiệm so với tập lẻ.',
-    validityDays: 90,
-  ),
-  MockPackage(
-    id: 'pkg_20',
-    name: 'Gói 20 buổi',
-    sessionCount: 20,
-    totalPriceVnd: 4500000,
-    description: 'Ưu đãi dài hạn, kèm 1 buổi tư vấn dinh dưỡng.',
-    validityDays: 180,
-  ),
-];
+const _pkgLong10 = MockPackage(
+  id: 'pkg_long_10',
+  coachId: 'coach_01',
+  name: 'Gói 10 buổi',
+  sessionCount: 10,
+  totalPriceVnd: 2500000,
+  description: 'Linh hoạt lịch trong 3 tháng, tiết kiệm so với tập lẻ.',
+);
+
+const _pkgLong20 = MockPackage(
+  id: 'pkg_long_20',
+  coachId: 'coach_01',
+  name: 'Gói 20 buổi',
+  sessionCount: 20,
+  totalPriceVnd: 4500000,
+  description: 'Ưu đãi dài hạn, kèm 1 buổi tư vấn dinh dưỡng.',
+);
 
 const List<MockCoach> mockCoaches = [
   MockCoach(
@@ -62,6 +60,9 @@ const List<MockCoach> mockCoaches = [
     lat: 10.7765,
     lng: 106.7009,
     services: [_personal60, _duo60, _nutrition],
+    packages: [_pkgLong10, _pkgLong20],
+    bio:
+        'HLV thể hình 8 năm, tập trung tăng cơ và giảm mỡ. Từng làm việc tại California Fitness, đồng hành cùng hơn 200 học viên. Chứng chỉ ACE Personal Trainer; từng dẫn team thi Fitness Model quốc gia.',
   ),
   MockCoach(
     id: 'coach_02',
@@ -74,6 +75,18 @@ const List<MockCoach> mockCoaches = [
     lat: 10.7798,
     lng: 106.6882,
     services: [_personal60, _nutrition],
+    packages: [
+      MockPackage(
+        id: 'pkg_mai_5',
+        coachId: 'coach_02',
+        name: 'Gói 5 buổi',
+        sessionCount: 5,
+        totalPriceVnd: 1400000,
+        description: 'Phù hợp dinh dưỡng + tập cá nhân.',
+      ),
+    ],
+    bio:
+        '10 năm kèm dinh dưỡng và tập cá nhân. Ưu tiên giáo án bền vững, phù hợp lịch văn phòng.',
   ),
   MockCoach(
     id: 'coach_03',
@@ -86,6 +99,17 @@ const List<MockCoach> mockCoaches = [
     lat: 10.8104,
     lng: 106.7098,
     services: [_personal60, _duo60],
+    packages: [
+      MockPackage(
+        id: 'pkg_nam_10',
+        coachId: 'coach_03',
+        name: 'Gói 10 buổi',
+        sessionCount: 10,
+        totalPriceVnd: 2700000,
+        description: 'Tập cá nhân hoặc cặp đôi.',
+      ),
+    ],
+    bio: '6 năm strength training, hay kèm cặp đôi và nhóm nhỏ cuối tuần.',
   ),
   MockCoach(
     id: 'coach_04',
@@ -98,6 +122,17 @@ const List<MockCoach> mockCoaches = [
     lat: 10.7872,
     lng: 106.7185,
     services: [_personal90, _nutrition, _duo60],
+    packages: [
+      MockPackage(
+        id: 'pkg_chau_8',
+        coachId: 'coach_04',
+        name: 'Gói 8 buổi',
+        sessionCount: 8,
+        totalPriceVnd: 2200000,
+        description: 'Buổi sáng, kèm tư vấn dinh dưỡng.',
+      ),
+    ],
+    bio: '7 năm HLV buổi sáng. Kết hợp 90 phút + tư vấn dinh dưỡng.',
   ),
   MockCoach(
     id: 'coach_05',
@@ -110,6 +145,8 @@ const List<MockCoach> mockCoaches = [
     lat: 10.7721,
     lng: 106.7210,
     services: [_personal60, _duo60],
+    packages: [],
+    bio: '4 năm kèm beginner. Tập tối, nhịp vừa phải cho người mới.',
   ),
   MockCoach(
     id: 'coach_06',
@@ -122,5 +159,17 @@ const List<MockCoach> mockCoaches = [
     lat: 10.8250,
     lng: 106.6952,
     services: [_personal60, _nutrition, _personal90],
+    packages: [
+      MockPackage(
+        id: 'pkg_ha_12',
+        coachId: 'coach_06',
+        name: 'Gói 12 buổi',
+        sessionCount: 12,
+        totalPriceVnd: 3200000,
+        description: 'Lịch sáng, tập cá nhân 60 hoặc 90 phút.',
+      ),
+    ],
+    bio:
+        '12 năm HLV, chuyên buổi sáng dài. Giáo án cá nhân 60–90 phút kèm dinh dưỡng.',
   ),
 ];

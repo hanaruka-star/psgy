@@ -69,6 +69,8 @@ class ParkingLinkApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         navigatorKey: appNavigatorKey,
         theme: AppTheme.light,
+        darkTheme: AppTheme.dark,
+        themeMode: ThemeMode.system,
         home: FatalErrorScreen(
           error: bootstrap.error!,
           onRetry: () {

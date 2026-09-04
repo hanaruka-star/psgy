@@ -9,7 +9,7 @@ enum MockBookingStatus {
   cancelled,
 }
 
-enum MockPaymentMethod { cash, wallet }
+enum MockPaymentMethod { cash, package }
 
 class MockBookingRequest {
   final String id;
@@ -22,7 +22,8 @@ class MockBookingRequest {
   final MockBookingStatus status;
   final String? cancelReason;
   final MockPaymentMethod paymentMethod;
-  final int topUpAmountVnd;
+  final String? purchasedPackageId;
+  final String? purchasedPackageName;
   final int? rating;
   final String? reviewComment;
   final String coachId;
@@ -39,7 +40,8 @@ class MockBookingRequest {
     required this.status,
     this.cancelReason,
     this.paymentMethod = MockPaymentMethod.cash,
-    this.topUpAmountVnd = 0,
+    this.purchasedPackageId,
+    this.purchasedPackageName,
     this.rating,
     this.reviewComment,
     this.coachId = '',
@@ -48,22 +50,16 @@ class MockBookingRequest {
 
   String get priceLabel => formatVnd(priceVnd);
 
-  int get walletChargeVnd => paymentMethod == MockPaymentMethod.wallet
-      ? priceVnd - topUpAmountVnd
-      : 0;
-
   String get paymentSummary {
     if (paymentMethod == MockPaymentMethod.cash) {
       return 'Thanh toán tiền mặt trực tiếp với Coach';
     }
-    if (topUpAmountVnd <= 0) {
-      return 'Thanh toán bằng ví — 0đ tiền mặt';
-    }
-    return 'Ví ${formatVnd(walletChargeVnd)} · tiền mặt thêm ${formatVnd(topUpAmountVnd)}';
+    final name = purchasedPackageName ?? 'gói';
+    return 'Thanh toán bằng gói $name — trừ 1 buổi';
   }
 
   String get paymentMethodLabel =>
-      paymentMethod == MockPaymentMethod.wallet ? 'Ví' : 'Tiền mặt';
+      paymentMethod == MockPaymentMethod.package ? 'Gói' : 'Tiền mặt';
 
   bool get isActive =>
       status == MockBookingStatus.confirmed ||
@@ -104,7 +100,8 @@ class MockBookingRequest {
       status: status ?? this.status,
       cancelReason: cancelReason ?? this.cancelReason,
       paymentMethod: paymentMethod,
-      topUpAmountVnd: topUpAmountVnd,
+      purchasedPackageId: purchasedPackageId,
+      purchasedPackageName: purchasedPackageName,
       rating: rating ?? this.rating,
       reviewComment: reviewComment ?? this.reviewComment,
       coachId: coachId,

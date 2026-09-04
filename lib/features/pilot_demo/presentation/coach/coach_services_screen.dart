@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:psgy/core/theme/app_spacing.dart';
+import 'package:psgy/core/theme/app_status_colors.dart';
 import 'package:psgy/features/pilot_demo/data/mock_coach_session.dart';
+import 'package:psgy/features/pilot_demo/models/mock_package.dart';
 import 'package:psgy/features/pilot_demo/models/mock_service.dart';
 
 class CoachServicesScreen extends StatelessWidget {
@@ -18,6 +20,19 @@ class CoachServicesScreen extends StatelessWidget {
     );
     if (result == null) return;
     session.upsertService(result);
+  }
+
+  Future<void> _editPackage(
+    BuildContext context,
+    MockCoachSession session, {
+    MockPackage? existing,
+  }) async {
+    final result = await showDialog<MockPackage>(
+      context: context,
+      builder: (_) => _PackageFormDialog(existing: existing),
+    );
+    if (result == null) return;
+    session.upsertPackage(result);
   }
 
   Future<void> _confirmDelete(
@@ -47,56 +62,151 @@ class CoachServicesScreen extends StatelessWidget {
     if (ok == true) onConfirm();
   }
 
+  void _deleteService(
+    BuildContext context,
+    MockCoachSession session,
+    MockService service,
+  ) {
+    if (session.services.length <= 1) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text(
+            'Phải giữ ít nhất 1 dịch vụ để khách tập thử 1 buổi.',
+          ),
+        ),
+      );
+      return;
+    }
+    _confirmDelete(
+      context,
+      title: 'Xóa dịch vụ',
+      onConfirm: () => session.removeService(service.id),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final session = MockCoachSession.instance;
 
-    return ListenableBuilder(
-      listenable: session,
-      builder: (context, _) {
-        final theme = Theme.of(context);
-        return Scaffold(
-          backgroundColor: theme.scaffoldBackgroundColor,
-          appBar: AppBar(title: const Text('Dịch vụ của bạn')),
-          floatingActionButton: FloatingActionButton(
-            onPressed: () => _editService(context, session),
-            child: const Icon(Icons.add),
-          ),
-          body: ListView.separated(
-            padding: AppSpacing.screenPadding,
-            itemCount: session.services.length,
-            separatorBuilder: (_, __) => const SizedBox(height: AppSpacing.sm),
-            itemBuilder: (context, index) {
-              final service = session.services[index];
-              return Card(
-                child: ListTile(
-                  title: Text(service.name),
-                  subtitle: Text(
-                    '${service.priceLabel} · ${service.durationMinutes} phút',
-                  ),
-                  trailing: PopupMenuButton<String>(
-                    onSelected: (value) {
-                      if (value == 'edit') {
-                        _editService(context, session, existing: service);
-                      } else if (value == 'delete') {
-                        _confirmDelete(
-                          context,
-                          title: 'Xóa dịch vụ',
-                          onConfirm: () => session.removeService(service.id),
-                        );
-                      }
-                    },
-                    itemBuilder: (_) => const [
-                      PopupMenuItem(value: 'edit', child: Text('Sửa')),
-                      PopupMenuItem(value: 'delete', child: Text('Xóa')),
-                    ],
-                  ),
+    return DefaultTabController(
+      length: 2,
+      child: ListenableBuilder(
+        listenable: session,
+        builder: (context, _) {
+          final theme = Theme.of(context);
+          return Scaffold(
+            backgroundColor: theme.scaffoldBackgroundColor,
+            appBar: AppBar(
+              title: const Text('Dịch vụ của bạn'),
+              titleTextStyle: AppStatusColors.headingStyle(context),
+              foregroundColor: AppStatusColors.sheetTitle(theme.brightness),
+              bottom: const TabBar(
+                tabs: [
+                  Tab(text: 'Dịch vụ'),
+                  Tab(text: 'Gói'),
+                ],
+              ),
+            ),
+            floatingActionButton: Builder(
+              builder: (fabContext) {
+                return FloatingActionButton(
+                  onPressed: () {
+                    final index = DefaultTabController.of(fabContext).index;
+                    if (index == 0) {
+                      _editService(fabContext, session);
+                    } else {
+                      _editPackage(fabContext, session);
+                    }
+                  },
+                  backgroundColor:
+                      AppStatusColors.highlight(theme.brightness),
+                  foregroundColor:
+                      AppStatusColors.onHighlight(theme.brightness),
+                  child: const Icon(Icons.add),
+                );
+              },
+            ),
+            body: TabBarView(
+              children: [
+                ListView.separated(
+                  padding: AppSpacing.screenPadding,
+                  itemCount: session.services.length,
+                  separatorBuilder: (_, __) =>
+                      const SizedBox(height: AppSpacing.sm),
+                  itemBuilder: (context, index) {
+                    final service = session.services[index];
+                    return Card(
+                      child: ListTile(
+                        title: Text(service.name),
+                        subtitle: Text(
+                          '${service.priceLabel} · ${service.durationMinutes} phút',
+                        ),
+                        trailing: PopupMenuButton<String>(
+                          onSelected: (value) {
+                            if (value == 'edit') {
+                              _editService(
+                                context,
+                                session,
+                                existing: service,
+                              );
+                            } else if (value == 'delete') {
+                              _deleteService(context, session, service);
+                            }
+                          },
+                          itemBuilder: (_) => const [
+                            PopupMenuItem(value: 'edit', child: Text('Sửa')),
+                            PopupMenuItem(value: 'delete', child: Text('Xóa')),
+                          ],
+                        ),
+                      ),
+                    );
+                  },
                 ),
-              );
-            },
-          ),
-        );
-      },
+                ListView.separated(
+                  padding: AppSpacing.screenPadding,
+                  itemCount: session.packages.length,
+                  separatorBuilder: (_, __) =>
+                      const SizedBox(height: AppSpacing.sm),
+                  itemBuilder: (context, index) {
+                    final package = session.packages[index];
+                    return Card(
+                      child: ListTile(
+                        title: Text(package.name),
+                        subtitle: Text(
+                          '${package.sessionCount} buổi · ${package.priceLabel}\n${package.description}',
+                        ),
+                        isThreeLine: true,
+                        trailing: PopupMenuButton<String>(
+                          onSelected: (value) {
+                            if (value == 'edit') {
+                              _editPackage(
+                                context,
+                                session,
+                                existing: package,
+                              );
+                            } else if (value == 'delete') {
+                              _confirmDelete(
+                                context,
+                                title: 'Xóa gói',
+                                onConfirm: () =>
+                                    session.removePackage(package.id),
+                              );
+                            }
+                          },
+                          itemBuilder: (_) => const [
+                            PopupMenuItem(value: 'edit', child: Text('Sửa')),
+                            PopupMenuItem(value: 'delete', child: Text('Xóa')),
+                          ],
+                        ),
+                      ),
+                    );
+                  },
+                ),
+              ],
+            ),
+          );
+        },
+      ),
     );
   }
 }
@@ -143,7 +253,8 @@ class _ServiceFormDialogState extends State<_ServiceFormDialog> {
     if (name.isEmpty || price == null || duration == null) return;
     Navigator.of(context).pop(
       MockService(
-        id: widget.existing?.id ?? 'svc_${DateTime.now().microsecondsSinceEpoch}',
+        id: widget.existing?.id ??
+            'svc_${DateTime.now().microsecondsSinceEpoch}',
         name: name,
         priceVnd: price,
         durationMinutes: duration,
@@ -185,7 +296,118 @@ class _ServiceFormDialogState extends State<_ServiceFormDialog> {
           onPressed: () => Navigator.of(context).pop(),
           child: const Text('Hủy'),
         ),
-        FilledButton(onPressed: _submit, child: const Text('Lưu')),
+        FilledButton(
+          onPressed: _submit,
+          style: AppStatusColors.highlightFilledButton(context),
+          child: const Text('Lưu'),
+        ),
+      ],
+    );
+  }
+}
+
+class _PackageFormDialog extends StatefulWidget {
+  const _PackageFormDialog({this.existing});
+
+  final MockPackage? existing;
+
+  @override
+  State<_PackageFormDialog> createState() => _PackageFormDialogState();
+}
+
+class _PackageFormDialogState extends State<_PackageFormDialog> {
+  late final TextEditingController _name;
+  late final TextEditingController _sessions;
+  late final TextEditingController _price;
+  late final TextEditingController _description;
+
+  @override
+  void initState() {
+    super.initState();
+    final existing = widget.existing;
+    _name = TextEditingController(text: existing?.name ?? '');
+    _sessions = TextEditingController(
+      text: existing == null ? '' : existing.sessionCount.toString(),
+    );
+    _price = TextEditingController(
+      text: existing == null ? '' : existing.totalPriceVnd.toString(),
+    );
+    _description = TextEditingController(text: existing?.description ?? '');
+  }
+
+  @override
+  void dispose() {
+    _name.dispose();
+    _sessions.dispose();
+    _price.dispose();
+    _description.dispose();
+    super.dispose();
+  }
+
+  void _submit() {
+    final name = _name.text.trim();
+    final sessions = int.tryParse(_sessions.text.trim());
+    final price = int.tryParse(_price.text.trim());
+    final description = _description.text.trim();
+    if (name.isEmpty || sessions == null || price == null) return;
+    Navigator.of(context).pop(
+      MockPackage(
+        id: widget.existing?.id ??
+            'pkg_${DateTime.now().microsecondsSinceEpoch}',
+        coachId: widget.existing?.coachId ??
+            MockCoachSession.instance.profile.id,
+        name: name,
+        sessionCount: sessions,
+        totalPriceVnd: price,
+        description: description,
+      ),
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return AlertDialog(
+      title: Text(widget.existing == null ? 'Thêm gói' : 'Sửa gói'),
+      content: SingleChildScrollView(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            TextField(
+              controller: _name,
+              decoration: const InputDecoration(labelText: 'Tên'),
+            ),
+            const SizedBox(height: AppSpacing.sm),
+            TextField(
+              controller: _sessions,
+              keyboardType: TextInputType.number,
+              inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+              decoration: const InputDecoration(labelText: 'Số buổi'),
+            ),
+            const SizedBox(height: AppSpacing.sm),
+            TextField(
+              controller: _price,
+              keyboardType: TextInputType.number,
+              inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+              decoration: const InputDecoration(labelText: 'Giá gói (VND)'),
+            ),
+            const SizedBox(height: AppSpacing.sm),
+            TextField(
+              controller: _description,
+              decoration: const InputDecoration(labelText: 'Mô tả'),
+            ),
+          ],
+        ),
+      ),
+      actions: [
+        TextButton(
+          onPressed: () => Navigator.of(context).pop(),
+          child: const Text('Hủy'),
+        ),
+        FilledButton(
+          onPressed: _submit,
+          style: AppStatusColors.highlightFilledButton(context),
+          child: const Text('Lưu'),
+        ),
       ],
     );
   }

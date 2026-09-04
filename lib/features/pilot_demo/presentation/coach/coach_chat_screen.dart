@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:psgy/core/theme/app_colors.dart';
+import 'package:psgy/core/theme/app_shapes.dart';
 import 'package:psgy/core/theme/app_spacing.dart';
+import 'package:psgy/core/theme/app_status_colors.dart';
 import 'package:psgy/features/pilot_demo/data/mock_coach_session.dart';
 
 class CoachChatScreen extends StatefulWidget {
@@ -53,6 +54,8 @@ class _CoachChatScreenState extends State<CoachChatScreen> {
           backgroundColor: theme.scaffoldBackgroundColor,
           appBar: AppBar(
             title: Text(booking?.userName ?? 'Chat'),
+            titleTextStyle: AppStatusColors.headingStyle(context),
+            foregroundColor: AppStatusColors.sheetTitle(theme.brightness),
           ),
           body: Column(
             children: [
@@ -77,11 +80,11 @@ class _CoachChatScreenState extends State<CoachChatScreen> {
                             horizontal: AppSpacing.md,
                             vertical: AppSpacing.sm + 2,
                           ),
-                          decoration: BoxDecoration(
+                          decoration: ShapeDecoration(
                             color: isCoach
-                                ? AppColors.primary
-                                : theme.colorScheme.surfaceContainerHighest,
-                            borderRadius: AppSpacing.borderRadiusMd,
+                                ? theme.colorScheme.primaryContainer
+                                : theme.colorScheme.surfaceContainerHigh,
+                            shape: AppShapes.rect(radius: AppSpacing.radiusMd),
                           ),
                           child: Column(
                             crossAxisAlignment: isCoach
@@ -92,7 +95,7 @@ class _CoachChatScreenState extends State<CoachChatScreen> {
                                 message.text,
                                 style: theme.textTheme.bodyMedium?.copyWith(
                                   color: isCoach
-                                      ? Colors.white
+                                      ? theme.colorScheme.onPrimaryContainer
                                       : theme.colorScheme.onSurface,
                                 ),
                               ),
@@ -101,8 +104,9 @@ class _CoachChatScreenState extends State<CoachChatScreen> {
                                 message.sentAtLabel,
                                 style: theme.textTheme.bodySmall?.copyWith(
                                   color: isCoach
-                                      ? Colors.white70
-                                      : theme.textTheme.bodySmall?.color,
+                                      ? theme.colorScheme.onPrimaryContainer
+                                          .withValues(alpha: 0.7)
+                                      : theme.colorScheme.onSurfaceVariant,
                                 ),
                               ),
                             ],
@@ -136,6 +140,12 @@ class _CoachChatScreenState extends State<CoachChatScreen> {
                       const SizedBox(width: AppSpacing.sm),
                       IconButton.filled(
                         onPressed: _send,
+                        style: IconButton.styleFrom(
+                          backgroundColor:
+                              AppStatusColors.highlight(theme.brightness),
+                          foregroundColor:
+                              AppStatusColors.onHighlight(theme.brightness),
+                        ),
                         icon: const Icon(Icons.send),
                       ),
                     ],

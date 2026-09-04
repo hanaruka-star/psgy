@@ -2,10 +2,9 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:psgy/core/theme/app_colors.dart';
 import 'package:psgy/core/theme/app_spacing.dart';
 import 'package:psgy/features/pilot_demo/data/mock_user_session.dart';
-import 'package:psgy/features/pilot_demo/presentation/pilot_map_screen.dart';
+import 'package:psgy/features/pilot_demo/presentation/main_shell_screen.dart';
 
 class UserProfileSetupScreen extends StatefulWidget {
   const UserProfileSetupScreen({super.key});
@@ -52,7 +51,7 @@ class _UserProfileSetupScreenState extends State<UserProfileSetupScreen> {
     final navigator = Navigator.of(context);
     if (navigator.canPop()) {
       navigator.pushAndRemoveUntil(
-        PilotMapScreen.route(),
+        MainShellScreen.route(),
         (route) => route.isFirst,
       );
     }
@@ -81,8 +80,10 @@ class _UserProfileSetupScreenState extends State<UserProfileSetupScreen> {
                       onTap: _pickAvatar,
                       child: CircleAvatar(
                         radius: 48,
-                        backgroundColor: AppColors.primaryContainer,
-                        foregroundColor: AppColors.onPrimaryContainer,
+                        backgroundColor:
+                            Theme.of(context).colorScheme.primaryContainer,
+                        foregroundColor:
+                            Theme.of(context).colorScheme.onPrimaryContainer,
                         backgroundImage: _avatarPath == null
                             ? null
                             : FileImage(File(_avatarPath!)),

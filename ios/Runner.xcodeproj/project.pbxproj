@@ -954,7 +954,7 @@
 			baseConfigurationReference = D3B6A1000000000000000001 /* Debug-user.xcconfig */;
 			buildSettings = {
 				APP_NAME = "PSGymer User";
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon-user;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = Runner/Runner.entitlements;
 				CURRENT_PROJECT_VERSION = "$(FLUTTER_BUILD_NUMBER)";
@@ -979,7 +979,7 @@
 			baseConfigurationReference = D3B6A1000000000000000002 /* Release-user.xcconfig */;
 			buildSettings = {
 				APP_NAME = "PSGymer User";
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon-user;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = Runner/Runner.entitlements;
 				CURRENT_PROJECT_VERSION = "$(FLUTTER_BUILD_NUMBER)";
@@ -1003,7 +1003,7 @@
 			baseConfigurationReference = D3B6A1000000000000000003 /* Debug-coach.xcconfig */;
 			buildSettings = {
 				APP_NAME = "PSGymer Coach";
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon-coach;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = Runner/Runner.entitlements;
 				CURRENT_PROJECT_VERSION = "$(FLUTTER_BUILD_NUMBER)";
@@ -1028,7 +1028,7 @@
 			baseConfigurationReference = D3B6A1000000000000000004 /* Release-coach.xcconfig */;
 			buildSettings = {
 				APP_NAME = "PSGymer Coach";
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon-coach;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = Runner/Runner.entitlements;
 				CURRENT_PROJECT_VERSION = "$(FLUTTER_BUILD_NUMBER)";

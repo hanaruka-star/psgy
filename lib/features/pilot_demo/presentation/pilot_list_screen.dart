@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:psgy/core/theme/app_colors.dart';
 import 'package:psgy/core/theme/app_spacing.dart';
+import 'package:psgy/core/theme/app_status_colors.dart';
 import 'package:psgy/features/pilot_demo/data/mock_coaches.dart';
 import 'package:psgy/features/pilot_demo/models/mock_coach.dart';
 import 'package:psgy/features/pilot_demo/presentation/coach_detail_screen.dart';
@@ -44,12 +44,12 @@ class PilotListScreen extends StatelessWidget {
                   children: [
                     CircleAvatar(
                       radius: 28,
-                      backgroundColor: AppColors.primaryContainer,
-                      foregroundColor: AppColors.onPrimaryContainer,
+                      backgroundColor: theme.colorScheme.primaryContainer,
+                      foregroundColor: theme.colorScheme.onPrimaryContainer,
                       child: Text(
                         coach.initials,
                         style: theme.textTheme.titleMedium?.copyWith(
-                          color: AppColors.onPrimaryContainer,
+                          color: theme.colorScheme.onPrimaryContainer,
                         ),
                       ),
                     ),
@@ -60,20 +60,15 @@ class PilotListScreen extends StatelessWidget {
                         children: [
                           Text(coach.name, style: theme.textTheme.titleMedium),
                           const SizedBox(height: AppSpacing.xs),
-                          Text(
-                            '⭐ ${coach.rating.toStringAsFixed(1)}  ·  ${coach.distanceKm.toStringAsFixed(1)} km',
-                            style: theme.textTheme.bodySmall,
+                          AppRating(
+                            value: coach.rating,
+                            suffix:
+                                '${coach.distanceKm.toStringAsFixed(1)} km',
                           ),
                           const SizedBox(height: AppSpacing.sm),
-                          Chip(
-                            visualDensity: VisualDensity.compact,
-                            label: Text(coach.nextSlotLabel),
-                            backgroundColor: AppColors.primaryContainer,
-                            side: BorderSide.none,
-                            labelStyle:
-                                theme.textTheme.labelMedium?.copyWith(
-                              color: AppColors.onPrimaryContainer,
-                            ),
+                          AppTag(
+                            label: coach.nextSlotLabel,
+                            highlight: true,
                           ),
                         ],
                       ),

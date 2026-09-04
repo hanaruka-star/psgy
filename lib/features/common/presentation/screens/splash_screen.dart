@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:psgy/core/config/app_config.dart';
+import 'package:psgy/core/config/flavor.dart';
 import 'package:psgy/core/theme/app_colors.dart';
 import 'package:psgy/core/theme/app_spacing.dart';
+import 'package:psgy/core/theme/app_status_colors.dart';
 import 'package:psgy/features/common/presentation/widgets/debug_menu_host.dart';
+import 'package:psgy/shared/widgets/header_logo.dart';
 
 class SplashScreen extends ConsumerStatefulWidget {
   final VoidCallback onFinished;
@@ -56,87 +59,72 @@ class _SplashScreenState extends ConsumerState<SplashScreen>
 
   @override
   Widget build(BuildContext context) {
+    final canvas = FlavorConfig.isCoach
+        ? AppStatusColors.sheetBackground(Brightness.light)
+        : Colors.white;
     return Scaffold(
-      body: Container(
-        width: double.infinity,
-        decoration: const BoxDecoration(gradient: AppColors.brandGradient),
-        child: SafeArea(
-          child: AnimatedBuilder(
-            animation: _controller,
-            builder: (context, child) {
-              return Opacity(
-                opacity: _fade.value,
-                child: Transform.scale(
-                  scale: _scale.value,
-                  child: child,
-                ),
-              );
-            },
+      backgroundColor: canvas,
+      body: SafeArea(
+        child: AnimatedBuilder(
+          animation: _controller,
+          builder: (context, child) {
+            return Opacity(
+              opacity: _fade.value,
+              child: Transform.scale(
+                scale: _scale.value,
+                child: child,
+              ),
+            );
+          },
+          child: Center(
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisSize: MainAxisSize.min,
               children: [
-                GestureDetector(
-                  onLongPress: () => openDebugMenuFromContext(context, ref),
-                  child: Container(
-                    width: 120,
-                    height: 120,
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(AppSpacing.radiusXl),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.black.withValues(alpha: 0.18),
-                          blurRadius: 24,
-                          offset: const Offset(0, 8),
-                        ),
-                      ],
-                    ),
-                    padding: const EdgeInsets.all(16),
-                    child: Image.asset(
-                      'assets/images/branding/splash_logo.png',
-                      fit: BoxFit.contain,
-                    ),
-                  ),
+              GestureDetector(
+                onLongPress: () => openDebugMenuFromContext(context, ref),
+                child: HeaderLogo(
+                  fontSize: 32,
+                  showCoachLabel: FlavorConfig.isCoach,
                 ),
-                const SizedBox(height: AppSpacing.lg),
-                Text(
-                  widget.appName,
-                  style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                        color: Colors.white,
-                        fontWeight: FontWeight.w800,
-                      ),
+              ),
+              const SizedBox(height: AppSpacing.lg),
+              Text(
+                widget.appName,
+                style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                      color: AppColors.gymPsInk.withValues(alpha: 0.7),
+                    ),
+              ),
+              const SizedBox(height: AppSpacing.sm),
+              Text(
+                AppConfig.tagline,
+                style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                      color: AppColors.textSecondaryLight,
+                    ),
+              ),
+              if (!AppConfig.isProduction) ...[
+                const SizedBox(height: AppSpacing.md),
+                Container(
+                  padding: AppSpacing.chipPadding,
+                  decoration: BoxDecoration(
+                    color: AppColors.gymPsNavy.withValues(alpha: 0.08),
+                    borderRadius: AppSpacing.borderRadiusSm,
+                  ),
+                  child: Text(
+                    AppConfig.environmentLabel,
+                    style: Theme.of(context).textTheme.labelMedium?.copyWith(
+                          color: AppColors.gymPsNavy,
+                          fontWeight: FontWeight.w700,
+                        ),
+                  ),
                 ),
                 const SizedBox(height: AppSpacing.sm),
                 Text(
-                  AppConfig.tagline,
-                  style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                        color: Colors.white.withValues(alpha: 0.92),
+                  'Giữ logo để mở Debug Menu',
+                  style: Theme.of(context).textTheme.labelSmall?.copyWith(
+                        color: AppColors.textSecondaryLight,
                       ),
                 ),
-                if (!AppConfig.isProduction) ...[
-                  const SizedBox(height: AppSpacing.md),
-                  Container(
-                    padding: AppSpacing.chipPadding,
-                    decoration: BoxDecoration(
-                      color: Colors.white.withValues(alpha: 0.18),
-                      borderRadius: AppSpacing.borderRadiusSm,
-                    ),
-                    child: Text(
-                      AppConfig.environmentLabel,
-                      style: Theme.of(context).textTheme.labelMedium?.copyWith(
-                            color: Colors.white,
-                            fontWeight: FontWeight.w700,
-                          ),
-                    ),
-                  ),
-                  const SizedBox(height: AppSpacing.sm),
-                  Text(
-                    'Giữ logo để mở Debug Menu',
-                    style: Theme.of(context).textTheme.labelSmall?.copyWith(
-                          color: Colors.white.withValues(alpha: 0.75),
-                        ),
-                  ),
-                ],
+              ],
               ],
             ),
           ),

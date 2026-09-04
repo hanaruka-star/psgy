@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:psgy/core/theme/app_spacing.dart';
+import 'package:psgy/core/theme/app_status_colors.dart';
 import 'package:psgy/features/pilot_demo/data/mock_coach_session.dart';
 import 'package:psgy/features/pilot_demo/models/mock_booking_request.dart';
 
@@ -18,7 +19,13 @@ class BookingRequestDetailScreen extends StatelessWidget {
         final booking = session.bookingById(bookingId);
         if (booking == null) {
           return Scaffold(
-            appBar: AppBar(title: const Text('Chi tiết booking')),
+            appBar: AppBar(
+              title: const Text('Chi tiết booking'),
+              titleTextStyle: AppStatusColors.headingStyle(context),
+              foregroundColor: AppStatusColors.sheetTitle(
+                Theme.of(context).brightness,
+              ),
+            ),
             body: const Center(child: Text('Không tìm thấy booking.')),
           );
         }
@@ -28,7 +35,11 @@ class BookingRequestDetailScreen extends StatelessWidget {
 
         return Scaffold(
           backgroundColor: theme.scaffoldBackgroundColor,
-          appBar: AppBar(title: const Text('Yêu cầu đặt lịch')),
+          appBar: AppBar(
+            title: const Text('Yêu cầu đặt lịch'),
+            titleTextStyle: AppStatusColors.headingStyle(context),
+            foregroundColor: AppStatusColors.sheetTitle(theme.brightness),
+          ),
           body: Column(
             children: [
               Expanded(
@@ -41,7 +52,10 @@ class BookingRequestDetailScreen extends StatelessWidget {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text(booking.userName, style: theme.textTheme.titleLarge),
+                            Text(
+                              booking.userName,
+                              style: AppStatusColors.headingStyle(context),
+                            ),
                             const SizedBox(height: AppSpacing.md),
                             _Row(label: 'Dịch vụ', value: booking.serviceName),
                             _Row(label: 'Giá', value: booking.priceLabel),
@@ -84,6 +98,7 @@ class BookingRequestDetailScreen extends StatelessWidget {
                               );
                               Navigator.of(context).pop();
                             },
+                            style: AppStatusColors.highlightFilledButton(context),
                             child: const Text('Xác nhận'),
                           ),
                         ),

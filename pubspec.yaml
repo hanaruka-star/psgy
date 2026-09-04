@@ -46,6 +46,8 @@ dependencies:
   flutter_local_notifications: ^18.0.1
   firebase_storage: ^12.4.10
   image_picker: ^1.1.2
+  google_fonts: ^6.2.1
+  figma_squircle: ^0.6.3
 
 dev_dependencies:
   flutter_test:
@@ -60,17 +62,18 @@ dev_dependencies:
 flutter_launcher_icons:
   android: true
   ios: true
-  image_path: assets/images/icons/app_icon.png
-  adaptive_icon_background: "#2563EB"
-  adaptive_icon_foreground: assets/images/icons/app_icon.png
+  image_path: assets/images/icons/app_icon_user.png
+  adaptive_icon_background: "#FFFFFF"
+  adaptive_icon_foreground: assets/images/icons/app_icon_user.png
+  adaptive_icon_foreground_inset: 0
   remove_alpha_ios: true
+  background_color_ios: "#FFFFFF"
 
 flutter_native_splash:
   color: "#2563EB"
-  image: assets/images/branding/splash_logo.png
   android_12:
     color: "#2563EB"
-    image: assets/images/branding/splash_logo.png
+    image: assets/images/branding/splash_blank.png
   ios: true
   android: true
   web: false
@@ -81,4 +84,6 @@ flutter:
     - assets/images/
     - assets/images/branding/
     - assets/images/icons/
+    - assets/images/journal/
     - assets/animations/
+    - assets/map_style/

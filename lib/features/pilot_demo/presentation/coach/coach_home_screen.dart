@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:psgy/core/theme/app_colors.dart';
+import 'package:psgy/core/config/app_config.dart';
 import 'package:psgy/core/theme/app_spacing.dart';
+import 'package:psgy/core/theme/app_status_colors.dart';
 import 'package:psgy/features/pilot_demo/data/mock_coach_session.dart';
 import 'package:psgy/features/pilot_demo/models/mock_booking_request.dart';
 import 'package:psgy/features/pilot_demo/presentation/coach/active_booking_screen.dart';
 import 'package:psgy/features/pilot_demo/presentation/coach/booking_request_detail_screen.dart';
 import 'package:psgy/features/pilot_demo/presentation/coach/coach_services_screen.dart';
+import 'package:psgy/features/pilot_demo/presentation/coach/coach_student_journal_screen.dart';
+import 'package:psgy/features/pilot_demo/presentation/booking_status_style.dart';
+import 'package:psgy/shared/widgets/header_logo.dart';
 
 class CoachHomeScreen extends StatelessWidget {
   static const routeName = 'coach_home';
@@ -34,8 +38,24 @@ class CoachHomeScreen extends StatelessWidget {
         return Scaffold(
           backgroundColor: theme.scaffoldBackgroundColor,
           appBar: AppBar(
-            title: const Text('Trang chủ Coach'),
+            title: AppConfig.showDevModeSwitcher
+                ? null
+                : const HeaderLogo(fontSize: 20, showCoachLabel: true),
+            toolbarHeight:
+                AppConfig.showDevModeSwitcher ? kToolbarHeight : 72,
+            foregroundColor: AppStatusColors.sheetTitle(theme.brightness),
             actions: [
+              IconButton(
+                tooltip: 'Nhật ký học viên',
+                onPressed: () {
+                  Navigator.of(context).push(
+                    MaterialPageRoute<void>(
+                      builder: (_) => const CoachStudentJournalScreen(),
+                    ),
+                  );
+                },
+                icon: const Icon(Icons.auto_stories_outlined),
+              ),
               IconButton(
                 tooltip: 'Dịch vụ',
                 onPressed: () {
@@ -56,12 +76,12 @@ class CoachHomeScreen extends StatelessWidget {
                 children: [
                   CircleAvatar(
                     radius: 28,
-                    backgroundColor: AppColors.primaryContainer,
-                    foregroundColor: AppColors.onPrimaryContainer,
+                    backgroundColor: theme.colorScheme.primaryContainer,
+                    foregroundColor: theme.colorScheme.onPrimaryContainer,
                     child: Text(
                       profile.avatarInitials,
                       style: theme.textTheme.titleMedium?.copyWith(
-                        color: AppColors.onPrimaryContainer,
+                        color: theme.colorScheme.onPrimaryContainer,
                       ),
                     ),
                   ),
@@ -71,9 +91,9 @@ class CoachHomeScreen extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(profile.name, style: theme.textTheme.titleLarge),
-                        Text(
-                          '⭐ ${profile.ratingAvg.toStringAsFixed(1)}  ·  ${profile.ratingCount} đánh giá',
-                          style: theme.textTheme.bodySmall,
+                        AppRating(
+                          value: profile.ratingAvg,
+                          suffix: '${profile.ratingCount} đánh giá',
                         ),
                       ],
                     ),
@@ -92,8 +112,20 @@ class CoachHomeScreen extends StatelessWidget {
                         title: const Text('Đang rảnh'),
                         subtitle: Text('Khung giờ ${profile.hoursLabel}'),
                         value: profile.isAvailableNow,
-                        activeThumbColor: AppColors.primary,
                         onChanged: session.setAvailable,
+                        thumbColor: WidgetStateProperty.resolveWith((states) {
+                          if (states.contains(WidgetState.selected)) {
+                            return AppStatusColors.highlight(theme.brightness);
+                          }
+                          return null;
+                        }),
+                        trackColor: WidgetStateProperty.resolveWith((states) {
+                          if (states.contains(WidgetState.selected)) {
+                            return AppStatusColors.highlight(theme.brightness)
+                                .withValues(alpha: 0.35);
+                          }
+                          return null;
+                        }),
                       ),
                       const Divider(),
                       Text('Vị trí hiện tại', style: theme.textTheme.titleMedium),
@@ -117,7 +149,10 @@ class CoachHomeScreen extends StatelessWidget {
               ),
               if (active.isNotEmpty) ...[
                 const SizedBox(height: AppSpacing.lg),
-                Text('Booking đang diễn ra', style: theme.textTheme.titleLarge),
+                Text(
+                  'Booking đang diễn ra',
+                  style: AppStatusColors.headingStyle(context),
+                ),
                 const SizedBox(height: AppSpacing.sm),
                 for (final booking in active) ...[
                   _BookingCard(
@@ -135,7 +170,10 @@ class CoachHomeScreen extends StatelessWidget {
                 ],
               ],
               const SizedBox(height: AppSpacing.lg),
-              Text('Booking mới cần xác nhận', style: theme.textTheme.titleLarge),
+              Text(
+                'Booking mới cần xác nhận',
+                style: AppStatusColors.headingStyle(context),
+              ),
               const SizedBox(height: AppSpacing.sm),
               if (pending.isEmpty)
                 Text(
@@ -185,8 +223,8 @@ class _BookingCard extends StatelessWidget {
             children: [
               CircleAvatar(
                 radius: 24,
-                backgroundColor: AppColors.primaryContainer,
-                foregroundColor: AppColors.onPrimaryContainer,
+                backgroundColor: theme.colorScheme.primaryContainer,
+                foregroundColor: theme.colorScheme.onPrimaryContainer,
                 child: Text(booking.userAvatarInitials),
               ),
               const SizedBox(width: AppSpacing.md),
@@ -224,44 +262,15 @@ class _StatusChip extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final colors = _statusColors(booking.status);
+    final pair = bookingStatusPair(context, booking.status);
     return Chip(
       visualDensity: VisualDensity.compact,
-      backgroundColor: colors.$1,
+      backgroundColor: pair.container,
       side: BorderSide.none,
       label: Text(booking.statusLabel),
       labelStyle: Theme.of(context).textTheme.labelMedium?.copyWith(
-            color: colors.$2,
+            color: pair.onContainer,
           ),
     );
   }
-}
-
-(Color, Color) _statusColors(MockBookingStatus status) {
-  return switch (status) {
-    MockBookingStatus.pending => (
-        AppColors.warningContainer,
-        AppColors.onWarningContainer,
-      ),
-    MockBookingStatus.confirmed => (
-        AppColors.primaryContainer,
-        AppColors.onPrimaryContainer,
-      ),
-    MockBookingStatus.inProgress => (
-        AppColors.successContainer,
-        AppColors.onSuccessContainer,
-      ),
-    MockBookingStatus.awaitingUserConfirmation => (
-        AppColors.warningContainer,
-        AppColors.onWarningContainer,
-      ),
-    MockBookingStatus.completed => (
-        AppColors.successContainer,
-        AppColors.onSuccessContainer,
-      ),
-    MockBookingStatus.cancelled => (
-        AppColors.dangerContainer,
-        AppColors.onDangerContainer,
-      ),
-  };
 }

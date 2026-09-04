@@ -1,0 +1,9 @@
+flutter_launcher_icons:
+  android: true
+  ios: true
+  image_path: assets/images/icons/app_icon_coach.png
+  adaptive_icon_background: "#DEF0F1"
+  adaptive_icon_foreground: assets/images/icons/app_icon_coach.png
+  adaptive_icon_foreground_inset: 0
+  remove_alpha_ios: true
+  background_color_ios: "#DEF0F1"

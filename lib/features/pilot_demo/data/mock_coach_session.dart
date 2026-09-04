@@ -1,7 +1,9 @@
 import 'package:flutter/foundation.dart';
 import 'package:psgy/features/pilot_demo/models/mock_booking_request.dart';
 import 'package:psgy/features/pilot_demo/models/mock_coach_profile.dart';
+import 'package:psgy/features/pilot_demo/models/mock_journal_post.dart';
 import 'package:psgy/features/pilot_demo/models/mock_message.dart';
+import 'package:psgy/features/pilot_demo/models/mock_package.dart';
 import 'package:psgy/features/pilot_demo/models/mock_service.dart';
 
 /// In-memory coach session for the 22/08 pilot. Not persisted.
@@ -10,6 +12,10 @@ class MockCoachSession extends ChangeNotifier {
       : profile = _seedProfile,
         bookings = List<MockBookingRequest>.of(_seedBookings),
         services = List<MockService>.of(_seedServices),
+        packages = List<MockPackage>.of(_seedPackages),
+        // Mock độc lập minh hoạ UI — không đọc MockUserSession.
+        // Bản thật cần Firestore sync xuyên 2 app (việc đội dev sau).
+        studentJournalPosts = List<JournalPost>.of(_seedStudentJournalPosts),
         messages = {
           for (final entry in _seedMessages.entries)
             entry.key: List<MockMessage>.of(entry.value),
@@ -27,7 +33,15 @@ class MockCoachSession extends ChangeNotifier {
   MockCoachProfile profile;
   List<MockBookingRequest> bookings;
   List<MockService> services;
+  List<MockPackage> packages;
   final Map<String, List<MockMessage>> messages;
+
+  /// Nhật ký học viên mock, seed tại chỗ — không kéo từ MockUserSession.
+  List<JournalPost> studentJournalPosts;
+
+  String studentNameFor(String userId) {
+    return _seedStudentNames[userId] ?? 'Học viên';
+  }
 
   List<MockBookingRequest> get pendingBookings => bookings
       .where((booking) => booking.status == MockBookingStatus.pending)
@@ -102,7 +116,26 @@ class MockCoachSession extends ChangeNotifier {
   }
 
   void removeService(String id) {
+    if (services.length <= 1) return;
     services = services.where((item) => item.id != id).toList();
+    notifyListeners();
+  }
+
+  void upsertPackage(MockPackage package) {
+    final index = packages.indexWhere((item) => item.id == package.id);
+    if (index < 0) {
+      packages = [...packages, package];
+    } else {
+      packages = [
+        for (var i = 0; i < packages.length; i++)
+          if (i == index) package else packages[i],
+      ];
+    }
+    notifyListeners();
+  }
+
+  void removePackage(String id) {
+    packages = packages.where((item) => item.id != id).toList();
     notifyListeners();
   }
 }
@@ -140,6 +173,64 @@ const _seedServices = [
     name: 'Tư vấn dinh dưỡng',
     priceVnd: 150000,
     durationMinutes: 45,
+  ),
+];
+
+const _seedPackages = [
+  MockPackage(
+    id: 'pkg_long_10',
+    coachId: 'coach_01',
+    name: 'Gói 10 buổi',
+    sessionCount: 10,
+    totalPriceVnd: 2500000,
+    description: 'Linh hoạt lịch trong 3 tháng, tiết kiệm so với tập lẻ.',
+  ),
+  MockPackage(
+    id: 'pkg_long_20',
+    coachId: 'coach_01',
+    name: 'Gói 20 buổi',
+    sessionCount: 20,
+    totalPriceVnd: 4500000,
+    description: 'Ưu đãi dài hạn, kèm 1 buổi tư vấn dinh dưỡng.',
+  ),
+];
+
+/// Data mock độc lập minh hoạ UI Coach xem nhật ký học viên.
+/// Không đồng bộ với MockUserSession / journalPosts phía User.
+/// Bản thật cần Firestore sync xuyên 2 app (việc đội dev sau).
+const _seedStudentNames = {
+  'coach_student_01': 'Trần Minh Anh',
+  'coach_student_02': 'Lê Thị Hương',
+};
+
+final _seedStudentJournalPosts = [
+  JournalPost(
+    id: 'cjp_01',
+    userId: 'coach_student_01',
+    bookingId: 'bk_student_journal_01',
+    coachId: 'coach_01',
+    coachName: 'Nguyễn Văn Long',
+    serviceName: 'Tập cá nhân 60 phút',
+    durationMinutes: 60,
+    caption:
+        'Buổi squat hôm nay form ổn hơn. Cảm ơn coach đã chỉnh lưng ạ.',
+    mediaUrl: 'assets/images/journal/seed_01.jpg',
+    privacy: JournalPrivacy.coachOnly,
+    createdAt: DateTime(2026, 8, 27, 19, 20),
+  ),
+  JournalPost(
+    id: 'cjp_02',
+    userId: 'coach_student_02',
+    bookingId: 'bk_student_journal_02',
+    coachId: 'coach_01',
+    coachName: 'Nguyễn Văn Long',
+    serviceName: 'Tư vấn dinh dưỡng',
+    durationMinutes: 45,
+    caption:
+        'Thực đơn mới dễ theo. Giảm đồ ngọt tối, ngủ ngon hơn hẳn.',
+    mediaUrl: 'assets/images/journal/seed_02.jpg',
+    privacy: JournalPrivacy.public,
+    createdAt: DateTime(2026, 8, 26, 10, 15),
   ),
 ];
 

@@ -9,9 +9,10 @@ import 'package:psgy/features/common/presentation/screens/splash_screen.dart';
 import 'package:psgy/features/pilot_demo/data/mock_user_session.dart';
 import 'package:psgy/features/pilot_demo/presentation/coach/coach_home_screen.dart';
 import 'package:psgy/features/pilot_demo/presentation/mock_phone_auth_screen.dart';
-import 'package:psgy/features/pilot_demo/presentation/pilot_map_screen.dart';
+import 'package:psgy/features/pilot_demo/presentation/main_shell_screen.dart';
 import 'package:psgy/features/pilot_demo/presentation/user_profile_setup_screen.dart';
 import 'package:psgy/features/user/presentation/widgets/watchlist_notification_bootstrap.dart';
+import 'package:psgy/shared/widgets/header_logo.dart';
 
 enum _AppStage { splash, consent, home }
 
@@ -63,7 +64,7 @@ class AppHomeScreen extends ConsumerWidget {
     }
 
     return FlavorConfig.isUser
-        ? const _UserPilotGate() // TEMP: demo B1 OTP → hồ sơ → Map
+        ? const _UserPilotGate() // TEMP: demo B1 OTP → hồ sơ → shell 5 tab
         : const CoachHomeScreen(); // TEMP: demo pilot 2026-08-22, revert lại LoginScreen() sau
   }
 }
@@ -78,7 +79,11 @@ class ModeSwitcherScreen extends ConsumerWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(FlavorConfig.appName),
+        title: HeaderLogo(
+          fontSize: modeController.isCoach ? 18 : 20,
+          showCoachLabel: modeController.isCoach,
+        ),
+        toolbarHeight: modeController.isCoach ? 72 : kToolbarHeight,
         actions: [
           TextButton.icon(
             onPressed: () {
@@ -97,13 +102,13 @@ class ModeSwitcherScreen extends ConsumerWidget {
         ],
       ),
       body: modeController.isUser
-          ? const _UserPilotGate() // TEMP: demo B1 OTP → hồ sơ → Map
+          ? const _UserPilotGate() // TEMP: demo B1 OTP → hồ sơ → shell 5 tab
           : const CoachHomeScreen(), // TEMP: demo pilot 2026-08-22, revert lại LoginScreen() sau
     );
   }
 }
 
-/// TEMP: User flavor — OTP mock → hồ sơ mock → PilotMap. Revert sau pilot.
+/// TEMP: User flavor — OTP mock → hồ sơ mock → MainShell. Revert sau pilot.
 class _UserPilotGate extends StatefulWidget {
   const _UserPilotGate();
 
@@ -120,7 +125,7 @@ class _UserPilotGateState extends State<_UserPilotGate> {
       listenable: MockUserSession.instance,
       builder: (context, _) {
         if (MockUserSession.instance.profile != null) {
-          return const WatchlistNotificationBootstrap(child: PilotMapScreen());
+          return const WatchlistNotificationBootstrap(child: MainShellScreen());
         }
         if (_otpVerified) {
           return const UserProfileSetupScreen();
