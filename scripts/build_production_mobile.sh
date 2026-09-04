@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
-# Build all production mobile artifacts: Android APK + AAB (user & staff).
-# iOS: run ./scripts/build_production_ios.sh [user|staff] separately (requires Xcode signing).
+# Build all production mobile artifacts: Android APK + AAB (user & coach).
+# iOS: run ./scripts/build_production_ios.sh [user|coach] separately (requires Xcode signing).
 set -euo pipefail
 
 ROOT_DIR="$(cd "$(dirname "$0")/.." && pwd)"
@@ -36,18 +36,18 @@ build_android_flavor() {
     "${DEFINES[@]}"
 }
 
-echo "ParkingLink — Mobile Production Build (Android)"
+echo "PSgy — Mobile Production Build (Android)"
 build_android_flavor user
-build_android_flavor staff
+build_android_flavor coach
 
 echo ""
 echo "=== Android artifacts ==="
 ls -lh build/app/outputs/flutter-apk/app-user-release.apk 2>/dev/null || true
-ls -lh build/app/outputs/flutter-apk/app-staff-release.apk 2>/dev/null || true
+ls -lh build/app/outputs/flutter-apk/app-coach-release.apk 2>/dev/null || true
 ls -lh build/app/outputs/bundle/userRelease/app-user-release.aab 2>/dev/null || true
-ls -lh build/app/outputs/bundle/staffRelease/app-staff-release.aab 2>/dev/null || true
+ls -lh build/app/outputs/bundle/coachRelease/app-coach-release.aab 2>/dev/null || true
 
 echo ""
 echo "iOS TestFlight: ./scripts/build_production_ios.sh user"
-echo "                ./scripts/build_production_ios.sh staff"
+echo "                ./scripts/build_production_ios.sh coach"
 echo "Checks:         ./scripts/final_release_checks.sh"

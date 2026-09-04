@@ -1,5 +1,5 @@
 {
-  "name": "parkinglink-firestore-rules-tests",
+  "name": "psgy-firestore-rules-tests",
   "private": true,
   "scripts": {
     "test": "node rules.test.js"

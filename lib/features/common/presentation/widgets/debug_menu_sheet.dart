@@ -5,14 +5,9 @@ import 'package:psgy/core/cache/cache_sync_state.dart';
 import 'package:psgy/core/config/app_config.dart';
 import 'package:psgy/core/config/flavor.dart';
 import 'package:psgy/core/debug/debug_providers.dart';
-import 'package:psgy/core/di/app_settings_providers.dart';
 import 'package:psgy/core/di/sync_providers.dart';
-import 'package:psgy/core/di/user_providers.dart';
-import 'package:psgy/core/di/watchlist_providers.dart';
 import 'package:psgy/core/routes/app_navigator.dart';
-import 'package:psgy/core/services/fcm_notification_service.dart';
 import 'package:psgy/core/theme/app_spacing.dart';
-import 'package:psgy/features/user/presentation/handlers/watchlist_event_handlers.dart';
 
 /// Bottom sheet with QA tools for real-device testing (dev/staging only).
 class DebugMenuSheet extends ConsumerWidget {
@@ -40,8 +35,6 @@ class DebugMenuSheet extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final syncState = ref.watch(cacheSyncStateProvider);
     final simulateOffline = ref.watch(debugSimulateOfflineProvider);
-    final notificationsEnabled =
-        ref.watch(watchlistNotificationsEnabledProvider).valueOrNull ?? true;
 
     return SafeArea(
       child: Padding(
@@ -77,26 +70,16 @@ class DebugMenuSheet extends ConsumerWidget {
                       trigger: SyncTrigger.manual,
                     );
                 if (!context.mounted) return;
-                ref.invalidate(userNearbyCacheSnapshotProvider);
-                ref.invalidate(userNearbyNetworkSnapshotProvider);
-                ref.invalidate(userSurveyingCacheSnapshotProvider);
-                ref.invalidate(userSurveyingNetworkSnapshotProvider);
                 _toast(context, 'Background sync triggered');
               },
             ),
             _ActionTile(
               icon: Icons.delete_sweep_outlined,
               title: 'Clear Isar Cache',
-              subtitle: 'Xóa lots, vehicle types, sessions trong cache local',
+              subtitle: 'Xóa cache local (AppSettings / migration marker)',
               onTap: () async {
-                await ref
-                    .read(cacheInvalidationServiceProvider)
-                    .invalidateAll();
+                await ref.read(cacheInvalidationServiceProvider).invalidateAll();
                 if (!context.mounted) return;
-                ref.invalidate(userNearbyCacheSnapshotProvider);
-                ref.invalidate(userNearbyNetworkSnapshotProvider);
-                ref.invalidate(userSurveyingCacheSnapshotProvider);
-                ref.invalidate(userSurveyingNetworkSnapshotProvider);
                 Navigator.pop(context);
                 _toast(context, 'Isar cache cleared');
               },
@@ -112,44 +95,11 @@ class DebugMenuSheet extends ConsumerWidget {
               },
             ),
             _ActionTile(
-              icon: Icons.notifications_active_outlined,
-              title: 'Trigger Fake Notification',
-              subtitle: notificationsEnabled
-                  ? 'WatchlistLotOpenedEvent + local notif'
-                  : 'Thông báo đang tắt trong Settings',
-              onTap: () {
-                const lotId = 'debug_fake_lot';
-                const lotName = 'Bãi Demo Debug';
-                handleWatchlistForegroundMessageWithReader(
-                  ref.read,
-                  const WatchlistNotificationPayload(
-                    lotId: lotId,
-                    lotName: lotName,
-                    type: FcmNotificationService.lotOpenedType,
-                  ),
-                );
-                Navigator.pop(context);
-                _toast(context, 'Fake notification sent');
-              },
-            ),
-            _ActionTile(
-              icon: Icons.playlist_remove_rounded,
-              title: 'Reset Watchlist',
-              subtitle: 'Xóa toàn bộ bãi đang theo dõi (local)',
-              onTap: () async {
-                await ref.read(watchlistLocalDataSourceProvider).clearAll();
-                if (!context.mounted) return;
-                ref.invalidate(userWatchlistProvider);
-                ref.invalidate(watchedLotIdsProvider);
-                ref.invalidate(watchlistBadgeCountProvider);
-                Navigator.pop(context);
-                _toast(context, 'Watchlist reset');
-              },
-            ),
-            _ActionTile(
               icon: Icons.analytics_outlined,
               title: 'View Cache Metrics',
-              subtitle: _metricsSummary(syncState),
+              subtitle: syncState.lastError == null
+                  ? 'Last error: none'
+                  : 'Last error: ${syncState.lastError}',
               onTap: () {
                 showDialog<void>(
                   context: context,
@@ -170,7 +120,7 @@ class DebugMenuSheet extends ConsumerWidget {
             ),
             const SizedBox(height: AppSpacing.sm),
             Text(
-              'Mở menu: giữ logo Splash 2s • giữ thanh tìm kiếm Map 2s • lắc máy (dev)',
+              'Mở menu: giữ logo Splash 2s • lắc máy (dev)',
               style: Theme.of(context).textTheme.labelSmall,
             ),
           ],
@@ -185,21 +135,11 @@ class DebugMenuSheet extends ConsumerWidget {
     return 'Lần cuối ${fmt.format(state.lastLotsSyncAt!)} • ${state.lastTrigger?.name ?? '-'}';
   }
 
-  static String _metricsSummary(CacheSyncState state) {
-    final m = state.metrics;
-    return '${m.lotsCount} lots • ${m.vehicleTypesCount} VT • ${m.sessionsCount} sessions';
-  }
-
   static String _metricsDetail(CacheSyncState state) {
-    final m = state.metrics;
     final fmt = DateFormat('yyyy-MM-dd HH:mm:ss');
     return [
-      'Lots cached: ${m.lotsCount}',
-      'Vehicle types: ${m.vehicleTypesCount}',
-      'Sessions: ${m.sessionsCount}',
-      'Latest lots cache: ${m.latestLotsCachedAt != null ? fmt.format(m.latestLotsCachedAt!) : '-'}',
-      'Latest VT cache: ${m.latestVehicleTypesCachedAt != null ? fmt.format(m.latestVehicleTypesCachedAt!) : '-'}',
       'Syncing: ${state.isSyncing}',
+      'Last sync: ${state.lastLotsSyncAt != null ? fmt.format(state.lastLotsSyncAt!) : '-'}',
       'Last duration: ${state.lastSyncDuration?.inMilliseconds ?? '-'} ms',
       'Last error: ${state.lastError ?? 'none'}',
     ].join('\n');

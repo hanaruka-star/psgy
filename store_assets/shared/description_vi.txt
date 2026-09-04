@@ -1,14 +1,1 @@
-Parking Link — Tìm chỗ đậu xe thông minh
-
-Parking Link giúp bạn tìm bãi xe gần đây với thông tin chỗ trống cập nhật realtime trên bản đồ.
-
-TÍNH NĂNG NỔI BẬT
-• Bản đồ bãi xe gần bạn — xem nhanh bãi đang mở và còn chỗ
-• Bãi khảo sát (tiềm năng) — khám phá bãi sắp hoạt động, theo dõi để nhận thông báo
-• Lọc thông minh — bãi đang mở, còn chỗ, bãi khảo sát
-• Hoạt động offline — cache dữ liệu gần bạn khi mạng yếu
-• Giao diện hiện đại, dễ dùng
-
-Parking Link phù hợp cho người dùng tại TP.HCM và các khu vực đang triển khai.
-
-Quyền riêng tư: https://parkinglink.app/privacy
+PSgy — Tìm gym và đặt lịch Coach tại TP.HCM.

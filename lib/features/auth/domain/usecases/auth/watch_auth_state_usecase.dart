@@ -1,4 +1,4 @@
-import 'package:psgy/features/auth/domain/entities/staff_profile_entity.dart';
+import 'package:psgy/features/auth/domain/entities/auth_user.dart';
 import 'package:psgy/features/auth/domain/repositories/auth_repository.dart';
 
 class WatchAuthStateUseCase {
@@ -6,7 +6,7 @@ class WatchAuthStateUseCase {
 
   WatchAuthStateUseCase(this._repository);
 
-  Stream<StaffProfileEntity?> call() {
+  Stream<AuthUser?> call() {
     return _repository.watchAuthState();
   }
 }

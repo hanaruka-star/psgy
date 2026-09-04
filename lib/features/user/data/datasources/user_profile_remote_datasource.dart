@@ -14,25 +14,6 @@ abstract class IUserProfileRemoteDatasource {
   Future<void> addVehicle(Map<String, dynamic> data);
   Future<List<Map<String, dynamic>>> getVehicles(String userId);
   Future<void> updateVehicle(String vehicleId, Map<String, dynamic> data);
-  Future<Map<String, dynamic>> createQrToken(Map<String, dynamic> data);
-  Stream<Map<String, dynamic>?> watchQrToken(String tokenId);
-  Future<void> updateQrToken(String tokenId, Map<String, dynamic> data);
-  Future<Map<String, dynamic>?> getQrToken(String tokenId);
-  Future<void> completeQrToken(String tokenId, String sessionId);
-
-  // Checkout QR tokens
-  Future<Map<String, dynamic>> createCheckoutQrToken(
-      String tokenId, Map<String, dynamic> data);
-  Future<Map<String, dynamic>?> getCheckoutQrToken(String tokenId);
-  Stream<Map<String, dynamic>?> watchCheckoutQrToken(String tokenId);
-  Future<void> updateCheckoutQrToken(
-      String tokenId, Map<String, dynamic> data);
-
-  /// Reads a parking session document (used to build a checkout token).
-  Future<Map<String, dynamic>?> getParkingSession(String sessionId);
-
-  /// Reads a parking lot document (used to resolve the lot name).
-  Future<Map<String, dynamic>?> getParkingLot(String lotId);
 }
 
 class UserProfileRemoteDatasourceImpl implements IUserProfileRemoteDatasource {
@@ -49,10 +30,6 @@ class UserProfileRemoteDatasourceImpl implements IUserProfileRemoteDatasource {
 
   static const _usersCollection = 'users';
   static const _vehiclesCollection = 'user_vehicles';
-  static const _qrTokensCollection = 'qr_tokens';
-  static const _checkoutQrTokensCollection = 'checkout_qr_tokens';
-  static const _parkingSessionsCollection = 'parking_sessions';
-  static const _parkingLotsCollection = 'parking_lots';
 
   @override
   Future<void> sendOtp(String phoneNumber) async {
@@ -147,104 +124,6 @@ class UserProfileRemoteDatasourceImpl implements IUserProfileRemoteDatasource {
   @override
   Future<void> updateVehicle(String vehicleId, Map<String, dynamic> data) async {
     await _firestore.collection(_vehiclesCollection).doc(vehicleId).update(data);
-  }
-
-  @override
-  Future<Map<String, dynamic>> createQrToken(Map<String, dynamic> data) async {
-    final tokenId = data['tokenId'] as String;
-    await _firestore.collection(_qrTokensCollection).doc(tokenId).set(data);
-    return {...data, 'tokenId': tokenId};
-  }
-
-  @override
-  Stream<Map<String, dynamic>?> watchQrToken(String tokenId) {
-    return _firestore
-        .collection(_qrTokensCollection)
-        .doc(tokenId)
-        .snapshots()
-        .map((snapshot) => snapshot.exists ? snapshot.data() : null);
-  }
-
-  @override
-  Future<void> updateQrToken(String tokenId, Map<String, dynamic> data) async {
-    await _firestore.collection(_qrTokensCollection).doc(tokenId).update(data);
-  }
-
-  @override
-  Future<Map<String, dynamic>?> getQrToken(String tokenId) async {
-    final doc =
-        await _firestore.collection(_qrTokensCollection).doc(tokenId).get();
-    if (!doc.exists) return null;
-    return doc.data();
-  }
-
-  @override
-  Future<void> completeQrToken(String tokenId, String sessionId) async {
-    await _firestore.collection(_qrTokensCollection).doc(tokenId).update({
-      'used': true,
-      'usedAt': FieldValue.serverTimestamp(),
-      'sessionId': sessionId,
-    });
-  }
-
-  @override
-  Future<Map<String, dynamic>> createCheckoutQrToken(
-    String tokenId,
-    Map<String, dynamic> data,
-  ) async {
-    await _firestore
-        .collection(_checkoutQrTokensCollection)
-        .doc(tokenId)
-        .set(data);
-    return {...data, 'tokenId': tokenId};
-  }
-
-  @override
-  Future<Map<String, dynamic>?> getCheckoutQrToken(String tokenId) async {
-    final doc = await _firestore
-        .collection(_checkoutQrTokensCollection)
-        .doc(tokenId)
-        .get();
-    if (!doc.exists) return null;
-    return doc.data();
-  }
-
-  @override
-  Stream<Map<String, dynamic>?> watchCheckoutQrToken(String tokenId) {
-    return _firestore
-        .collection(_checkoutQrTokensCollection)
-        .doc(tokenId)
-        .snapshots()
-        .map((snapshot) => snapshot.exists ? snapshot.data() : null);
-  }
-
-  @override
-  Future<void> updateCheckoutQrToken(
-    String tokenId,
-    Map<String, dynamic> data,
-  ) async {
-    await _firestore
-        .collection(_checkoutQrTokensCollection)
-        .doc(tokenId)
-        .update(data);
-  }
-
-  @override
-  Future<Map<String, dynamic>?> getParkingSession(String sessionId) async {
-    final doc = await _firestore
-        .collection(_parkingSessionsCollection)
-        .doc(sessionId)
-        .get();
-    if (!doc.exists) return null;
-    return doc.data();
-  }
-
-  @override
-  Future<Map<String, dynamic>?> getParkingLot(String lotId) async {
-    final doc =
-        await _firestore.collection(_parkingLotsCollection).doc(lotId).get();
-    if (!doc.exists) return null;
-    return doc.data();
   }
 
   String _formatPhoneNumber(String phone) {

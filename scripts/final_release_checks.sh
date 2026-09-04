@@ -8,11 +8,11 @@ cd "${ROOT_DIR}"
 echo "==> Release artifact sizes"
 for f in \
   build/app/outputs/bundle/userRelease/app-user-release.aab \
-  build/app/outputs/bundle/staffRelease/app-staff-release.aab \
+  build/app/outputs/bundle/coachRelease/app-coach-release.aab \
   build/app/outputs/flutter-apk/app-user-release.apk \
-  build/app/outputs/flutter-apk/app-staff-release.apk \
-  "build/ios/ipa/Parking Link - User.ipa" \
-  "build/ios/ipa/Parking Link - Staff.ipa"; do
+  build/app/outputs/flutter-apk/app-coach-release.apk \
+  "build/ios/ipa/PSgy User.ipa" \
+  "build/ios/ipa/PSgy Coach.ipa"; do
   if [[ -f "${f}" ]]; then
     ls -lh "${f}"
   fi

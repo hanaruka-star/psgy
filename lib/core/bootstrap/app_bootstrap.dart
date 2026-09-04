@@ -61,7 +61,7 @@ class AppBootstrap {
       await FirebaseConfig.initialize();
       final monitoringService = await initializeMonitoringService();
       appErrorHandler.attachMonitoring(monitoringService);
-      final isar = await openParkingIsar();
+      final isar = await openPsgyIsar();
 
       return AppBootstrapResult.success(
         isar: isar,

@@ -1,33 +1,7 @@
-ParkingLink — Store Submission Assets
-=====================================
+PSgy — Store Submission Assets
 
-Structure for Play Store + App Store metadata.
+Apps:
+- Google Play / App Store: com.psgy.user (PSGymer User)
+- Google Play / App Store: com.psgy.coach (PSgy Coach)
 
-store_assets/
-├── shared/
-│   ├── privacy_url.txt          # Canonical privacy policy URL
-│   ├── terms_url.txt
-│   ├── description_vi.txt       # Full store description (Vietnamese)
-│   ├── description_en.txt       # Full store description (English)
-│   ├── short_description_vi.txt # Play Store short desc (≤80 chars)
-│   └── release_notes_vi.txt     # What's new template
-├── android/
-│   ├── user/
-│   │   ├── screenshots/         # Phone: 1080×1920 or 1080×2340 (min 2)
-│   │   ├── feature_graphic/     # 1024×500 PNG
-│   │   └── icon/              # 512×512 PNG (optional, launcher used)
-│   └── staff/
-│       ├── screenshots/
-│       ├── feature_graphic/
-│       └── icon/
-└── ios/
-    ├── user/
-    │   ├── screenshots/         # 6.7" 1290×2796, 6.5" 1284×2778
-    │   └── app_preview/         # Optional video
-    └── staff/
-        ├── screenshots/
-        └── app_preview/
-
-Upload targets:
-- Google Play: 2 separate apps (com.parkinglink.user, com.parkinglink.staff)
-- App Store Connect: 2 separate apps (com.parkinglink.user, com.parkinglink.staff)
+Legal URLs: in-app screens until public pages exist.

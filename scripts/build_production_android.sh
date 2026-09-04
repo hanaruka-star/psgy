@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Build production Android AAB (+ optional APK) for User and Staff flavors.
+# Build production Android AAB (+ optional APK) for User and Coach flavors.
 set -euo pipefail
 
 ROOT_DIR="$(cd "$(dirname "$0")/.." && pwd)"
@@ -21,15 +21,15 @@ flutter build appbundle \
   --dart-define=FLAVOR=user \
   "${FLUTTER_DEFINES[@]}"
 
-echo "==> Building Staff AAB"
+echo "==> Building Coach AAB"
 flutter build appbundle \
-  --flavor staff \
+  --flavor coach \
   --release \
-  --dart-define=FLAVOR=staff \
+  --dart-define=FLAVOR=coach \
   "${FLUTTER_DEFINES[@]}"
 
 echo ""
 echo "✓ User AAB:  build/app/outputs/bundle/userRelease/app-user-release.aab"
-echo "✓ Staff AAB: build/app/outputs/bundle/staffRelease/app-staff-release.aab"
+echo "✓ Coach AAB: build/app/outputs/bundle/coachRelease/app-coach-release.aab"
 echo ""
-ls -lh build/app/outputs/bundle/userRelease/*.aab build/app/outputs/bundle/staffRelease/*.aab 2>/dev/null || true
+ls -lh build/app/outputs/bundle/userRelease/*.aab build/app/outputs/bundle/coachRelease/*.aab 2>/dev/null || true

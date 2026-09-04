@@ -9,12 +9,9 @@ import 'package:psgy/core/error/app_exception.dart';
 import 'package:psgy/core/error/error_mapper.dart';
 import 'package:psgy/core/theme/app_colors.dart';
 import 'package:psgy/core/theme/app_spacing.dart';
-import 'package:psgy/features/auth/domain/entities/staff_profile_entity.dart';
+import 'package:psgy/features/auth/domain/entities/auth_user.dart';
 import 'package:psgy/features/auth/domain/usecases/sign_in_usecase.dart';
 import 'package:psgy/features/auth/domain/usecases/watch_auth_state_usecase.dart';
-import 'package:psgy/features/auth/presentation/screens/register_screen.dart';
-import 'package:psgy/features/owner/presentation/screens/owner_dashboard_screen.dart';
-import 'package:psgy/features/staff/presentation/screens/staff_dashboard_screen.dart';
 import 'package:psgy/shared/widgets/micro_interactions.dart';
 import 'package:psgy/shared/widgets/modern_card.dart';
 
@@ -33,8 +30,8 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
   final _formKey = GlobalKey<FormState>();
   bool _obscurePassword = true;
 
-  StreamSubscription<StaffProfileEntity?>? _authSub;
-  StaffProfileEntity? _profile;
+  StreamSubscription<AuthUser?>? _authSub;
+  AuthUser? _user;
   bool _isLoading = false;
   String? _errorText;
 
@@ -45,9 +42,9 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
     _watchAuthStateUseCase = ref.read(watchAuthStateUseCaseProvider);
 
     _authSub = _watchAuthStateUseCase().listen(
-      (profile) {
+      (user) {
         if (!mounted) return;
-        setState(() => _profile = profile);
+        setState(() => _user = user);
       },
       onError: (error) {
         if (!mounted) return;
@@ -86,7 +83,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
             params: {'email': _emailController.text.trim()},
           );
 
-      final profile = await _signInUseCase(
+      final user = await _signInUseCase(
         email: _emailController.text.trim(),
         password: _passwordController.text,
       );
@@ -94,13 +91,10 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
 
       ref.read(monitoringServiceProvider).logBreadcrumb(
             'login_success',
-            params: {
-              'role': profile.isOwner ? 'owner' : 'staff',
-              'uid': profile.uid,
-            },
+            params: {'uid': user.uid},
           );
 
-      setState(() => _profile = profile);
+      setState(() => _user = user);
     } catch (e) {
       if (!mounted) return;
       final mapped = mapFirebaseException(e);
@@ -115,19 +109,8 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
   Widget build(BuildContext context) {
     return AnimatedSwitcher(
       duration: const Duration(milliseconds: 450),
-      switchInCurve: Curves.easeOutCubic,
-      switchOutCurve: Curves.easeInCubic,
-      transitionBuilder: (child, animation) {
-        return FadeTransition(
-          opacity: animation,
-          child: ScaleTransition(
-            scale: Tween<double>(begin: 0.96, end: 1).animate(animation),
-            child: child,
-          ),
-        );
-      },
-      child: _profile != null
-          ? _AuthenticatedView(key: ValueKey(_profile!.uid), profile: _profile!)
+      child: _user != null
+          ? _AuthenticatedView(key: ValueKey(_user!.uid), user: _user!)
           : _LoginFormView(
               key: const ValueKey('login-form'),
               formKey: _formKey,
@@ -140,28 +123,43 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                 setState(() => _obscurePassword = !_obscurePassword);
               },
               onSignIn: _handleSignIn,
-              onRegisterOwner: () {
-                Navigator.of(context).push(
-                  MaterialPageRoute(
-                    builder: (_) => const RegisterScreen(),
-                  ),
-                );
-              },
             ),
     );
   }
 }
 
-class _AuthenticatedView extends StatelessWidget {
-  final StaffProfileEntity profile;
+class _AuthenticatedView extends ConsumerWidget {
+  final AuthUser user;
 
-  const _AuthenticatedView({super.key, required this.profile});
+  const _AuthenticatedView({super.key, required this.user});
 
   @override
-  Widget build(BuildContext context) {
-    return profile.isOwner
-        ? OwnerDashboardScreen(ownerProfile: profile)
-        : const StaffDashboardScreen();
+  Widget build(BuildContext context, WidgetRef ref) {
+    return Scaffold(
+      body: SafeArea(
+        child: Center(
+          child: Padding(
+            padding: AppSpacing.screenPadding,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  'Đã đăng nhập',
+                  style: Theme.of(context).textTheme.headlineSmall,
+                ),
+                const SizedBox(height: AppSpacing.sm),
+                Text(user.email ?? user.uid),
+                const SizedBox(height: AppSpacing.lg),
+                FilledButton(
+                  onPressed: () => ref.read(signOutUseCaseProvider)(),
+                  child: const Text('Đăng xuất'),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
   }
 }
 
@@ -174,7 +172,6 @@ class _LoginFormView extends StatelessWidget {
   final String? errorText;
   final VoidCallback onTogglePassword;
   final VoidCallback onSignIn;
-  final VoidCallback onRegisterOwner;
 
   const _LoginFormView({
     super.key,
@@ -186,7 +183,6 @@ class _LoginFormView extends StatelessWidget {
     required this.errorText,
     required this.onTogglePassword,
     required this.onSignIn,
-    required this.onRegisterOwner,
   });
 
   @override
@@ -213,13 +209,13 @@ class _LoginFormView extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.stretch,
                         children: [
                           Text(
-                            'Staff Login',
+                            'Đăng nhập',
                             textAlign: TextAlign.center,
                             style: Theme.of(context).textTheme.headlineMedium,
                           ),
                           const SizedBox(height: AppSpacing.xs),
                           Text(
-                            'Sign in with your staff or owner account',
+                            'Email / mật khẩu (hạ tầng Auth). Coach + User dùng Phone OTP.',
                             textAlign: TextAlign.center,
                             style: Theme.of(context).textTheme.bodySmall,
                           ),
@@ -292,11 +288,6 @@ class _LoginFormView extends StatelessWidget {
                                   : const Text('Login'),
                             ),
                           ),
-                          const SizedBox(height: AppSpacing.sm),
-                          OutlinedButton(
-                            onPressed: isLoading ? null : onRegisterOwner,
-                            child: const Text('Đăng ký tài khoản Owner'),
-                          ),
                         ],
                       ),
                     ),
@@ -345,14 +336,14 @@ class _BrandHeader extends StatelessWidget {
               shape: BoxShape.circle,
             ),
             child: const Icon(
-              Icons.local_parking_rounded,
+              Icons.fitness_center_rounded,
               color: Colors.white,
               size: 40,
             ),
           ),
           const SizedBox(height: AppSpacing.md),
           Text(
-            'ParkingLink',
+            'PSgy',
             style: Theme.of(context).textTheme.headlineMedium?.copyWith(
                   color: Colors.white,
                   fontWeight: FontWeight.w800,
@@ -360,7 +351,7 @@ class _BrandHeader extends StatelessWidget {
           ),
           const SizedBox(height: AppSpacing.xs),
           Text(
-            'Smart Parking • Staff & Owner',
+            'Gym + Coach booking',
             style: Theme.of(context).textTheme.bodySmall?.copyWith(
                   color: Colors.white.withValues(alpha: 0.88),
                 ),
@@ -398,7 +389,8 @@ class _ErrorBox extends StatelessWidget {
             child: Text(
               message,
               style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                    color: isDark ? AppColors.danger : AppColors.onDangerContainer,
+                    color:
+                        isDark ? AppColors.danger : AppColors.onDangerContainer,
                   ),
             ),
           ),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:psgy/core/config/flavor.dart';
 import 'package:psgy/core/theme/app_theme.dart';
 import 'package:psgy/features/pilot_demo/presentation/coach/coach_home_screen.dart';
 import 'package:psgy/features/pilot_demo/presentation/pilot_list_screen.dart';
@@ -10,6 +11,7 @@ import 'package:psgy/features/pilot_demo/presentation/pilot_list_screen.dart';
 /// - Nút trên AppBar để chuyển User ⇄ Coach
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
+  FlavorConfig.initialize(AppFlavor.user); // TEMP: pilot demo entry không qua bootstrap, cần init flavor trước khi AppTheme dùng
   runApp(const ProviderScope(child: PilotDemoWebApp()));
 }
 

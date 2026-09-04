@@ -1,17 +1,34 @@
-# parking_link
+# PSgy
 
-A new Flutter project.
+Flutter app tìm gym + đặt lịch với PT/Coach tại TP.HCM.
 
-## Getting Started
+Hai binary cùng codebase:
 
-This project is a starting point for a Flutter application.
+- **User** — `com.psgy.user` (`--dart-define=FLAVOR=user`)
+- **Coach** — `com.psgy.coach` (`--dart-define=FLAVOR=coach`)
 
-A few resources to get you started if this is your first Flutter project:
+Firebase project: `psgy-app`. Chỉ iOS + Android.
 
-- [Learn Flutter](https://docs.flutter.dev/get-started/learn-flutter)
-- [Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Flutter learning resources](https://docs.flutter.dev/reference/learning-resources)
+## Chạy
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+```bash
+flutter run --dart-define=FLAVOR=user --dart-define=ENV=development
+flutter run --dart-define=FLAVOR=coach --dart-define=ENV=development
+```
+
+## Test / analyze
+
+```bash
+flutter analyze
+flutter test
+```
+
+## Firestore rules
+
+Local `firestore.rules` là nguồn thật. Deploy:
+
+```bash
+./scripts/deploy_firestore_rules.sh
+```
+
+Tài liệu chuyển giao backend: `docs/handoff/`.

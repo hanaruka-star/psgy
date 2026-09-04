@@ -13,7 +13,7 @@ Future<void> fcmBackgroundMessageHandler(RemoteMessage message) async {
 
   if (kDebugMode) {
     debugPrint(
-      'FCM background: type=${message.data['type']} lotId=${message.data['lotId']}',
+      'FCM background: type=${message.data['type']} id=${message.data['bookingId'] ?? message.data['lotId']}',
     );
   }
 }

@@ -1,17 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:psgy/core/error/app_exception.dart';
 import 'package:psgy/features/user/data/datasources/user_profile_remote_datasource.dart';
 import 'package:psgy/features/user/data/datasources/vehicle_photo_datasource.dart';
-import 'package:psgy/features/user/domain/entities/checkout_qr_token.dart';
-import 'package:psgy/features/user/domain/entities/qr_token.dart';
 import 'package:psgy/features/user/domain/entities/user_profile.dart';
 import 'package:psgy/features/user/domain/entities/user_vehicle.dart';
-import 'package:psgy/core/contracts/i_qr_token_repository.dart';
 import 'package:psgy/features/user/domain/repositories/i_user_profile_repository.dart';
-import 'package:uuid/uuid.dart';
 
-class UserProfileRepositoryImpl
-    implements IUserProfileRepository, IQrTokenRepository {
+class UserProfileRepositoryImpl implements IUserProfileRepository {
   const UserProfileRepositoryImpl({
     required IUserProfileRemoteDatasource remoteDatasource,
     required IVehiclePhotoDatasource photoDatasource,
@@ -120,200 +114,6 @@ class UserProfileRepositoryImpl
   }) =>
       _photoDatasource.uploadPhoto(userId: userId, localPath: localPath);
 
-  @override
-  Future<QrToken> createQrToken({
-    required String userId,
-    required UserVehicle vehicle,
-    required String maskedPhone,
-  }) async {
-    final tokenId = const Uuid().v4();
-    final now = DateTime.now();
-    final expiresAt = now.add(const Duration(minutes: 3));
-    final data = {
-      'tokenId': tokenId,
-      'userId': userId,
-      'vehicleId': vehicle.vehicleId,
-      'plate': vehicle.plate,
-      'vehiclePhotoUrl': vehicle.photoUrl,
-      'userPhone': maskedPhone,
-      'lotId': null,
-      'createdAt': Timestamp.fromDate(now),
-      'expiresAt': Timestamp.fromDate(expiresAt),
-      'used': false,
-      'usedAt': null,
-      'sessionId': null,
-    };
-    await _remoteDatasource.createQrToken(data);
-    return QrToken(
-      tokenId: tokenId,
-      userId: userId,
-      vehicleId: vehicle.vehicleId,
-      plate: vehicle.plate,
-      vehiclePhotoUrl: vehicle.photoUrl,
-      userPhone: maskedPhone,
-      createdAt: now,
-      expiresAt: expiresAt,
-      used: false,
-    );
-  }
-
-  @override
-  Stream<QrToken?> watchQrToken(String tokenId) {
-    return _remoteDatasource.watchQrToken(tokenId).map((data) {
-      if (data == null) return null;
-      return _mapQrToken(data, tokenId);
-    });
-  }
-
-  @override
-  Future<void> cancelQrToken(String tokenId) async {
-    await _remoteDatasource.updateQrToken(tokenId, {
-      'used': true,
-      'usedAt': Timestamp.now(),
-      'cancelledByUser': true,
-    });
-  }
-
-  @override
-  Future<QrToken?> getQrToken(String tokenId) async {
-    final data = await _remoteDatasource.getQrToken(tokenId);
-    if (data == null) return null;
-    return _mapQrToken(data, tokenId);
-  }
-
-  @override
-  Future<void> completeQrToken({
-    required String tokenId,
-    required String sessionId,
-  }) async {
-    await _remoteDatasource.completeQrToken(tokenId, sessionId);
-  }
-
-  // ── Check-out QR tokens (MOD-12b-4) ────────────────────────────────────────
-
-  @override
-  Future<CheckoutQrToken> createCheckoutQrToken({
-    required String sessionId,
-    required String userId,
-    required int estimatedFee,
-  }) async {
-    final session = await _remoteDatasource.getParkingSession(sessionId);
-    if (session == null) {
-      throw const AppException('Phiên gửi xe không tồn tại', code: 'not-found');
-    }
-
-    final lotId = (session['lotId'] as String?) ?? '';
-    final vehicleType = (session['vehicleType'] as String?) ?? '';
-    final plate = (session['vehiclePlate'] as String?) ?? '';
-    final checkedInRaw = session['checkedInAt'];
-    final checkedInTs =
-        checkedInRaw is Timestamp ? checkedInRaw : Timestamp.now();
-
-    final lot = await _remoteDatasource.getParkingLot(lotId);
-    final lotName = (lot?['name'] as String?) ?? '';
-
-    final tokenId = const Uuid().v4();
-    final now = DateTime.now();
-    final expiresAt = now.add(const Duration(minutes: 10));
-
-    final data = <String, dynamic>{
-      'tokenId': tokenId,
-      'sessionId': sessionId,
-      'userId': userId,
-      'plate': plate,
-      'lotId': lotId,
-      'lotName': lotName,
-      'vehicleType': vehicleType,
-      'estimatedFee': estimatedFee,
-      'checkedInAt': checkedInTs,
-      'createdAt': Timestamp.fromDate(now),
-      'expiresAt': Timestamp.fromDate(expiresAt),
-      'used': false,
-      'usedAt': null,
-      'checkOutStaffId': null,
-    };
-
-    await _remoteDatasource.createCheckoutQrToken(tokenId, data);
-
-    return CheckoutQrToken(
-      tokenId: tokenId,
-      sessionId: sessionId,
-      userId: userId,
-      plate: plate,
-      lotId: lotId,
-      lotName: lotName,
-      vehicleType: vehicleType,
-      estimatedFee: estimatedFee,
-      checkedInAt: checkedInTs.toDate(),
-      createdAt: now,
-      expiresAt: expiresAt,
-      used: false,
-    );
-  }
-
-  @override
-  Future<CheckoutQrToken?> getCheckoutQrToken(String tokenId) async {
-    final data = await _remoteDatasource.getCheckoutQrToken(tokenId);
-    if (data == null) return null;
-    return _mapCheckoutQrToken(data, tokenId);
-  }
-
-  @override
-  Stream<CheckoutQrToken?> watchCheckoutQrToken(String tokenId) {
-    return _remoteDatasource.watchCheckoutQrToken(tokenId).map((data) {
-      if (data == null) return null;
-      return _mapCheckoutQrToken(data, tokenId);
-    });
-  }
-
-  @override
-  Future<void> cancelCheckoutQrToken(String tokenId) async {
-    await _remoteDatasource.updateCheckoutQrToken(tokenId, {
-      'used': true,
-      'usedAt': Timestamp.now(),
-      'cancelledByUser': true,
-    });
-  }
-
-  @override
-  Future<void> completeCheckoutQrToken({
-    required String tokenId,
-    required String checkOutStaffId,
-  }) async {
-    await _remoteDatasource.updateCheckoutQrToken(tokenId, {
-      'used': true,
-      'usedAt': FieldValue.serverTimestamp(),
-      'checkOutStaffId': checkOutStaffId,
-    });
-  }
-
-  CheckoutQrToken _mapCheckoutQrToken(
-    Map<String, dynamic> data,
-    String tokenId,
-  ) {
-    final checkedInAt = data['checkedInAt'];
-    final createdAt = data['createdAt'];
-    final expiresAt = data['expiresAt'];
-    final usedAt = data['usedAt'];
-    return CheckoutQrToken(
-      tokenId: (data['tokenId'] as String?) ?? tokenId,
-      sessionId: (data['sessionId'] as String?) ?? '',
-      userId: (data['userId'] as String?) ?? '',
-      plate: (data['plate'] as String?) ?? '',
-      lotId: (data['lotId'] as String?) ?? '',
-      lotName: (data['lotName'] as String?) ?? '',
-      vehicleType: (data['vehicleType'] as String?) ?? '',
-      estimatedFee: (data['estimatedFee'] as num?)?.toInt() ?? 0,
-      checkedInAt:
-          checkedInAt is Timestamp ? checkedInAt.toDate() : DateTime.now(),
-      createdAt: createdAt is Timestamp ? createdAt.toDate() : DateTime.now(),
-      expiresAt: expiresAt is Timestamp ? expiresAt.toDate() : DateTime.now(),
-      used: data['used'] as bool? ?? false,
-      usedAt: usedAt is Timestamp ? usedAt.toDate() : null,
-      checkOutStaffId: data['checkOutStaffId'] as String?,
-    );
-  }
-
   String _normalizePlate(String plate) =>
       plate.trim().toUpperCase().replaceAll(RegExp(r'[\s\.\-]'), '');
 
@@ -326,31 +126,7 @@ class UserProfileRepositoryImpl
       userId: (data['userId'] as String?) ?? userId,
       phoneNumber: (data['phoneNumber'] as String?) ?? '',
       displayName: data['displayName'] as String?,
-      createdAt: createdAt is Timestamp
-          ? createdAt.toDate()
-          : DateTime.now(),
-    );
-  }
-
-  QrToken? _mapQrToken(Map<String, dynamic> data, String tokenId) {
-    final createdAt = data['createdAt'];
-    final expiresAt = data['expiresAt'];
-    final usedAt = data['usedAt'];
-    return QrToken(
-      tokenId: (data['tokenId'] as String?) ?? tokenId,
-      userId: (data['userId'] as String?) ?? '',
-      vehicleId: (data['vehicleId'] as String?) ?? '',
-      plate: (data['plate'] as String?) ?? '',
-      vehiclePhotoUrl: (data['vehiclePhotoUrl'] as String?) ?? '',
-      userPhone: (data['userPhone'] as String?) ?? '',
-      lotId: data['lotId'] as String?,
-      createdAt:
-          createdAt is Timestamp ? createdAt.toDate() : DateTime.now(),
-      expiresAt:
-          expiresAt is Timestamp ? expiresAt.toDate() : DateTime.now(),
-      used: data['used'] as bool? ?? false,
-      usedAt: usedAt is Timestamp ? usedAt.toDate() : null,
-      sessionId: data['sessionId'] as String?,
+      createdAt: createdAt is Timestamp ? createdAt.toDate() : DateTime.now(),
     );
   }
 
@@ -365,10 +141,8 @@ class UserProfileRepositoryImpl
       photoUrl: (data['photoUrl'] as String?) ?? '',
       isPersonal: data['isPersonal'] as bool? ?? true,
       isDefault: data['isDefault'] as bool? ?? false,
-      createdAt:
-          createdAt is Timestamp ? createdAt.toDate() : DateTime.now(),
-      updatedAt:
-          updatedAt is Timestamp ? updatedAt.toDate() : DateTime.now(),
+      createdAt: createdAt is Timestamp ? createdAt.toDate() : DateTime.now(),
+      updatedAt: updatedAt is Timestamp ? updatedAt.toDate() : DateTime.now(),
     );
   }
 }

@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Build production iOS for TestFlight / App Store (User or Staff).
+# Build production iOS for TestFlight / App Store (User or Coach).
 #
 # Requires: Xcode, Apple Developer account, valid signing certificates.
 # See store_assets/ios/SIGNING_AND_ARCHIVE.txt
@@ -12,8 +12,8 @@ cd "${ROOT_DIR}"
 FLAVOR="${1:-user}"
 EXPORT_METHOD="${2:-app-store}"
 
-if [[ "${FLAVOR}" != "user" && "${FLAVOR}" != "staff" ]]; then
-  echo "Usage: $0 [user|staff] [app-store|development|ad-hoc]"
+if [[ "${FLAVOR}" != "user" && "${FLAVOR}" != "coach" ]]; then
+  echo "Usage: $0 [user|coach] [app-store|development|ad-hoc]"
   exit 1
 fi
 

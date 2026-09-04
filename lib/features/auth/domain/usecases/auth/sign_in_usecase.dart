@@ -1,4 +1,4 @@
-import 'package:psgy/features/auth/domain/entities/staff_profile_entity.dart';
+import 'package:psgy/features/auth/domain/entities/auth_user.dart';
 import 'package:psgy/features/auth/domain/repositories/auth_repository.dart';
 
 class SignInUseCase {
@@ -6,7 +6,7 @@ class SignInUseCase {
 
   SignInUseCase(this._repository);
 
-  Future<StaffProfileEntity> call({
+  Future<AuthUser> call({
     required String email,
     required String password,
   }) {

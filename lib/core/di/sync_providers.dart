@@ -1,9 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:psgy/core/cache/cache_sync_state.dart';
-import 'package:psgy/core/di/firebase_providers.dart';
-import 'package:psgy/core/di/isar_providers.dart';
-import 'package:psgy/core/di/parking_providers.dart';
-import 'package:psgy/core/di/user_providers.dart';
 import 'package:psgy/core/network/connectivity_service.dart';
 import 'package:psgy/core/services/background_sync_service.dart';
 import 'package:psgy/core/services/cache_invalidation_service.dart';
@@ -14,31 +10,15 @@ final cacheSyncStateProvider =
 
 final cacheInvalidationServiceProvider =
     Provider<CacheInvalidationService>((ref) {
-  return CacheInvalidationService(
-    localDataSource: ref.watch(parkingLocalDataSourceProvider),
-    onInvalidated: () {
-      _invalidateUserMapLotSnapshots(ref);
-    },
-  );
+  return CacheInvalidationService();
 });
 
 final backgroundSyncServiceProvider = Provider<BackgroundSyncService>((ref) {
   final service = BackgroundSyncService(
     connectivity: ref.watch(connectivityServiceProvider),
-    userRepository: ref.watch(userRepositoryProvider),
-    parkingRepository: ref.watch(parkingRepositoryProvider),
     cacheInvalidation: ref.watch(cacheInvalidationServiceProvider),
-    localDataSource: ref.watch(parkingLocalDataSourceProvider),
-    monitoring: ref.watch(monitoringServiceProvider),
     onStateChanged: (state) {
       ref.read(cacheSyncStateProvider.notifier).state = state;
-      if (!state.isSyncing && state.lastLotsSyncAt != null) {
-        _invalidateUserMapLotSnapshots(ref);
-      }
-    },
-    getSearchCenter: () {
-      final mapCenter = ref.read(mapSearchCenterProvider);
-      return mapCenter;
     },
   );
 
@@ -51,17 +31,8 @@ Future<void> triggerUserDataSync(
   required SyncTrigger trigger,
   GeoCoordinate? center,
 }) async {
-  final syncService = ref.read(backgroundSyncServiceProvider);
-  await syncService.syncNow(trigger: trigger, center: center);
-  ref.invalidate(userNearbyCacheSnapshotProvider);
-  ref.invalidate(userNearbyNetworkSnapshotProvider);
-  ref.invalidate(userSurveyingCacheSnapshotProvider);
-  ref.invalidate(userSurveyingNetworkSnapshotProvider);
-}
-
-void _invalidateUserMapLotSnapshots(Ref ref) {
-  ref.invalidate(userNearbyCacheSnapshotProvider);
-  ref.invalidate(userNearbyNetworkSnapshotProvider);
-  ref.invalidate(userSurveyingCacheSnapshotProvider);
-  ref.invalidate(userSurveyingNetworkSnapshotProvider);
+  await ref.read(backgroundSyncServiceProvider).syncNow(
+        trigger: trigger,
+        center: center,
+      );
 }

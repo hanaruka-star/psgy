@@ -1,12 +1,12 @@
 #!/usr/bin/env bash
-# Create Android release keystore + android/key.properties for ParkingLink.
+# Create Android release keystore + android/key.properties for PSgy.
 #
 # Usage:
 #   ./scripts/create_android_release_keystore.sh              # interactive (production)
 #   ./scripts/create_android_release_keystore.sh --dev        # non-interactive dev keystore
 #
 # Production (recommended before Play Store upload):
-#   ./scripts/create_android_release_keystore.sh ~/secure/parkinglink-release.jks parkinglink
+#   ./scripts/create_android_release_keystore.sh ~/secure/psgy-release.jks psgy
 #
 set -euo pipefail
 
@@ -20,15 +20,15 @@ fi
 
 ROOT_DIR="$(cd "$(dirname "$0")/.." && pwd)"
 KEYSTORE_DIR="${ROOT_DIR}/android/keystores"
-KEYSTORE_PATH="${1:-${KEYSTORE_DIR}/parkinglink-release.jks}"
-ALIAS="${2:-parkinglink}"
+KEYSTORE_PATH="${1:-${KEYSTORE_DIR}/psgy-release.jks}"
+ALIAS="${2:-psgy}"
 KEY_PROPERTIES="${ROOT_DIR}/android/key.properties"
 DEV_MODE=false
 
 if [[ "${1:-}" == "--dev" ]]; then
   DEV_MODE=true
-  KEYSTORE_PATH="${KEYSTORE_DIR}/parkinglink-release.jks"
-  ALIAS="parkinglink"
+  KEYSTORE_PATH="${KEYSTORE_DIR}/psgy-release.jks"
+  ALIAS="psgy"
 fi
 
 mkdir -p "${KEYSTORE_DIR}"
@@ -43,11 +43,11 @@ else
       -keystore "${KEYSTORE_PATH}" \
       -alias "${ALIAS}" \
       -keyalg RSA -keysize 2048 -validity 10000 \
-      -storepass "parkinglink_dev_store" \
-      -keypass "parkinglink_dev_key" \
-      -dname "CN=ParkingLink Dev, OU=Mobile, O=ParkingLink, L=Ho Chi Minh, ST=HCM, C=VN"
-    STORE_PASSWORD="parkinglink_dev_store"
-    KEY_PASSWORD="parkinglink_dev_store"
+      -storepass "psgy_dev_store" \
+      -keypass "psgy_dev_key" \
+      -dname "CN=PSgy Dev, OU=Mobile, O=PSgy, L=Ho Chi Minh, ST=HCM, C=VN"
+    STORE_PASSWORD="psgy_dev_store"
+    KEY_PASSWORD="psgy_dev_store"
   else
     echo "Creating PRODUCTION release keystore at: ${KEYSTORE_PATH}"
     "${KEYTOOL}" -genkey -v \
@@ -71,8 +71,8 @@ else
 fi
 
 if [[ "${DEV_MODE}" == true ]]; then
-  STORE_PASSWORD="parkinglink_dev_store"
-  KEY_PASSWORD="parkinglink_dev_key"
+  STORE_PASSWORD="psgy_dev_store"
+  KEY_PASSWORD="psgy_dev_key"
 fi
 
 if [[ -z "${STORE_PASSWORD:-}" ]]; then
@@ -99,4 +99,4 @@ echo "✓ key.properties: ${KEY_PROPERTIES}"
 echo ""
 echo "Build production AAB:"
 echo "  flutter build appbundle --flavor user --release --dart-define=FLAVOR=user --dart-define=ENV=production"
-echo "  flutter build appbundle --flavor staff --release --dart-define=FLAVOR=staff --dart-define=ENV=production"
+echo "  flutter build appbundle --flavor coach --release --dart-define=FLAVOR=coach --dart-define=ENV=production"

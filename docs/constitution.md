@@ -1,6 +1,6 @@
-# BẢN HIẾN PHÁP PARKINGLINK (BẤT BIẾN)
+# BẢN HIẾN PHÁP PSGY (BẤT BIẾN)
 
-**Project:** ParkingLink
+**Project:** PSgy
 **Kiến trúc:** Clean Architecture + Feature-first
 **State Management:** Riverpod 2.0+
 **Version:** Grok Handover v1.0
@@ -47,11 +47,9 @@ lib/
 │
 ├── features/
 │   ├── auth/
-│   ├── parking/             # Core business: lots, sessions, vehicle types
-│   ├── staff/
-│   ├── owner/
-│   ├── user/
-│   └── common/              # Shared models, widgets
+│   ├── user/                # Phone Auth OTP + profile (KEEP)
+│   ├── common/
+│   └── pilot_demo/          # UI tham khảo (mock) — backend thay bằng Firestore
 │
 │   └── [feature_name]/
 │       ├── domain/
@@ -84,13 +82,13 @@ lib/
 
 ## 5. NỀN TẢNG (iOS + Android ONLY)
 
-**ParkingLink chỉ phát triển và build cho iOS và Android.**
+**PSgy chỉ phát triển và build cho iOS và Android.**
 
 - Không hỗ trợ Web, Desktop (macOS/Windows/Linux)
 - Config, signing, flavors, assets chỉ tối ưu cho mobile
 - Release targets:
-  - **Android:** APK + AAB (`user` / `staff` flavors)
-  - **iOS:** IPA cho TestFlight / App Store (`User` / `Staff` schemes)
+  - **Android:** APK + AAB (`user` / `coach` flavors)
+  - **iOS:** IPA cho TestFlight / App Store (`user` / `coach` schemes)
 - Bootstrap gọi `SupportedPlatforms.ensureMobile()` — app throw nếu chạy trên nền tảng không hỗ trợ
 - Build scripts: `./scripts/build_production_mobile.sh` (Android), `./scripts/build_production_ios.sh` (iOS)
 
@@ -115,16 +113,16 @@ lib/
 
 ## 7. MULTI-APP ARCHITECTURE
 
-**Hiện tại (Production — CP24):**
+**Hiện tại:**
 - Single codebase, **2 app binaries** qua flavors:
-  - `ParkingLink User` — `com.parkinglink.user`
-  - `ParkingLink Staff` — `com.parkinglink.staff`
-- Android: product flavors `user` / `staff`
-- iOS: schemes `User` / `Staff`
-- Chung 1 Firebase project (`parkinglink-v2`), plist/json theo flavor
+  - `PSgy User` — `com.psgy.user`
+  - `PSgy Coach` — `com.psgy.coach`
+- Android: product flavors `user` / `coach`
+- iOS: schemes `user` / `coach`
+- Chung 1 Firebase project (`psgy-app`), plist/json theo flavor
 
 **Nguyên tắc thiết kế phải tuân thủ:**
 - Domain và Data layer phải **thuần túy**, không phụ thuộc vào loại app
-- Presentation phải tách rõ theo feature + role (`features/user/`, `features/staff/`, `features/owner/`)
-- Không hardcode logic UI chung cho cả User và Staff
+- Presentation tách theo feature + role (`features/user/`, `features/pilot_demo/` Coach)
+- Không hardcode logic UI chung cho cả User và Coach
 - Dễ dàng extract một phần presentation ra app riêng sau này

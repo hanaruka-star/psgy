@@ -1,52 +1,22 @@
-import 'package:psgy/core/cache/cache_policy.dart';
 import 'package:psgy/core/services/sync_logger.dart';
-import 'package:psgy/features/parking/data/datasources/parking_local_datasource.dart';
 
 typedef CacheInvalidationListener = void Function();
 
+/// Local-cache invalidation hook. Parking-lot collections were removed;
+/// this keeps the sync pattern for future gym/coach cache.
 class CacheInvalidationService {
-  final ParkingLocalDataSource? _local;
   final CacheInvalidationListener? _onInvalidated;
 
   CacheInvalidationService({
-    ParkingLocalDataSource? localDataSource,
     CacheInvalidationListener? onInvalidated,
-  })  : _local = localDataSource,
-        _onInvalidated = onInvalidated;
-
-  Future<void> invalidateNearbyLots() async {
-    final local = _local;
-    if (local == null) return;
-
-    await local.purgeExpiredLots(ttl: Duration.zero);
-    SyncLogger.cacheInvalidated('nearby_lots');
-    _onInvalidated?.call();
-  }
-
-  Future<void> invalidateVehicleTypes() async {
-    final local = _local;
-    if (local == null) return;
-
-    await local.purgeExpiredVehicleTypes(ttl: Duration.zero);
-    SyncLogger.cacheInvalidated('vehicle_types');
-    _onInvalidated?.call();
-  }
+  }) : _onInvalidated = onInvalidated;
 
   Future<void> invalidateAll() async {
-    final local = _local;
-    if (local == null) return;
-
-    await local.clearAll();
     SyncLogger.cacheInvalidated('all');
     _onInvalidated?.call();
   }
 
   Future<void> purgeStaleEntries() async {
-    final local = _local;
-    if (local == null) return;
-
-    await local.purgeExpiredLots(ttl: CachePolicy.nearbyLotsTtl);
-    await local.purgeExpiredVehicleTypes(ttl: CachePolicy.vehicleTypesTtl);
     SyncLogger.cacheInvalidated('stale_entries');
     _onInvalidated?.call();
   }

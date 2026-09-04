@@ -1,16 +1,16 @@
 import 'package:flutter/foundation.dart';
 import 'package:isar/isar.dart';
 import 'package:psgy/core/data/local/app_settings_isar.dart';
-import 'package:psgy/features/parking/data/local/surveying_lot_isar.dart';
 
 /// Centralized schema-aware migration runner for local Isar cache.
 ///
 /// Versioning strategy:
 /// - Persist current schema marker in [AppSettingsIsar.surveyingCacheSchemaVersion]
+///   (field name kept to avoid regenerating Isar codecs; value is generic cache schema)
 /// - Apply migrations incrementally from currentVersion+1..targetVersion
 /// - Only clear affected collections when a breaking schema change occurs
 class IsarMigrationService {
-  static const targetSchemaVersion = 4;
+  static const targetSchemaVersion = 5;
 
   Future<void> migrate(Isar isar) async {
     final settings = await isar.appSettingsIsars.get(1);
@@ -43,21 +43,14 @@ class IsarMigrationService {
   Future<void> _applyMigration(Isar isar, int toVersion) async {
     switch (toVersion) {
       case 2:
-        debugPrint('[IsarMigration] v2: no-op');
-        return;
       case 3:
-        // Existing behavior kept for compatibility:
-        // survey cache schema changed and requires cache reset.
-        await isar.writeTxn(() async {
-          await isar.surveyingLotIsars.clear();
-        });
-        debugPrint(
-          '[IsarMigration] v3: cleared affected collection surveyingLotIsars',
-        );
-        return;
       case 4:
-        // Introduce schema-aware migration framework.
-        debugPrint('[IsarMigration] v4: schema-aware migration service enabled');
+        debugPrint('[IsarMigration] v$toVersion: no-op (legacy parking cache)');
+        return;
+      case 5:
+        debugPrint(
+          '[IsarMigration] v5: parking/surveying collections removed; AppSettings only',
+        );
         return;
     }
   }

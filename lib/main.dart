@@ -22,11 +22,11 @@ Future<void> main() async {
   FirebaseMessaging.onBackgroundMessage(fcmBackgroundMessageHandler);
 
   final bootstrap = await AppBootstrap.initialize();
-  runParkingLinkApp(bootstrap);
+  runPsgyApp(bootstrap);
 }
 
-/// Boots [ParkingLinkApp] inside a root [ProviderScope] with bootstrap overrides.
-void runParkingLinkApp(AppBootstrapResult bootstrap) {
+/// Boots [PsgyApp] inside a root [ProviderScope] with bootstrap overrides.
+void runPsgyApp(AppBootstrapResult bootstrap) {
   if (bootstrap.status == AppBootstrapStatus.success) {
     FirebaseFirestore.instance.settings =
         const Settings(persistenceEnabled: true);
@@ -35,7 +35,7 @@ void runParkingLinkApp(AppBootstrapResult bootstrap) {
   runApp(
     ProviderScope(
       overrides: _bootstrapOverrides(bootstrap),
-      child: ParkingLinkApp(bootstrap: bootstrap),
+      child: PsgyApp(bootstrap: bootstrap),
     ),
   );
 }
@@ -56,16 +56,16 @@ List<Override> _bootstrapOverrides(AppBootstrapResult bootstrap) {
   ];
 }
 
-class ParkingLinkApp extends StatelessWidget {
+class PsgyApp extends StatelessWidget {
   final AppBootstrapResult bootstrap;
 
-  const ParkingLinkApp({super.key, required this.bootstrap});
+  const PsgyApp({super.key, required this.bootstrap});
 
   @override
   Widget build(BuildContext context) {
     if (bootstrap.status != AppBootstrapStatus.success) {
       return MaterialApp(
-        title: 'Parking Link',
+        title: 'PSgy',
         debugShowCheckedModeBanner: false,
         navigatorKey: appNavigatorKey,
         theme: AppTheme.light,
@@ -100,6 +100,6 @@ class ParkingLinkApp extends StatelessWidget {
 
   static Future<void> _retryBootstrap() async {
     final result = await AppBootstrap.initialize();
-    runParkingLinkApp(result);
+    runPsgyApp(result);
   }
 }

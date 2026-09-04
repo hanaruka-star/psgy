@@ -11,7 +11,6 @@ import 'package:psgy/features/pilot_demo/presentation/coach/coach_home_screen.da
 import 'package:psgy/features/pilot_demo/presentation/mock_phone_auth_screen.dart';
 import 'package:psgy/features/pilot_demo/presentation/main_shell_screen.dart';
 import 'package:psgy/features/pilot_demo/presentation/user_profile_setup_screen.dart';
-import 'package:psgy/features/user/presentation/widgets/watchlist_notification_bootstrap.dart';
 import 'package:psgy/shared/widgets/header_logo.dart';
 
 enum _AppStage { splash, consent, home }
@@ -65,11 +64,11 @@ class AppHomeScreen extends ConsumerWidget {
 
     return FlavorConfig.isUser
         ? const _UserPilotGate() // TEMP: demo B1 OTP → hồ sơ → shell 5 tab
-        : const CoachHomeScreen(); // TEMP: demo pilot 2026-08-22, revert lại LoginScreen() sau
+        : const CoachHomeScreen(); // TEMP: demo pilot — revert to PhoneAuthScreen after backend Auth
   }
 }
 
-/// Dev-only runtime toggle between User and Staff flows.
+/// Dev-only runtime toggle between User and Coach flows.
 class ModeSwitcherScreen extends ConsumerWidget {
   const ModeSwitcherScreen({super.key});
 
@@ -103,7 +102,7 @@ class ModeSwitcherScreen extends ConsumerWidget {
       ),
       body: modeController.isUser
           ? const _UserPilotGate() // TEMP: demo B1 OTP → hồ sơ → shell 5 tab
-          : const CoachHomeScreen(), // TEMP: demo pilot 2026-08-22, revert lại LoginScreen() sau
+          : const CoachHomeScreen(), // TEMP: demo pilot — revert to PhoneAuthScreen after backend Auth
     );
   }
 }
@@ -125,7 +124,7 @@ class _UserPilotGateState extends State<_UserPilotGate> {
       listenable: MockUserSession.instance,
       builder: (context, _) {
         if (MockUserSession.instance.profile != null) {
-          return const WatchlistNotificationBootstrap(child: MainShellScreen());
+          return const MainShellScreen();
         }
         if (_otpVerified) {
           return const UserProfileSetupScreen();

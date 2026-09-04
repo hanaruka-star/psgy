@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
-# Build / run ParkingLink on a real iPhone (User or Staff, debug or profile).
+# Build / run PSgy on a real iPhone (User or Coach, debug or profile).
 #
 # Quick start (fastest — recommended for QA):
 #   ./scripts/build_test_iphone.sh --run
 #   ./scripts/build_test_iphone.sh user --run
-#   ./scripts/build_test_iphone.sh staff --run
+#   ./scripts/build_test_iphone.sh coach --run
 #
 # Build + install:
 #   ./scripts/build_test_iphone.sh user debug --install
@@ -22,7 +22,7 @@ SKIP_PODS=false
 
 usage() {
   cat <<'EOF'
-Usage: ./scripts/build_test_iphone.sh [user|staff|both] [debug|profile] [options]
+Usage: ./scripts/build_test_iphone.sh [user|coach|both] [debug|profile] [options]
 
 Options:
   --run           Run on device with hot reload (default)
@@ -34,14 +34,14 @@ Options:
 
 Examples:
   ./scripts/build_test_iphone.sh --run
-  ./scripts/build_test_iphone.sh staff --run
+  ./scripts/build_test_iphone.sh coach --run
   ./scripts/build_test_iphone.sh user profile --install
 EOF
 }
 
 while [[ $# -gt 0 ]]; do
   case "$1" in
-    user|staff|both) FLAVOR="$1" ;;
+    user|coach|both) FLAVOR="$1" ;;
     debug|profile) MODE="$1" ;;
     --run) ACTION="run" ;;
     --build-only) ACTION="build" ;;
@@ -83,7 +83,7 @@ run_flavor() {
 
   echo ""
   echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
-  echo " ParkingLink iPhone QA"
+  echo " PSgy iPhone QA"
   echo " Flavor: ${flavor}  Mode: ${MODE}  ENV: ${env_define}"
   echo " Scheme: ${scheme}  Action: ${ACTION}"
   echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
@@ -128,9 +128,9 @@ run_flavor() {
 }
 
 if [[ "${FLAVOR}" == "both" ]]; then
-  [[ "${ACTION}" == "run" ]] && echo "Note: running User only. Re-run with staff --run for Staff."
+  [[ "${ACTION}" == "run" ]] && echo "Note: running User only. Re-run with coach --run for Coach."
   run_flavor user
-  [[ "${ACTION}" != "run" ]] && run_flavor staff
+  [[ "${ACTION}" != "run" ]] && run_flavor coach
 else
   run_flavor "${FLAVOR}"
 fi

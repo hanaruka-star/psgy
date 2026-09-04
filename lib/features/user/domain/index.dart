@@ -1,14 +1,6 @@
 export 'entities/geo_coordinate.dart';
 export 'entities/geo_distance.dart';
-export 'entities/user_geo_query_config.dart';
-export 'entities/user_lot_filter.dart';
-export 'entities/user_nearby_lots_snapshot.dart';
+export 'entities/user_profile.dart';
+export 'entities/user_vehicle.dart';
 export 'repositories/user_location_repository.dart';
-export 'repositories/user_repository.dart';
-export 'usecases/calculate_distance_km_usecase.dart';
-export 'usecases/filter_parking_lots_usecase.dart';
 export 'usecases/get_user_location_usecase.dart';
-export 'usecases/sort_parking_lots_usecase.dart';
-export 'usecases/watch_nearby_lots_usecase.dart';
-export 'usecases/watch_user_lots_usecase.dart';
-export 'usecases/watch_user_vehicle_types_usecase.dart';

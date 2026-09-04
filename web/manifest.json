@@ -1,11 +1,11 @@
 {
-    "name": "parking_link",
-    "short_name": "parking_link",
+    "name": "PSgy",
+    "short_name": "PSgy",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",
     "theme_color": "#0175C2",
-    "description": "A new Flutter project.",
+    "description": "Find gyms and book a Coach.",
     "orientation": "portrait-primary",
     "prefer_related_applications": false,
     "icons": [

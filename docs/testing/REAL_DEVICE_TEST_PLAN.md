@@ -1,4 +1,4 @@
-# Real Device Test Plan — ParkingLink
+# Real Device Test Plan — PSgy
 
 **Version:** CP31  
 **Target:** iPhone thật (ưu tiên) + Android  
@@ -23,7 +23,7 @@
 ### Bước 1 — Chạy app User flavor (nhanh nhất)
 
 ```bash
-cd /path/to/parking_link
+cd /path/to/psgy
 
 # Cách 1: Script tự detect iPhone và chạy (khuyến nghị)
 ./scripts/build_test_iphone.sh --run
@@ -32,15 +32,15 @@ cd /path/to/parking_link
 ./scripts/build_test_iphone.sh user --run
 ```
 
-Lần đầu Xcode có thể hỏi **Signing** — mở `ios/Runner.xcworkspace`, chọn Team (Apple ID), bật "Automatically manage signing" cho target **Runner** (User + Staff).
+Lần đầu Xcode có thể hỏi **Signing** — mở `ios/Runner.xcworkspace`, chọn Team (Apple ID), bật "Automatically manage signing" cho target **Runner** (User + Coach).
 
-### Bước 2 — Chạy app Staff flavor
+### Bước 2 — Chạy app Coach flavor
 
 ```bash
-./scripts/build_test_iphone.sh staff --run
+./scripts/build_test_iphone.sh coach --run
 ```
 
-Hoặc trong app User (dev build): tap **"Chuyen sang Staff"** trên map.
+Hoặc trong app User (dev build): tap **"Chuyen sang Coach"** trên map.
 
 ### Bước 3 — Mở Debug Menu trên iPhone
 
@@ -81,14 +81,14 @@ flutter run --flavor user --debug \
   -d <DEVICE_ID>
 ```
 
-### Staff flavor
+### Coach flavor
 
 ```bash
-./scripts/build_test_iphone.sh staff --run
+./scripts/build_test_iphone.sh coach --run
 
 # Hoặc:
-flutter run --flavor staff --debug \
-  --dart-define=FLAVOR=staff \
+flutter run --flavor coach --debug \
+  --dart-define=FLAVOR=coach \
   --dart-define=ENV=development \
   -d <DEVICE_ID>
 ```
@@ -97,7 +97,7 @@ flutter run --flavor staff --debug \
 
 ```bash
 ./scripts/build_test_iphone.sh user debug --install
-./scripts/build_test_iphone.sh staff debug --install
+./scripts/build_test_iphone.sh coach debug --install
 ```
 
 ### Rebuild nhanh (bỏ qua pod install)
@@ -136,8 +136,8 @@ flutter install --flavor user -d <DEVICE_ID>
 | 7 | N-05 | Deep link | User | Tap notification | Map opens + sheet on lot | ☐ |
 | 8 | O-01 | Offline | User | Debug → Simulate Offline ON | Cache banner, no new sync | ☐ |
 | 9 | O-03 | Online | User | Debug → Offline OFF | Auto sync resumes | ☐ |
-| 10 | S-01 | Staff | Staff | Login valid creds | Dashboard loads | ☐ |
-| 11 | S-02 | Check-in | Staff | Enter plate + check in | Session created, slot −1 | ☐ |
+| 10 | S-01 | Coach | Coach | Login valid creds | Dashboard loads | ☐ |
+| 11 | S-02 | Check-in | Coach | Enter plate + check in | Session created, slot −1 | ☐ |
 | 12 | P-01 | Perf | User | Bật "Hiện tất cả bãi" | Map usable, no freeze >1s | ☐ |
 
 ### Error recovery (bonus P0 — nếu có thời gian)
@@ -146,7 +146,7 @@ flutter install --flavor user -d <DEVICE_ID>
 |----|------|----------|---|
 | E-01 | Simulate Offline → pull refresh | Error view + retry works | ☐ |
 | E-02 | Deny location | Fallback TP.HCM + prompt | ☐ |
-| S-03 | Staff check-out | Session closes, slot +1 | ☐ |
+| S-03 | Coach check-out | Session closes, slot +1 | ☐ |
 
 ---
 
@@ -171,7 +171,7 @@ flutter install --flavor user -d <DEVICE_ID>
 | O-05 | Force sync | Debug → Force Sync | Metrics update | ☐ |
 | O-06 | Airplane mode | Real airplane toggle | Same as simulate | ☐ |
 
-### P3 — Staff Operations
+### P3 — Coach Operations
 
 | ID | Case | Steps | Expected | ✓ |
 |----|------|-------|----------|---|

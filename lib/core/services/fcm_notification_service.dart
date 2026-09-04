@@ -24,7 +24,8 @@ typedef WatchlistNotificationTapHandler = void Function(
 
 /// Central FCM wrapper: permission, token, topics, message routing.
 class FcmNotificationService {
-  static const watchlistAndroidChannelId = 'watchlist_channel';
+  static const defaultAndroidChannelId = 'psgy_default';
+  static const watchlistAndroidChannelId = defaultAndroidChannelId;
   static const lotOpenedType = 'lot_opened';
   // DEBT-009: FCM works on production/TestFlight; dev builds may delay APNs token.
 

@@ -1,20 +1,12 @@
-import 'package:psgy/features/auth/domain/entities/staff_profile_entity.dart';
+import 'package:psgy/features/auth/domain/entities/auth_user.dart';
 
 abstract class AuthRepository {
-  Future<StaffProfileEntity> signIn({
-    required String email,
-    required String password,
-  });
-
-  Future<void> registerOwner({
-    required String name,
+  Future<AuthUser> signIn({
     required String email,
     required String password,
   });
 
   Future<void> signOut();
 
-  Stream<StaffProfileEntity?> watchAuthState();
-
-  Future<StaffProfileEntity> getProfile(String uid);
+  Stream<AuthUser?> watchAuthState();
 }

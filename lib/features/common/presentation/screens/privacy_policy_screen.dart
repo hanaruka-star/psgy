@@ -17,15 +17,15 @@ class PrivacyPolicyScreen extends StatelessWidget {
         const LegalSectionItem(
           title: '1. Dữ liệu chúng tôi thu thập',
           body:
-              'ParkingLink có thể thu thập vị trí thiết bị (khi bạn cho phép), '
-              'thông tin bãi xe bạn xem/tìm kiếm, và dữ liệu chẩn đoán kỹ thuật '
+              'PSgy có thể thu thập vị trí thiết bị (khi bạn cho phép), '
+              'thông tin gym/Coach bạn xem, và dữ liệu chẩn đoán kỹ thuật '
               'để cải thiện độ ổn định ứng dụng.',
         ),
         const LegalSectionItem(
           title: '2. Mục đích sử dụng',
           body:
-              'Dữ liệu được dùng để hiển thị bãi xe gần bạn, cập nhật tình trạng chỗ trống, '
-              'đồng bộ bãi khảo sát, và hỗ trợ khắc phục sự cố.',
+              'Dữ liệu được dùng để hiển thị gym/Coach gần bạn, đặt lịch, '
+              'và hỗ trợ khắc phục sự cố.',
         ),
         const LegalSectionItem(
           title: '3. Chia sẻ dữ liệu',
@@ -58,17 +58,19 @@ class PrivacyPolicyScreen extends StatelessWidget {
             Text(section.body, style: Theme.of(context).textTheme.bodyMedium),
             const SizedBox(height: AppSpacing.lg),
           ],
-          OutlinedButton.icon(
-            onPressed: () => _openUrl(AppConfig.privacyPolicyUrl),
-            icon: const Icon(Icons.open_in_new_rounded, size: 18),
-            label: const Text('Xem bản đầy đủ trên web'),
-          ),
+          if (AppConfig.privacyPolicyUrl.isNotEmpty)
+            OutlinedButton.icon(
+              onPressed: () => _openUrl(AppConfig.privacyPolicyUrl),
+              icon: const Icon(Icons.open_in_new_rounded, size: 18),
+              label: const Text('Xem bản đầy đủ trên web'),
+            ),
         ],
       ),
     );
   }
 
   Future<void> _openUrl(String url) async {
+    if (url.isEmpty) return;
     final uri = Uri.parse(url);
     if (await canLaunchUrl(uri)) {
       await launchUrl(uri, mode: LaunchMode.externalApplication);

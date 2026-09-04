@@ -3,14 +3,14 @@
 This file aligns Claude guidance with:
 - `docs/constitution.md` (project constitution),
 - current codebase reality,
-- AgentMemory project context for ParkingLink.
+- AgentMemory project context for PSgy.
 
 ## 1. QUICK START COMMANDS
 
 ```bash
 # Run
 flutter run --dart-define=FLAVOR=user --dart-define=ENV=development
-flutter run --dart-define=FLAVOR=staff --dart-define=ENV=development
+flutter run --dart-define=FLAVOR=coach --dart-define=ENV=development
 
 # Test
 flutter analyze
@@ -19,11 +19,11 @@ flutter test
 # Build Production
 ./scripts/build_production_mobile.sh
 ./scripts/build_production_ios.sh user
-./scripts/build_production_ios.sh staff
+./scripts/build_production_ios.sh coach
 
 # Test on iPhone
 ./scripts/build_test_iphone.sh user --run
-./scripts/build_test_iphone.sh staff --run
+./scripts/build_test_iphone.sh coach --run
 
 # Deploy Firestore Rules
 ./scripts/deploy_firestore_rules.sh
@@ -36,7 +36,7 @@ flutter test
 - Domain: KHÔNG import external package
 - Central DI: `lib/core/di/`
 - State: Riverpod 2.0+
-- Multi-app strategy (current): single codebase, 2 mobile binaries via flavors (`user` / `staff`)
+- Multi-app strategy (current): single codebase, 2 mobile binaries via flavors (`user` / `coach`)
 
 Folder structure (from constitution):
 
@@ -54,11 +54,9 @@ lib/
 │
 ├── features/
 │   ├── auth/
-│   ├── parking/             # Core business: lots, sessions, vehicle types
-│   ├── staff/
-│   ├── owner/
-│   ├── user/
-│   └── common/              # Shared models, widgets
+│   ├── user/                # Phone Auth OTP
+│   ├── common/
+│   └── pilot_demo/          # mock UI tham khảo
 │
 │   └── [feature_name]/
 │       ├── domain/
@@ -89,36 +87,24 @@ lib/
 
 ## 4. FIREBASE
 
-- Project: `parkinglink-v2`
-- Flavors: `com.parkinglink.user` / `com.parkinglink.staff`
-- Collections:
-  - `parking_lots`
-  - `parking_sessions`
-  - `surveying_lots`
-  - `staff_profiles`
-  - `pricing_history`
-  - `manual_adjustments`
-  - `bookings`
-- Rules: deployed, role-based (xem `docs/security/`)
-- Authentication context: role-based access (`staff_profiles`) for staff/owner operations
+- Project: `psgy-app`
+- Flavors: `com.psgy.user` / `com.psgy.coach`
+- Collections: do đội backend định nghĩa (gym / coach / booking) — xem `docs/handoff/`
+- Rules: local `firestore.rules` = nguồn thật (`docs/security/FIRESTORE_RULES.md`)
+- Authentication: Phone Auth (OTP). User app tạm mock OTP; `PhoneAuthScreen` thật được giữ.
 
 ## 5. KEY DESIGN DECISIONS
 
-- `isRealtime` flag: phân biệt lot realtime vs static
-- `surveying_lots`: bãi khảo sát cộng đồng (read-only)
-- Isar: local cache cho dữ liệu hay đọc
-- Debug Menu: giữ logo/thanh map 2s (dev only)
-- AppModeController: runtime toggle (dev/testing)
-- `metadata` field: chừa cổng IoT/BLE/QR/Camera
-- Multi-app progression: can extract role-specific presentation into separate apps later
-- Monitor context: ParkingLink Monitor has active deployment history (PM2-managed) and should be treated as an external operational component
+- Isar: local cache + migration pattern (AppSettings)
+- Debug Menu: giữ logo Splash 2s (dev only)
+- AppModeController: runtime toggle User/Coach (dev)
+- Multi-app: flavors `user` / `coach`
 
 ## 6. KNOWN ISSUES (CẦN FIX)
 
-- DEBT-012: Rate limiting cần server-side
-- DEBT-007: Surveying client-side filter
-- DEBT-008: Isar migration manual
+- User app đang bypass Phone Auth thật bằng `MockPhoneAuthScreen` vì `UserProfileNotifier` đọc `users/{uid}` gây `permission-denied` (handoff B7)
 - DEBT-009: FCM/APNs dev build delay
+- DEBT-008: Isar migration manual
 
 ## 7. PLATFORMS
 
@@ -166,45 +152,11 @@ Không support Web/Desktop.
 - Commit format theo `docs/git_workflow.md`
 - Mỗi checkpoint nên commit riêng theo quy ước CP trong `docs/git_workflow.md`
 
-## 9. PARKINGLINK ECOSYSTEM (OPS)
+## 9. OPS
 
-### PL-Monitor (Flutter Web dashboard)
+PSgy không dùng ParkingLink Monitor / Telegram survey bot / Apps Script pipeline.
 
-- Runtime: `localhost:8080` via PM2
-- Main features:
-  - Filter
-  - Admin Panel
-  - Presentation Mode
-  - Coverage Gap visualization
-
-### Telegram Survey Bot
-
-- Stack/location: Node.js at `~/parkinglink_bot`
-- Survey flow: `ten -> dia diem -> loai -> gia -> anh -> GPS`
-- Commands:
-  - `/start`
-  - `/lich`
-  - `/mysurveys`
-
-### Automated data pipeline
-
-- Flow: `Telegram -> Google Sheets -> Firestore`
-- Apps Script trigger: `onChange` around every 10 seconds
-
-### Cloud Function: onParkingLotCreated
-
-- Status: `DISABLED`
-- Merge logic replaced by manual admin process via PL-Monitor
-
-### PM2 processes
-
-- `id:5 parkinglink-monitor`
-- `id:7 parkinglink-survey-bot`
-
-### Update scripts
-
-- `~/update_monitor.sh`
-- `~/update_bot.sh`
+Deploy rules: `./scripts/deploy_firestore_rules.sh`
 
 ## 10. REFERENCES
 

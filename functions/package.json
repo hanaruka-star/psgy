@@ -1,6 +1,6 @@
 {
-  "name": "parkinglink-functions",
-  "description": "Cloud Functions for ParkingLink watchlist notifications",
+  "name": "psgy-functions",
+  "description": "Cloud Functions for PSgy (booking timeouts, ratings — TBD)",
   "engines": {
     "node": "20"
   },

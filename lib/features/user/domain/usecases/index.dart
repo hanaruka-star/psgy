@@ -1,7 +1,10 @@
-/// User feature use cases — barrel export.
+/// User feature use cases — Phone Auth + location.
 library;
 
-export 'parking_lot/user_parking_lot_query_usecases.dart';
+export 'add_vehicle_usecase.dart';
+export 'get_user_location_usecase.dart';
+export 'get_user_profile_usecase.dart';
+export 'get_user_vehicles_usecase.dart';
+export 'send_otp_usecase.dart';
 export 'user_location/user_location_query_usecases.dart';
-export 'watchlist/watchlist_command_usecases.dart';
-export 'watchlist/watchlist_query_usecases.dart';
+export 'verify_otp_usecase.dart';

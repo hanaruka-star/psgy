@@ -1,33 +1,9 @@
-iOS Signing & Archive — ParkingLink
-===================================
+iOS Signing & Archive — PSgy
+============================
 
-Schemes: User | Staff
-Bundle IDs: com.parkinglink.user | com.parkinglink.staff
+Schemes: user | coach
+Bundle IDs: com.psgy.user | com.psgy.coach
 
-Xcode Setup (one-time per app):
-1. open ios/Runner.xcworkspace
-2. Select Runner target → Signing & Capabilities
-3. Team: your Apple Developer team
-4. Enable "Automatically manage signing"
-5. Repeat for each scheme (User uses com.parkinglink.user, Staff uses com.parkinglink.staff)
-
-Firebase plist copy runs automatically via build phase "Copy GoogleService-Info.plist".
-
-Archive via Xcode:
-  Product → Scheme → User (or Staff)
-  Product → Archive
-  Window → Organizer → Distribute App → App Store Connect → Upload
-
-CLI (requires valid certificates; always pass flavor):
+CLI:
   ./scripts/build_production_ios.sh user
-  ./scripts/build_production_ios.sh staff
-
-Output IPAs:
-  build/ios/ipa/Parking Link - User.ipa   → com.parkinglink.user
-  build/ios/ipa/Parking Link - Staff.ipa  → com.parkinglink.staff
-
-TestFlight:
-  App Store Connect → My Apps → Parking Link → TestFlight → add build
-
-Required Info.plist keys (already configured):
-  NSLocationWhenInUseUsageDescription — map nearby lots
+  ./scripts/build_production_ios.sh coach

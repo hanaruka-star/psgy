@@ -1,4 +1,4 @@
-# Git Workflow Convention — ParkingLink
+# Git Workflow Convention — PSgy
 
 ## Branch naming
 

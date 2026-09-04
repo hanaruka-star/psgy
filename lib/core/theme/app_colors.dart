@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-/// ParkingLink brand and semantic colors.
+/// PSgy brand and semantic colors.
 abstract final class AppColors {
   // Brand — modern blue
   static const Color primary = Color(0xFF2563EB);

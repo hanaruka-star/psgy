@@ -30,7 +30,7 @@ class PrivacyConsentScreen extends ConsumerWidget {
               ),
               const SizedBox(height: AppSpacing.sm),
               Text(
-                'ParkingLink sử dụng vị trí và dữ liệu bãi xe để giúp bạn tìm chỗ đậu. '
+                'PSgy sử dụng vị trí để giúp bạn tìm gym và Coach gần bạn. '
                 'Chúng tôi không bán dữ liệu cá nhân của bạn.',
                 style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                       color: colorScheme.onSurfaceVariant,

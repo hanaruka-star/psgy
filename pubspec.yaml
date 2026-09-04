@@ -1,5 +1,5 @@
 name: psgy
-description: Parking Link - Hệ thống tìm chỗ đậu xe realtime
+description: PSgy — tìm gym + đặt lịch Coach tại TP.HCM
 publish_to: 'none'
 version: 1.0.0+1
 
@@ -19,6 +19,7 @@ dependencies:
   firebase_crashlytics: ^4.3.10
   firebase_performance: ^0.10.1+8
   google_maps_flutter: ^2.9.0
+  google_maps_flutter_platform_interface: ^2.15.0
   geolocator: ^13.0.0
 
   # State Management
@@ -35,10 +36,6 @@ dependencies:
   isar: ^3.1.0+1
   isar_flutter_libs: ^3.1.0+1
 
-  # QR Code
-  qr_flutter: ^4.1.0
-  mobile_scanner: ^6.0.0
-
   # Navigation & UI
   go_router: ^14.2.0
   url_launcher: ^6.3.0
@@ -51,6 +48,8 @@ dependencies:
 
 dev_dependencies:
   flutter_test:
+    sdk: flutter
+  integration_test:
     sdk: flutter
   flutter_lints: ^4.0.0
   mocktail: ^1.0.5

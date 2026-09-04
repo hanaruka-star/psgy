@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
-# Build ParkingLink APK for real Android device testing (User / Staff, debug or profile).
+# Build PSgy APK for real Android device testing (User / Coach, debug or profile).
 #
 # Usage:
-#   ./scripts/build_test_android.sh [user|staff|both] [debug|profile]
+#   ./scripts/build_test_android.sh [user|coach|both] [debug|profile]
 #
 # Install:
 #   flutter install --flavor user -d <DEVICE_ID>
@@ -16,8 +16,8 @@ cd "${ROOT_DIR}"
 FLAVOR="${1:-user}"
 MODE="${2:-debug}"
 
-if [[ "${FLAVOR}" != "user" && "${FLAVOR}" != "staff" && "${FLAVOR}" != "both" ]]; then
-  echo "Usage: $0 [user|staff|both] [debug|profile]"
+if [[ "${FLAVOR}" != "user" && "${FLAVOR}" != "coach" && "${FLAVOR}" != "both" ]]; then
+  echo "Usage: $0 [user|coach|both] [debug|profile]"
   exit 1
 fi
 
@@ -59,7 +59,7 @@ build_flavor() {
 
 if [[ "${FLAVOR}" == "both" ]]; then
   build_flavor user
-  build_flavor staff
+  build_flavor coach
 else
   build_flavor "${FLAVOR}"
 fi
