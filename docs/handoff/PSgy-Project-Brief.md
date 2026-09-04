@@ -1,10 +1,10 @@
-# PSgy — Bối cảnh & Quyết định Kiến trúc
+# GymPS — Bối cảnh & Quyết định Kiến trúc
 
-> **Tài liệu chuyển giao từ dự án ParkingLink.** Upload file này vào Project Knowledge của Project "PSgy" để Claude có đầy đủ ngữ cảnh ngay từ đầu, không cần giải thích lại.
+> **Tài liệu bàn giao cho đội dev.** Upload file này vào Project Knowledge của Project GymPS để có đầy đủ ngữ cảnh ngay từ đầu, không cần giải thích lại.
 
 ---
 
-## 1. PSgy là gì
+## 1. GymPS là gì
 
 App tìm phòng gym + đặt lịch với PT/HLV thể hình tại TP.HCM — mô hình tương tự app đặt dịch vụ tại nhà (ví dụ Glow) áp dụng cho ngành gym/PT.
 
@@ -22,38 +22,22 @@ App tìm phòng gym + đặt lịch với PT/HLV thể hình tại TP.HCM — m�
 
 ---
 
-## 2. Vì sao clone từ ParkingLink
+## 2. Nền tảng kế thừa
 
-ParkingLink (Flutter + Firebase, quản lý bãi gửi xe HCMC) đã xây xong hạ tầng cốt lõi qua nhiều tháng phát triển, đặc biệt:
+GymPS tái sử dụng nền tảng Flutter + Firebase nội bộ đã được xây dựng và vận hành ổn định qua nhiều tháng, đặc biệt:
 
-- **Phone Auth (OTP) trên iOS** — từng tốn rất nhiều công debug (3 nguyên nhân riêng biệt: thiếu APNs Auth Key, GoogleService-Info.plist thiếu REVERSED_CLIENT_ID, Info.plist thiếu CFBundleURLTypes khiến reCAPTCHA fallback callback không bao giờ trả về). Clone lại = tránh lặp lại toàn bộ quá trình debug này.
+- **Phone Auth (OTP) trên iOS** — từng tốn rất nhiều công debug (3 nguyên nhân riêng biệt: thiếu APNs Auth Key, GoogleService-Info.plist thiếu REVERSED_CLIENT_ID, Info.plist thiếu CFBundleURLTypes khiến reCAPTCHA fallback callback không bao giờ trả về). Tái sử dụng = tránh lặp lại toàn bộ quá trình debug này.
 - Geohash + tìm kiếm theo khoảng cách (Haversine) đã hoạt động ổn định, có spec chốt rõ ràng
 - Clean Architecture 4-layer đã được rèn qua nhiều đợt dọn nợ code (presentation/domain/data/core, dependency luôn hướng vào domain)
 - CI, pattern test baseline, quy trình deploy Firestore rules an toàn đã có sẵn
 
----
-
-## 3. Quyết định: Cách clone
-
-**Đã chọn: Clone độc lập hoàn toàn** (KHÔNG phải package dùng chung 2 business).
-
-```
-- Repo git MỚI, tách khỏi lịch sử ParkingLink (gỡ .git cũ, init lại)
-- Firebase project MỚI (không dùng chung parkinglink-v2)
-- Bundle ID mới, Apple Developer app entry riêng
-- KHÔNG chia sẻ code/package giữa 2 repo sau khi clone — 2 business
-  độc lập hoàn toàn, sửa bug 1 bên không tự động lan sang bên kia
-```
-
-**Lý do chọn cách này thay vì package dùng chung:** 2 business khác nhau hoàn toàn (gửi xe vs gym/PT). Package dùng chung giữa 2 domain khác nhau là trừu tượng hoá sớm (premature abstraction) — thêm rủi ro vận hành (publish/version package) không cần thiết ở giai đoạn này. ParkingLink cũng đang giữa lúc tách monorepo riêng của chính nó (Phase 2, pl_core/pl_user/pl_staff) — không muốn 2 việc lớn chồng lên nhau.
-
-> ⚠️ **QUAN TRỌNG: Việc xây PSgy KHÔNG ảnh hưởng gì đến dự án ParkingLink gốc.** ParkingLink giữ nguyên, tiếp tục phát triển riêng trong Project "ParkingLink" trên Claude — quay lại đó khi cần tiếp tục Phase 2 (Melos monorepo setup) hoặc việc khác của ParkingLink.
+**Nguyên tắc:** GymPS là sản phẩm độc lập — repo git riêng, Firebase project riêng, bundle ID riêng. Không chia sẻ code/package giữa các sản phẩm sau thời điểm kế thừa.
 
 ---
 
-## 4. Kiến trúc PSgy — Giữ gì, bỏ gì
+## 3. Kiến trúc GymPS — Giữ gì, bỏ gì
 
-### ✅ GIỮ nguyên (copy trực tiếp từ ParkingLink)
+### ✅ GIỮ nguyên (đã hoạt động, dùng lại được)
 
 | Thành phần | Lý do |
 |---|---|
@@ -72,22 +56,22 @@ ParkingLink (Flutter + Firebase, quản lý bãi gửi xe HCMC) đã xây xong h
 
 - `features/staff/`, `features/owner/` (Coach thay thế Staff, không có khái niệm Owner)
 - `features/parking/` (thay bằng gym/coach/booking)
-- QR check-in/check-out flow (không cần ở PSgy)
+- QR check-in/check-out flow (không cần ở GymPS)
 - Surveying lot + Apps Script pipeline
 - Ý tưởng "Cloud Function bypass rules" — KHÔNG cần, vì Coach có tài khoản Auth thật nên Firestore rules chuẩn theo `auth.uid` là đủ
 
-### 🆕 Multi-flavor mới: `user` + `coach` (thay vì `user` + `staff`)
+### 🆕 Multi-flavor mới: `user` + `coach`
 
-Giữ pattern multi-flavor tạm thời để dễ test — đúng bài học từ ParkingLink: multi-flavor chỉ là bước gộp tạm, nếu sau này cần 2 app riêng trên App Store thì tách sau (không phải ngay từ đầu).
+Giữ pattern multi-flavor để dễ test (2 app dùng chung 1 codebase, entry point khác nhau theo flavor). Nếu sau này cần 2 app riêng trên App Store thì tách sau (không phải ngay từ đầu).
 
 ---
 
-## 5. Domain Model mới
+## 4. Domain Model
 
 ```
 Gym {
   id, name, geohash, lat, lng, giá tham khảo, ảnh, tiện ích, giờ mở
-  → cấu trúc mượn TRỰC TIẾP từ ParkingLot (geohash + map + giá)
+  → cấu trúc mượn từ model bãi xe cũ (geohash + map + giá) — tương tự Coach
 }
 
 Coach {
@@ -105,13 +89,13 @@ Coach {
 
 Service {
   id, coachId, tên dịch vụ, giá, thời lượng
-  → cấu trúc mượn từ VehicleType (1 entity cha có nhiều loại giá khác nhau)
+  → cấu trúc mượn từ mô hình "1 entity cha có nhiều loại giá"
 }
 
 Booking {
   id, userId, coachId, serviceId, status, totalFee
   expiresAt        ← auto-cancel nếu Coach không xác nhận kịp (~15 phút,
-                      giống QrToken.isExpired pattern)
+                      pattern token hết hạn quen thuộc)
   agreedTime, agreedAddress, agreedLat/Lng
                     ← CHỐT CỨNG sau khi 2 bên thống nhất qua chat (nút
                       "Chốt lịch hẹn" riêng — không để hệ thống tự đọc
@@ -137,13 +121,13 @@ Review {
 
 ---
 
-## 6. Flow hoàn chỉnh (đã thống nhất, tham khảo app Glow)
+## 5. Flow hoàn chỉnh (đã thống nhất, tham khảo app Glow)
 
 ```
 1. Browse: List Gym trên map (giá cả) + List Coach gần đó (ảnh, sao,
    khoảng cách, "sớm nhất X giờ", filter theo loại dịch vụ)
 2. Xem hồ sơ Coach: ảnh, badge tin cậy, kinh nghiệm, dịch vụ + giá
-3. Chọn dịch vụ → xác nhận đặt (thanh toán tiền mặt v1, giống ParkingLink)
+3. Chọn dịch vụ → xác nhận đặt (thanh toán tiền mặt v1)
 4. Tạo Booking status=pending, hiện màn chờ + countdown auto-hủy
 5. Coach (app riêng, đã login) thấy booking mới → Xác nhận / Từ chối
 6. Xác nhận xong → mở Chat trong app (2 phía, realtime qua Firestore)
@@ -154,29 +138,28 @@ Review {
 
 ---
 
-## 7. Việc mới cần setup (KHÔNG có sẵn trong ParkingLink)
+## 6. Việc mới cần setup
 
 - Firebase project mới hoàn toàn (Firestore, Auth, Storage, Hosting)
 - Bundle ID mới (ví dụ `com.psgy.user`, `com.psgy.coach`) — cần chốt tên chính thức
-- Apple Developer: app entry mới, **APNs key mới** (dù quy trình giống hệt lần trước, vẫn cần tạo key MỚI vì key cũ gắn với bundle ID ParkingLink)
-- Repo git mới (GitHub riêng)
+- Apple Developer: app entry mới, **APNs key mới** (key cũ gắn với bundle ID cũ nên không dùng lại được)
+- Repo git riêng (GitHub)
 
 ---
 
-## 8. Quyết định còn TREO — cần bàn tiếp trong Project PSgy
+## 7. Quyết định còn TREO — cần bàn tiếp
 
 - [ ] Tên bundle ID chính thức + tên hiển thị app
 - [ ] Xác nhận lại: lịch rảnh Coach chỉ 1 khung giờ hiện tại (không multi-day calendar) — đã giả định, cần PO confirm hoặc điều chỉnh
-- [ ] Phương thức thanh toán v1: giả định tiền mặt như ParkingLink — cần xác nhận
-- [ ] Phân kỳ đề xuất: Milestone 1 (browse + book + xác nhận, CHƯA có chat) → Milestone 2 (thêm chat) — theo đúng cách làm MOD-12b-4 của ParkingLink (check-in trước, check-out sau, verify từng bước)
+- [ ] Phương thức thanh toán v1: giả định tiền mặt — cần xác nhận
+- [ ] Phân kỳ đề xuất: Milestone 1 (browse + book + xác nhận, CHƯA có chat) → Milestone 2 (thêm chat) — verify từng bước
 - [ ] Cách xử lý voucher/mã giảm giá (thấy trong ảnh tham khảo, chưa bàn kỹ)
-- [ ] Clone `pubspec.yaml` từ ParkingLink rồi dọn bớt dependency không cần (ví dụ nếu không cần Telegram bot pipeline)
+- [ ] Rà soát `pubspec.yaml` dọn bớt dependency không cần
 
 ---
 
-## 9. Ghi chú làm việc
+## 8. Ghi chú làm việc
 
-- Team: Ruka (Product Owner) + Claude (Tech Lead, không viết code) + Cursor (Implementation) — giữ nguyên mô hình đã chạy tốt ở ParkingLink
+- Team: Ruka (Product Owner) + đội dev backend thật (nhận code reference) — Claude/Cursor là công cụ soạn thảo, không thay thế team
 - Ngôn ngữ làm việc: tiếng Việt
 - Phong cách: hướng dẫn ngắn gọn, có ưu/nhược điểm rõ ràng, không áp đặt 1 chiều
-- Dự án ParkingLink gốc: xem lại Project "ParkingLink" trên Claude khi cần tiếp tục Phase 2 hoặc việc khác của ParkingLink — KHÔNG lẫn vào Project này
