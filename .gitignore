@@ -51,3 +51,7 @@ app.*.map.json
 # Service account keys (never commit)
 firestore_seed/serviceAccountKey.json
 **/serviceAccountKey.json
+
+# Test failure artifacts + web walkthrough artifact (không thuộc repo app)
+test/pilot_demo/failures/
+walkthrough/
