@@ -1,0 +1,14 @@
+---
+description: Demo-phase Dart-only changes — no new native packages, prefer hot reload
+alwaysApply: true
+---
+
+# Demo phase — Dart only
+
+Khi thêm tính năng **DEMO** (pilot_demo / mock UI):
+
+- CHỈ viết Dart thuần + mock data. Đánh dấu `// DEMO DATA` nếu là seed tạm.
+- TUYỆT ĐỐI không thêm native package mới (`firebase_*`, `google_maps_flutter`, `isar`, `geolocator`, plugin iOS/Android khác). Phải báo Claude trước.
+- Đổi Dart-only → bảo user dùng hot reload (`r` trong terminal `flutter run`). Không chạy lại `pod install` / Gradle native. Nhanh hơn build native 5–10x.
+- Chỉ hot restart (`R`) khi đổi state/DI/theme global, `main.dart`, hoặc provider không reload được.
+- Chạy demo: `./scripts/run_dev_fast.sh user` (hoặc `coach`).

@@ -8,9 +8,13 @@ This file aligns Claude guidance with:
 ## 1. QUICK START COMMANDS
 
 ```bash
-# Run
-flutter run --dart-define=FLAVOR=user --dart-define=ENV=development
-flutter run --dart-define=FLAVOR=coach --dart-define=ENV=development
+# Run (demo — nhanh, hot reload)
+./scripts/run_dev_fast.sh user
+./scripts/run_dev_fast.sh coach
+
+# Run (tương đương)
+flutter run --flavor user --dart-define=FLAVOR=user --dart-define=ENV=development --debug
+flutter run --flavor coach --dart-define=FLAVOR=coach --dart-define=ENV=development --debug
 
 # Test
 flutter analyze
@@ -153,6 +157,12 @@ Giai đoạn hiện tại = thêm tính năng demo + đổi style UI nhanh.
 Mỗi prompt phải có: Context (project, file liên quan) + Yêu cầu cụ thể + Ràng buộc (không thêm package, không đổi architecture, style qua theme) + Definition of Done (analyze sạch, chạy được, screenshot, commit).
 
 Đổi style UI: **ưu tiên qua `lib/core/theme/`**, không hardcode màu trong widget. Tính năng demo: mock data đánh dấu `// DEMO DATA`, dễ xoá sau.
+
+### Demo phase — tốc độ build
+
+- Tính năng DEMO: **chỉ Dart + mock**. Không thêm native package (`firebase_*`, maps, isar, geolocator).
+- Dart-only → hot reload (`r`). Đổi DI/theme/global → hot restart (`R`). Không `flutter run` lại từ đầu.
+- Native package mới (nếu thật sự cần) phải báo Claude trước — `pod install` + Gradle là chỗ chậm nhất.
 
 ### Nguyên tắc
 

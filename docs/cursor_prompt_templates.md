@@ -23,7 +23,7 @@
 3. [Style theo design system có sẵn — KHÔNG tự chế màu mới]
 
 ## Ràng buộc BẮT BUỘC
-- ❌ KHÔNG thêm package mới (hỏi trước nếu cần)
+- ❌ KHÔNG thêm package mới — đặc biệt native (`firebase_*`, maps, isar, geolocator). Báo Claude trước.
 - ❌ KHÔNG đổi architecture / domain layer / repository interface
 - ❌ KHÔNG đổi file lib/core/ (trừ theme nếu được duyệt)
 - ✅ Code mới đặt trong lib/features/<tên>/ hoặc lib/shared/
@@ -33,7 +33,7 @@
 
 ## Definition of Done
 - [ ] flutter analyze KHÔNG có error mới
-- [ ] Chạy được: flutter run --dart-define=FLAVOR=user --dart-define=ENV=development
+- [ ] Chạy được: `./scripts/run_dev_fast.sh user` (Dart-only sau đó dùng hot reload `r`)
 - [ ] Test thủ công trên simulator: [các bước test]
 - [ ] Commit: feat: [mô tả] (CPxx) — tuân theo docs/git_workflow.md
 - [ ] Báo cáo: file đã sửa, screenshot, điều gì chưa làm được
