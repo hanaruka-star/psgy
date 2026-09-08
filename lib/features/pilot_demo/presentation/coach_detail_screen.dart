@@ -23,6 +23,9 @@ class _CoachDetailScreenState extends State<CoachDetailScreen>
     with SingleTickerProviderStateMixin {
   late String _selectedServiceId;
   late final TabController _tabs;
+  late final PageController _photos;
+  int _photoIndex = 0;
+  var _photosPrecached = false;
 
   @override
   void initState() {
@@ -32,10 +35,22 @@ class _CoachDetailScreenState extends State<CoachDetailScreen>
     _tabs.addListener(() {
       if (!_tabs.indexIsChanging) setState(() {});
     });
+    _photos = PageController();
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    if (_photosPrecached) return;
+    _photosPrecached = true;
+    for (final url in widget.coach.photoUrls) {
+      precacheImage(AssetImage(url), context);
+    }
   }
 
   @override
   void dispose() {
+    _photos.dispose();
     _tabs.dispose();
     super.dispose();
   }
@@ -43,6 +58,13 @@ class _CoachDetailScreenState extends State<CoachDetailScreen>
   MockService get _selectedService => widget.coach.services.firstWhere(
         (service) => service.id == _selectedServiceId,
       );
+
+  int? _packageSavingsPercent(MockPackage package) {
+    final unit = widget.coach.services.first;
+    final retail = unit.priceVnd * package.sessionCount;
+    if (retail <= 0 || package.totalPriceVnd >= retail) return null;
+    return (((retail - package.totalPriceVnd) * 100) / retail).round();
+  }
 
   Future<void> _buy(MockPackage package) async {
     final theme = Theme.of(context);
@@ -112,190 +134,262 @@ class _CoachDetailScreenState extends State<CoachDetailScreen>
 
         return Scaffold(
           backgroundColor: theme.scaffoldBackgroundColor,
-          appBar: AppBar(title: const Text('Chi tiết Coach')),
+          appBar: AppBar(
+            leading: IconButton(
+              icon: const Icon(Icons.arrow_back),
+              tooltip: 'Quay lại',
+              onPressed: () => Navigator.of(context).maybePop(),
+            ),
+            title: Text(coach.name),
+          ),
           body: Column(
             children: [
               Expanded(
                 child: ListView(
-                  padding: AppSpacing.screenPadding,
+                  padding: EdgeInsets.zero,
                   children: [
-                    CircleAvatar(
-                      radius: 48,
-                      backgroundColor: scheme.primaryContainer,
-                      foregroundColor: scheme.onPrimaryContainer,
-                      child: Text(
-                        coach.initials,
-                        style: theme.textTheme.headlineMedium?.copyWith(
-                          color: scheme.onPrimaryContainer,
-                        ),
-                      ),
+                    _PhotoSlideshow(
+                      coach: coach,
+                      controller: _photos,
+                      index: _photoIndex,
+                      onChanged: (value) =>
+                          setState(() => _photoIndex = value),
                     ),
-                    const SizedBox(height: AppSpacing.md),
-                    Text(
-                      coach.name,
-                      textAlign: TextAlign.center,
-                      style: theme.textTheme.headlineMedium,
-                    ),
-                    const SizedBox(height: AppSpacing.sm),
-                    Center(
-                      child: FittedBox(
-                        fit: BoxFit.scaleDown,
-                        child: AppRating(
-                          value: coach.rating,
-                          suffix: '${coach.yearsExperience} năm kinh nghiệm',
-                          style: theme.textTheme.bodyMedium,
-                        ),
-                      ),
-                    ),
-                    const SizedBox(height: AppSpacing.xs),
-                    Center(
-                      child: AppTag(
-                        label: coach.nextSlotLabel,
-                        highlight: true,
-                      ),
-                    ),
-                    const SizedBox(height: AppSpacing.lg),
-                    if (coach.bio.isNotEmpty) ...[
-                      Card(
-                        child: Padding(
-                          padding: AppSpacing.cardPadding,
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
+                    Padding(
+                      padding: AppSpacing.screenPadding,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(coach.name, style: theme.textTheme.headlineMedium),
+                          const SizedBox(height: AppSpacing.sm),
+                          _TrustSignals(coach: coach, stats: stats),
+                          const SizedBox(height: AppSpacing.lg),
+                          const _SectionTitle('Về tôi'),
+                          const SizedBox(height: AppSpacing.sm),
+                          Text(coach.bio, style: theme.textTheme.bodyMedium),
+                          if (coach.goals.isNotEmpty) ...[
+                            const SizedBox(height: AppSpacing.lg),
+                            _ChipBlock(title: 'Mục tiêu', labels: coach.goals),
+                          ],
+                          if (coach.targetAudience.isNotEmpty) ...[
+                            const SizedBox(height: AppSpacing.lg),
+                            _ChipBlock(
+                              title: 'Đối tượng',
+                              labels: coach.targetAudience,
+                            ),
+                          ],
+                          if (coach.trainingFormats.isNotEmpty) ...[
+                            const SizedBox(height: AppSpacing.lg),
+                            _ChipBlock(
+                              title: 'Hình thức',
+                              labels: coach.trainingFormats,
+                            ),
+                          ],
+                          const SizedBox(height: AppSpacing.lg),
+                          const _SectionTitle('Lịch trống'),
+                          const SizedBox(height: AppSpacing.sm),
+                          AppTag(label: coach.nextSlotLabel, highlight: true),
+                          const SizedBox(height: AppSpacing.lg),
+                          const _SectionTitle('Chọn dịch vụ'),
+                          const SizedBox(height: AppSpacing.sm),
+                          TabBar(
+                            controller: _tabs,
+                            tabs: const [
+                              Tab(text: 'Dịch vụ'),
+                              Tab(text: 'Gói'),
+                            ],
+                          ),
+                          const SizedBox(height: AppSpacing.sm),
+                          if (_tabs.index == 0)
+                            RadioGroup<String>(
+                              groupValue: _selectedServiceId,
+                              onChanged: (value) {
+                                if (value == null) return;
+                                setState(() => _selectedServiceId = value);
+                              },
+                              child: Column(
+                                children: [
+                                  for (final service in coach.services)
+                                    RadioListTile<String>(
+                                      value: service.id,
+                                      title: Text(service.name),
+                                      subtitle: Text(
+                                        '${service.priceLabel} · ${service.durationMinutes} phút',
+                                      ),
+                                      contentPadding: EdgeInsets.zero,
+                                    ),
+                                ],
+                              ),
+                            )
+                          else ...[
+                            if (coach.packages.isEmpty)
                               Text(
-                                'Giới thiệu',
+                                'Coach này chưa có gói.',
+                                style: theme.textTheme.bodyMedium,
+                              )
+                            else
+                              for (final package in coach.packages) ...[
+                                Card(
+                                  child: Padding(
+                                    padding: AppSpacing.cardPadding,
+                                    child: Column(
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: [
+                                        Wrap(
+                                          spacing: AppSpacing.sm,
+                                          runSpacing: AppSpacing.xs,
+                                          crossAxisAlignment:
+                                              WrapCrossAlignment.center,
+                                          children: [
+                                            AppTag(label: package.name),
+                                            if (_packageSavingsPercent(package)
+                                                case final percent?)
+                                              AppTag(
+                                                label: 'Tiết kiệm $percent%',
+                                                highlight: true,
+                                              ),
+                                          ],
+                                        ),
+                                        const SizedBox(height: AppSpacing.xs),
+                                        Text(
+                                          '${package.sessionCount} buổi · ${package.priceLabel}',
+                                          style: theme.textTheme.bodyLarge,
+                                        ),
+                                        if (package.description.isNotEmpty) ...[
+                                          const SizedBox(height: AppSpacing.xs),
+                                          Text(
+                                            package.description,
+                                            style: theme.textTheme.bodySmall,
+                                          ),
+                                        ],
+                                        const SizedBox(height: AppSpacing.sm),
+                                        Align(
+                                          alignment: Alignment.centerRight,
+                                          child: FilledButton(
+                                            onPressed: () => _buy(package),
+                                            style: FilledButton.styleFrom(
+                                              backgroundColor: accent,
+                                              foregroundColor: onAccent,
+                                            ),
+                                            child: const Text('Mua'),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                                const SizedBox(height: AppSpacing.sm),
+                              ],
+                            if (owned.isNotEmpty) ...[
+                              const SizedBox(height: AppSpacing.md),
+                              Text(
+                                'Gói đã mua',
                                 style: theme.textTheme.titleMedium,
                               ),
                               const SizedBox(height: AppSpacing.sm),
+                              for (final item in owned) ...[
+                                Card(
+                                  child: ListTile(
+                                    title: AppTag(label: item.packageName),
+                                    subtitle: Text(
+                                      '${item.remainingLabel}\n'
+                                      'Mua ngày ${dateFormat.format(item.purchasedAt)}',
+                                    ),
+                                    isThreeLine: true,
+                                  ),
+                                ),
+                                const SizedBox(height: AppSpacing.sm),
+                              ],
+                            ],
+                          ],
+                          const SizedBox(height: AppSpacing.sm),
+                          AppTag(
+                            label: coach.gymFeeIncluded
+                                ? 'Đã bao gồm chi phí phòng gym'
+                                : 'Chưa bao gồm chi phí phòng gym',
+                            highlight: coach.gymFeeIncluded,
+                          ),
+                          if (coach.trainingLocationAddress.isNotEmpty) ...[
+                            const SizedBox(height: AppSpacing.lg),
+                            const _SectionTitle('Địa điểm tập'),
+                            const SizedBox(height: AppSpacing.sm),
+                            Text(
+                              coach.trainingLocationAddress,
+                              style: theme.textTheme.bodyMedium,
+                            ),
+                            if (coach.membershipFeeLabel != null) ...[
+                              const SizedBox(height: AppSpacing.xs),
                               Text(
-                                coach.bio,
-                                style: theme.textTheme.bodyMedium,
+                                coach.membershipFeeLabel!,
+                                style: theme.textTheme.bodySmall?.copyWith(
+                                  color: scheme.onSurfaceVariant,
+                                ),
                               ),
                             ],
-                          ),
-                        ),
-                      ),
-                      const SizedBox(height: AppSpacing.lg),
-                    ],
-                    Text('Chọn dịch vụ', style: theme.textTheme.titleMedium),
-                    const SizedBox(height: AppSpacing.sm),
-                    TabBar(
-                      controller: _tabs,
-                      tabs: const [
-                        Tab(text: 'Dịch vụ'),
-                        Tab(text: 'Gói'),
-                      ],
-                    ),
-                    const SizedBox(height: AppSpacing.sm),
-                    if (_tabs.index == 0)
-                      RadioGroup<String>(
-                        groupValue: _selectedServiceId,
-                        onChanged: (value) {
-                          if (value == null) return;
-                          setState(() => _selectedServiceId = value);
-                        },
-                        child: Column(
-                          children: [
-                            for (final service in coach.services)
-                              RadioListTile<String>(
-                                value: service.id,
-                                title: Text(service.name),
-                                subtitle: Text(
-                                  '${service.priceLabel} · ${service.durationMinutes} phút',
-                                ),
-                                contentPadding: EdgeInsets.zero,
-                              ),
                           ],
-                        ),
-                      )
-                    else ...[
-                      if (coach.packages.isEmpty)
-                        Text(
-                          'Coach này chưa có gói.',
-                          style: theme.textTheme.bodyMedium,
-                        )
-                      else
-                        for (final package in coach.packages) ...[
-                          Card(
-                            child: Padding(
-                              padding: AppSpacing.cardPadding,
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  AppTag(label: package.name),
-                                  const SizedBox(height: AppSpacing.xs),
-                                  Text(
-                                    '${package.sessionCount} buổi · ${package.priceLabel}',
-                                    style: theme.textTheme.bodyLarge,
-                                  ),
-                                  if (package.description.isNotEmpty) ...[
-                                    const SizedBox(height: AppSpacing.xs),
-                                    Text(
-                                      package.description,
-                                      style: theme.textTheme.bodySmall,
+                          if (coach.studentResults.isNotEmpty) ...[
+                            const SizedBox(height: AppSpacing.lg),
+                            const _SectionTitle('Kết quả học viên'),
+                            const SizedBox(height: AppSpacing.sm),
+                            for (final line in coach.studentResults)
+                              Padding(
+                                padding: const EdgeInsets.only(
+                                  bottom: AppSpacing.sm,
+                                ),
+                                child: Row(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text('•  ', style: theme.textTheme.bodyMedium),
+                                    Expanded(
+                                      child: Text(
+                                        line,
+                                        style: theme.textTheme.bodyMedium,
+                                      ),
                                     ),
                                   ],
-                                  const SizedBox(height: AppSpacing.sm),
-                                  Align(
-                                    alignment: Alignment.centerRight,
-                                    child: FilledButton(
-                                      onPressed: () => _buy(package),
-                                      style: FilledButton.styleFrom(
-                                        backgroundColor: accent,
-                                        foregroundColor: onAccent,
-                                      ),
-                                      child: const Text('Mua'),
-                                    ),
-                                  ),
-                                ],
+                                ),
                               ),
+                          ],
+                          if (coach.certifications.isNotEmpty) ...[
+                            const SizedBox(height: AppSpacing.lg),
+                            _ChipBlock(
+                              title: 'Certification',
+                              labels: coach.certifications,
                             ),
+                          ],
+                          const SizedBox(height: AppSpacing.lg),
+                          _ReviewOverviewCard(stats: stats),
+                          const SizedBox(height: AppSpacing.md),
+                          Text(
+                            'Bình luận khách hàng',
+                            style: theme.textTheme.titleMedium,
                           ),
                           const SizedBox(height: AppSpacing.sm),
-                        ],
-                      if (owned.isNotEmpty) ...[
-                        const SizedBox(height: AppSpacing.md),
-                        Text(
-                          'Gói đã mua',
-                          style: theme.textTheme.titleMedium,
-                        ),
-                        const SizedBox(height: AppSpacing.sm),
-                        for (final item in owned) ...[
-                          Card(
-                            child: ListTile(
-                              title: AppTag(label: item.packageName),
-                              subtitle: Text(
-                                '${item.remainingLabel}\n'
-                                'Mua ngày ${dateFormat.format(item.purchasedAt)}',
+                          if (reviews.isEmpty)
+                            Text(
+                              'Chưa có đánh giá.',
+                              style: theme.textTheme.bodyMedium,
+                            )
+                          else
+                            for (final review in reviews) ...[
+                              _ReviewCommentCard(
+                                review: review,
+                                dateLabel: dateFormat.format(review.date),
                               ),
-                              isThreeLine: true,
+                              const SizedBox(height: AppSpacing.sm),
+                            ],
+                          if (coach.bookingCancellationPolicy.isNotEmpty) ...[
+                            const SizedBox(height: AppSpacing.md),
+                            const _SectionTitle('Chính sách booking/cancellation'),
+                            const SizedBox(height: AppSpacing.sm),
+                            Text(
+                              coach.bookingCancellationPolicy,
+                              style: theme.textTheme.bodyMedium,
                             ),
-                          ),
-                          const SizedBox(height: AppSpacing.sm),
+                          ],
                         ],
-                      ],
-                    ],
-                    const SizedBox(height: AppSpacing.lg),
-                    _ReviewOverviewCard(stats: stats),
-                    const SizedBox(height: AppSpacing.md),
-                    Text(
-                      'Bình luận khách hàng',
-                      style: theme.textTheme.titleMedium,
+                      ),
                     ),
-                    const SizedBox(height: AppSpacing.sm),
-                    if (reviews.isEmpty)
-                      Text(
-                        'Chưa có đánh giá.',
-                        style: theme.textTheme.bodyMedium,
-                      )
-                    else
-                      for (final review in reviews) ...[
-                        _ReviewCommentCard(
-                          review: review,
-                          dateLabel: dateFormat.format(review.date),
-                        ),
-                        const SizedBox(height: AppSpacing.sm),
-                      ],
                   ],
                 ),
               ),
@@ -315,6 +409,190 @@ class _CoachDetailScreenState extends State<CoachDetailScreen>
           ),
         );
       },
+    );
+  }
+}
+
+class _PhotoSlideshow extends StatelessWidget {
+  const _PhotoSlideshow({
+    required this.coach,
+    required this.controller,
+    required this.index,
+    required this.onChanged,
+  });
+
+  final MockCoach coach;
+  final PageController controller;
+  final int index;
+  final ValueChanged<int> onChanged;
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final scheme = theme.colorScheme;
+    final photos = coach.photoUrls;
+
+    return SizedBox(
+      height: 240,
+      width: double.infinity,
+      child: photos.isEmpty
+          ? _PhotoFallback(coach: coach)
+          : Stack(
+              fit: StackFit.expand,
+              children: [
+                PageView.builder(
+                  controller: controller,
+                  itemCount: photos.length,
+                  onPageChanged: onChanged,
+                  itemBuilder: (context, i) {
+                    return Image.asset(
+                      photos[i],
+                      fit: BoxFit.cover,
+                      width: double.infinity,
+                      height: double.infinity,
+                      frameBuilder: (context, child, frame, wasSynchronouslyLoaded) {
+                        if (frame == null) {
+                          return _PhotoFallback(coach: coach);
+                        }
+                        return child;
+                      },
+                      errorBuilder: (context, error, stackTrace) {
+                        return _PhotoFallback(coach: coach);
+                      },
+                    );
+                  },
+                ),
+                Positioned(
+                  left: 0,
+                  right: 0,
+                  bottom: AppSpacing.sm,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      for (var i = 0; i < photos.length; i++) ...[
+                        Container(
+                          width: 8,
+                          height: 8,
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            color: i == index
+                                ? scheme.onPrimary
+                                : scheme.onPrimary.withValues(alpha: 0.4),
+                          ),
+                        ),
+                        if (i < photos.length - 1)
+                          const SizedBox(width: AppSpacing.xs),
+                      ],
+                      const SizedBox(width: AppSpacing.sm),
+                      DecoratedBox(
+                        decoration: BoxDecoration(
+                          color: scheme.scrim.withValues(alpha: 0.45),
+                          borderRadius: AppSpacing.borderRadiusSm,
+                        ),
+                        child: Padding(
+                          padding: AppSpacing.chipPadding,
+                          child: Text(
+                            '${index + 1}/${photos.length}',
+                            style: theme.textTheme.labelSmall?.copyWith(
+                              color: scheme.onPrimary,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+    );
+  }
+}
+
+class _PhotoFallback extends StatelessWidget {
+  const _PhotoFallback({required this.coach});
+
+  final MockCoach coach;
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final scheme = theme.colorScheme;
+    return ColoredBox(
+      color: scheme.primaryContainer,
+      child: Center(
+        child: Text(
+          coach.initials,
+          style: theme.textTheme.displaySmall?.copyWith(
+            color: scheme.onPrimaryContainer,
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class _TrustSignals extends StatelessWidget {
+  const _TrustSignals({required this.coach, required this.stats});
+
+  final MockCoach coach;
+  final MockCoachReviewStats stats;
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final accent = AppStatusColors.highlight(theme.brightness);
+    final style = theme.textTheme.bodyMedium;
+
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Icon(Icons.star, size: 16, color: accent),
+        const SizedBox(width: 4),
+        Expanded(
+          child: Text(
+            '${stats.average.toStringAsFixed(1)} · ${stats.count} đánh giá'
+            '  ·  ${coach.yearsExperience} năm kinh nghiệm'
+            '  ·  ${coach.totalBookings} lượt booking',
+            style: style,
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class _SectionTitle extends StatelessWidget {
+  const _SectionTitle(this.label);
+
+  final String label;
+
+  @override
+  Widget build(BuildContext context) {
+    return Text(label, style: Theme.of(context).textTheme.titleMedium);
+  }
+}
+
+class _ChipBlock extends StatelessWidget {
+  const _ChipBlock({required this.title, required this.labels});
+
+  final String title;
+  final List<String> labels;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        _SectionTitle(title),
+        const SizedBox(height: AppSpacing.sm),
+        Wrap(
+          spacing: AppSpacing.sm,
+          runSpacing: AppSpacing.xs,
+          children: [
+            for (final label in labels) AppTag(label: label),
+          ],
+        ),
+      ],
     );
   }
 }

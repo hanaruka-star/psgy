@@ -51,13 +51,13 @@ void main() {
   testWidgets('coach_detail shows intro, rating bars, and comments', (
     tester,
   ) async {
-    await tester.binding.setSurfaceSize(const Size(390, 2200));
+    await tester.binding.setSurfaceSize(const Size(390, 5600));
     addTearDown(() => tester.binding.setSurfaceSize(null));
 
     await tester.pumpWidget(_wrap(CoachDetailScreen(coach: mockCoaches.first)));
     await tester.pumpAndSettle();
 
-    expect(find.text('Giới thiệu'), findsOneWidget);
+    expect(find.text('Về tôi'), findsOneWidget);
     expect(find.textContaining('/5 ·'), findsOneWidget);
     expect(find.text('Bình luận khách hàng'), findsOneWidget);
     expect(find.text('Trần Minh Anh'), findsOneWidget);

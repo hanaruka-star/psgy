@@ -124,6 +124,8 @@ void main() {
     expect(find.text('Dịch vụ'), findsWidgets);
     expect(find.text('Gói'), findsOneWidget);
 
+    await tester.ensureVisible(find.text('Gói'));
+    await tester.pumpAndSettle();
     await tester.tap(find.text('Gói'));
     await tester.pumpAndSettle();
     expect(find.text('Gói 10 buổi'), findsOneWidget);
