@@ -3,12 +3,14 @@ class MockService {
   final String name;
   final int priceVnd;
   final int durationMinutes;
+  final String? promoLabel;
 
   const MockService({
     required this.id,
     required this.name,
     required this.priceVnd,
     required this.durationMinutes,
+    this.promoLabel,
   });
 
   String get priceLabel => formatVnd(priceVnd);
@@ -18,12 +20,14 @@ class MockService {
     String? name,
     int? priceVnd,
     int? durationMinutes,
+    String? promoLabel,
   }) {
     return MockService(
       id: id ?? this.id,
       name: name ?? this.name,
       priceVnd: priceVnd ?? this.priceVnd,
       durationMinutes: durationMinutes ?? this.durationMinutes,
+      promoLabel: promoLabel ?? this.promoLabel,
     );
   }
 }

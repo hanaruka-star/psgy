@@ -1,5 +1,8 @@
+import 'package:psgy/features/pilot_demo/models/mock_availability_slot.dart';
 import 'package:psgy/features/pilot_demo/models/mock_package.dart';
 import 'package:psgy/features/pilot_demo/models/mock_service.dart';
+import 'package:psgy/features/pilot_demo/models/mock_student_result.dart';
+import 'package:psgy/features/pilot_demo/models/mock_training_location.dart';
 
 class MockCoach {
   final String id;
@@ -23,11 +26,12 @@ class MockCoach {
   final List<String> targetAudience;
   final List<String> trainingFormats;
   final bool gymFeeIncluded;
-  final String trainingLocationAddress;
+  final List<MockTrainingLocation> trainingLocations;
   final String? membershipFeeLabel;
-  final List<String> studentResults;
+  final List<MockStudentResult> studentResults;
   final List<String> certifications;
   final String bookingCancellationPolicy;
+  final List<MockAvailabilitySlot> weeklyAvailability;
 
   const MockCoach({
     required this.id,
@@ -48,10 +52,11 @@ class MockCoach {
     this.targetAudience = const [],
     this.trainingFormats = const [],
     this.gymFeeIncluded = false,
-    this.trainingLocationAddress = '',
+    this.trainingLocations = const [],
     this.membershipFeeLabel,
     this.studentResults = const [],
     this.certifications = const [],
     this.bookingCancellationPolicy = '',
+    this.weeklyAvailability = const [],
   });
 }

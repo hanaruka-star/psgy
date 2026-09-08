@@ -4,7 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:psgy/features/pilot_demo/data/mock_coaches.dart';
+import 'package:psgy/features/pilot_demo/models/mock_training_location.dart';
 import 'package:psgy/features/pilot_demo/presentation/coach_detail_screen.dart';
+import 'package:psgy/features/pilot_demo/presentation/student_result_detail_screen.dart';
 
 Future<void> _loadFamily(String family, String path) async {
   final file = File(path);
@@ -55,8 +57,27 @@ void main() {
       expect(coach.goals, isNotEmpty, reason: coach.id);
       expect(coach.targetAudience, isNotEmpty, reason: coach.id);
       expect(coach.trainingFormats, isNotEmpty, reason: coach.id);
-      expect(coach.trainingLocationAddress, isNotEmpty, reason: coach.id);
+      expect(coach.trainingLocations.length, greaterThanOrEqualTo(2),
+          reason: coach.id);
+      expect(
+        coach.trainingLocations
+            .any((item) => item.type == MockTrainingLocation.typeNearby),
+        isTrue,
+        reason: coach.id,
+      );
+      expect(
+        coach.trainingLocations
+            .any((item) => item.type == MockTrainingLocation.typePartnerGym),
+        isTrue,
+        reason: coach.id,
+      );
       expect(coach.studentResults, isNotEmpty, reason: coach.id);
+      expect(coach.weeklyAvailability, isNotEmpty, reason: coach.id);
+      expect(
+        coach.services.where((item) => item.promoLabel != null).length,
+        inInclusiveRange(1, 2),
+        reason: coach.id,
+      );
       expect(coach.certifications, isNotEmpty, reason: coach.id);
       expect(coach.bookingCancellationPolicy, isNotEmpty, reason: coach.id);
     }
@@ -101,6 +122,41 @@ void main() {
         find.byType(CoachDetailScreen),
         matchesGoldenFile('goldens/coach_detail_${spec.file}_mid.png'),
       );
+      expect(find.text('Chọn HLV'), findsOneWidget);
+
+      await tester.scrollUntilVisible(
+        find.text('Lịch trống'),
+        300,
+        scrollable: find.byType(Scrollable).first,
+      );
+      await tester.pumpAndSettle();
+      await expectLater(
+        find.byType(CoachDetailScreen),
+        matchesGoldenFile('goldens/coach_detail_${spec.file}_week.png'),
+      );
+
+      await tester.scrollUntilVisible(
+        find.text('Chọn dịch vụ'),
+        300,
+        scrollable: find.byType(Scrollable).first,
+      );
+      await tester.pumpAndSettle();
+      await expectLater(
+        find.byType(CoachDetailScreen),
+        matchesGoldenFile('goldens/coach_detail_${spec.file}_services.png'),
+      );
+      expect(find.text('Chọn HLV'), findsOneWidget);
+
+      await tester.scrollUntilVisible(
+        find.text('Kết quả học viên'),
+        300,
+        scrollable: find.byType(Scrollable).first,
+      );
+      await tester.pumpAndSettle();
+      await expectLater(
+        find.byType(CoachDetailScreen),
+        matchesGoldenFile('goldens/coach_detail_${spec.file}_results.png'),
+      );
 
       await tester.scrollUntilVisible(
         find.text('Chính sách booking/cancellation'),
@@ -112,6 +168,60 @@ void main() {
         find.byType(CoachDetailScreen),
         matchesGoldenFile('goldens/coach_detail_${spec.file}_reviews.png'),
       );
+      expect(find.text('Chọn HLV'), findsOneWidget);
     });
   }
+
+  testWidgets('student result detail and certificate viewer', (tester) async {
+    await tester.binding.setSurfaceSize(const Size(390, 844));
+    addTearDown(() => tester.binding.setSurfaceSize(null));
+
+    final coach = mockCoaches.first;
+    await tester.pumpWidget(_wrap(CoachDetailScreen(coach: coach)));
+    await tester.pump();
+    await tester.runAsync(() async {
+      final context = tester.element(find.byType(MaterialApp));
+      for (final url in {
+        ...coach.photoUrls,
+        for (final result in coach.studentResults) ...[
+          result.beforeImageUrl,
+          result.afterImageUrl,
+        ],
+        ...mockCertificatePhotos,
+      }) {
+        await precacheImage(AssetImage(url), context);
+      }
+    });
+    await tester.pumpAndSettle();
+
+    await tester.scrollUntilVisible(
+      find.text('Xem chi tiết').first,
+      300,
+      scrollable: find.byType(Scrollable).first,
+    );
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Xem chi tiết').first);
+    await tester.pumpAndSettle();
+    expect(find.text('Nhật ký tiến độ'), findsOneWidget);
+    await expectLater(
+      find.byType(StudentResultDetailScreen),
+      matchesGoldenFile('goldens/student_result_detail.png'),
+    );
+
+    await tester.pageBack();
+    await tester.pumpAndSettle();
+
+    await tester.scrollUntilVisible(
+      find.text('ACE Personal Trainer'),
+      300,
+      scrollable: find.byType(Scrollable).first,
+    );
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('ACE Personal Trainer'));
+    await tester.pumpAndSettle();
+    await expectLater(
+      find.byType(Dialog),
+      matchesGoldenFile('goldens/certificate_viewer.png'),
+    );
+  });
 }

@@ -2,13 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:psgy/core/theme/app_spacing.dart';
 import 'package:psgy/core/theme/app_status_colors.dart';
+import 'package:psgy/features/pilot_demo/data/mock_coaches.dart';
 import 'package:psgy/features/pilot_demo/data/mock_coach_reviews.dart';
 import 'package:psgy/features/pilot_demo/data/mock_user_session.dart';
+import 'package:psgy/features/pilot_demo/models/mock_availability_slot.dart';
 import 'package:psgy/features/pilot_demo/models/mock_coach.dart';
 import 'package:psgy/features/pilot_demo/models/mock_coach_review.dart';
 import 'package:psgy/features/pilot_demo/models/mock_package.dart';
 import 'package:psgy/features/pilot_demo/models/mock_service.dart';
+import 'package:psgy/features/pilot_demo/models/mock_student_result.dart';
+import 'package:psgy/features/pilot_demo/models/mock_training_location.dart';
 import 'package:psgy/features/pilot_demo/presentation/booking_summary_screen.dart';
+import 'package:psgy/features/pilot_demo/presentation/student_result_detail_screen.dart';
 
 class CoachDetailScreen extends StatefulWidget {
   const CoachDetailScreen({super.key, required this.coach});
@@ -113,6 +118,35 @@ class _CoachDetailScreenState extends State<CoachDetailScreen>
     );
   }
 
+  void _openCertificate(BuildContext context, String title) {
+    final asset = mockCertificatePhotos[
+        title.hashCode.remainder(mockCertificatePhotos.length).abs()];
+    showDialog<void>(
+      context: context,
+      builder: (dialogContext) {
+        return Dialog.fullscreen(
+          child: Scaffold(
+            appBar: AppBar(
+              title: Text(title),
+              leading: IconButton(
+                icon: const Icon(Icons.close),
+                onPressed: () => Navigator.of(dialogContext).pop(),
+              ),
+            ),
+            body: InteractiveViewer(
+              child: Center(
+                child: Image.asset(
+                  asset,
+                  fit: BoxFit.contain,
+                ),
+              ),
+            ),
+          ),
+        );
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
@@ -169,13 +203,18 @@ class _CoachDetailScreenState extends State<CoachDetailScreen>
                           Text(coach.bio, style: theme.textTheme.bodyMedium),
                           if (coach.goals.isNotEmpty) ...[
                             const SizedBox(height: AppSpacing.lg),
-                            _ChipBlock(title: 'Mục tiêu', labels: coach.goals),
+                            _ChipBlock(
+                              title: 'Mục tiêu',
+                              labels: coach.goals,
+                              colored: true,
+                            ),
                           ],
                           if (coach.targetAudience.isNotEmpty) ...[
                             const SizedBox(height: AppSpacing.lg),
                             _ChipBlock(
                               title: 'Đối tượng',
                               labels: coach.targetAudience,
+                              colored: true,
                             ),
                           ],
                           if (coach.trainingFormats.isNotEmpty) ...[
@@ -188,7 +227,9 @@ class _CoachDetailScreenState extends State<CoachDetailScreen>
                           const SizedBox(height: AppSpacing.lg),
                           const _SectionTitle('Lịch trống'),
                           const SizedBox(height: AppSpacing.sm),
-                          AppTag(label: coach.nextSlotLabel, highlight: true),
+                          _WeeklyAvailabilityGrid(
+                            slots: coach.weeklyAvailability,
+                          ),
                           const SizedBox(height: AppSpacing.lg),
                           const _SectionTitle('Chọn dịch vụ'),
                           const SizedBox(height: AppSpacing.sm),
@@ -210,13 +251,8 @@ class _CoachDetailScreenState extends State<CoachDetailScreen>
                               child: Column(
                                 children: [
                                   for (final service in coach.services)
-                                    RadioListTile<String>(
-                                      value: service.id,
-                                      title: Text(service.name),
-                                      subtitle: Text(
-                                        '${service.priceLabel} · ${service.durationMinutes} phút',
-                                      ),
-                                      contentPadding: EdgeInsets.zero,
+                                    _ServiceRadioTile(
+                                      service: service,
                                     ),
                                 ],
                               ),
@@ -309,52 +345,38 @@ class _CoachDetailScreenState extends State<CoachDetailScreen>
                                 : 'Chưa bao gồm chi phí phòng gym',
                             highlight: coach.gymFeeIncluded,
                           ),
-                          if (coach.trainingLocationAddress.isNotEmpty) ...[
+                          if (coach.trainingLocations.isNotEmpty) ...[
                             const SizedBox(height: AppSpacing.lg),
                             const _SectionTitle('Địa điểm tập'),
                             const SizedBox(height: AppSpacing.sm),
-                            Text(
-                              coach.trainingLocationAddress,
-                              style: theme.textTheme.bodyMedium,
-                            ),
-                            if (coach.membershipFeeLabel != null) ...[
-                              const SizedBox(height: AppSpacing.xs),
+                            for (final location in coach.trainingLocations) ...[
+                              _TrainingLocationCard(location: location),
+                              const SizedBox(height: AppSpacing.sm),
+                            ],
+                            if (coach.membershipFeeLabel != null)
                               Text(
                                 coach.membershipFeeLabel!,
                                 style: theme.textTheme.bodySmall?.copyWith(
                                   color: scheme.onSurfaceVariant,
                                 ),
                               ),
-                            ],
                           ],
                           if (coach.studentResults.isNotEmpty) ...[
                             const SizedBox(height: AppSpacing.lg),
                             const _SectionTitle('Kết quả học viên'),
                             const SizedBox(height: AppSpacing.sm),
-                            for (final line in coach.studentResults)
-                              Padding(
-                                padding: const EdgeInsets.only(
-                                  bottom: AppSpacing.sm,
-                                ),
-                                child: Row(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text('•  ', style: theme.textTheme.bodyMedium),
-                                    Expanded(
-                                      child: Text(
-                                        line,
-                                        style: theme.textTheme.bodyMedium,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
+                            for (final result in coach.studentResults) ...[
+                              _StudentResultCard(result: result),
+                              const SizedBox(height: AppSpacing.sm),
+                            ],
                           ],
                           if (coach.certifications.isNotEmpty) ...[
                             const SizedBox(height: AppSpacing.lg),
                             _ChipBlock(
                               title: 'Certification',
                               labels: coach.certifications,
+                              onSelected: (label) =>
+                                  _openCertificate(context, label),
                             ),
                           ],
                           const SizedBox(height: AppSpacing.lg),
@@ -400,7 +422,7 @@ class _CoachDetailScreenState extends State<CoachDetailScreen>
                     width: double.infinity,
                     child: FilledButton(
                       onPressed: _continue,
-                      child: const Text('Tiếp tục'),
+                      child: const Text('Chọn HLV'),
                     ),
                   ),
                 ),
@@ -573,10 +595,17 @@ class _SectionTitle extends StatelessWidget {
 }
 
 class _ChipBlock extends StatelessWidget {
-  const _ChipBlock({required this.title, required this.labels});
+  const _ChipBlock({
+    required this.title,
+    required this.labels,
+    this.colored = false,
+    this.onSelected,
+  });
 
   final String title;
   final List<String> labels;
+  final bool colored;
+  final ValueChanged<String>? onSelected;
 
   @override
   Widget build(BuildContext context) {
@@ -589,10 +618,298 @@ class _ChipBlock extends StatelessWidget {
           spacing: AppSpacing.sm,
           runSpacing: AppSpacing.xs,
           children: [
-            for (final label in labels) AppTag(label: label),
+            for (final label in labels)
+              _ProfileTag(
+                label: label,
+                colored: colored,
+                onPressed: onSelected == null
+                    ? null
+                    : () => onSelected!(label),
+              ),
           ],
         ),
       ],
+    );
+  }
+}
+
+class _ProfileTag extends StatelessWidget {
+  const _ProfileTag({
+    required this.label,
+    required this.colored,
+    this.onPressed,
+  });
+
+  final String label;
+  final bool colored;
+  final VoidCallback? onPressed;
+
+  (Color background, Color foreground) _colors(BuildContext context) {
+    final theme = Theme.of(context);
+    final scheme = theme.colorScheme;
+    final brightness = theme.brightness;
+    if (!colored) {
+      return (
+        AppStatusColors.tagBackgroundOf(context),
+        scheme.onSurface,
+      );
+    }
+    switch (label) {
+      case 'Tăng cơ':
+        final pair = AppStatusColors.success(brightness);
+        return (pair.container, pair.onContainer);
+      case 'Giảm mỡ':
+        final pair = AppStatusColors.warning(brightness);
+        return (pair.container, pair.onContainer);
+      case 'Tăng sức bền':
+        return (scheme.primaryContainer, scheme.onPrimaryContainer);
+      case 'Phục hồi sau chấn thương':
+        return (scheme.tertiaryContainer, scheme.onTertiaryContainer);
+      case 'Nam':
+        return (scheme.secondaryContainer, scheme.onSecondaryContainer);
+      case 'Nữ':
+        return (
+          AppStatusColors.sheetBackground(brightness),
+          AppStatusColors.sheetTitle(brightness),
+        );
+      case 'VĐV':
+        return (
+          AppStatusColors.highlight(brightness).withValues(alpha: 0.18),
+          AppStatusColors.highlight(brightness),
+        );
+      case 'Người mới bắt đầu':
+        return (
+          AppStatusColors.tabActive(brightness).withValues(alpha: 0.16),
+          AppStatusColors.tabActive(brightness),
+        );
+      case 'Phục hồi chấn thương':
+        final pair = AppStatusColors.danger(brightness);
+        return (
+          pair.container.withValues(alpha: 0.85),
+          pair.onContainer,
+        );
+      default:
+        return (
+          AppStatusColors.tagBackgroundOf(context),
+          scheme.onSurface,
+        );
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final colors = _colors(context);
+    final chip = Chip(
+      visualDensity: VisualDensity.compact,
+      label: Text(label),
+      backgroundColor: colors.$1,
+      side: BorderSide.none,
+      labelStyle: theme.textTheme.labelMedium?.copyWith(color: colors.$2),
+    );
+    if (onPressed == null) return chip;
+    return GestureDetector(onTap: onPressed, child: chip);
+  }
+}
+
+class _ServiceRadioTile extends StatelessWidget {
+  const _ServiceRadioTile({required this.service});
+
+  final MockService service;
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      child: Stack(
+        children: [
+          RadioListTile<String>(
+            value: service.id,
+            title: Text(service.name),
+            subtitle: Text(
+              '${service.priceLabel} · ${service.durationMinutes} phút',
+            ),
+          ),
+          if (service.promoLabel != null)
+            Positioned(
+              top: AppSpacing.sm,
+              right: AppSpacing.sm,
+              child: AppTag(label: service.promoLabel!, highlight: true),
+            ),
+        ],
+      ),
+    );
+  }
+}
+
+class _WeeklyAvailabilityGrid extends StatelessWidget {
+  const _WeeklyAvailabilityGrid({required this.slots});
+
+  final List<MockAvailabilitySlot> slots;
+
+  static const _weekdayLabels = ['T2', 'T3', 'T4', 'T5', 'T6', 'T7', 'CN'];
+
+  bool _sameDay(DateTime a, DateTime b) {
+    return a.year == b.year && a.month == b.month && a.day == b.day;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final now = DateTime.now();
+    final today = DateTime(now.year, now.month, now.day);
+    final accent = AppStatusColors.highlight(theme.brightness);
+
+    return SizedBox(
+      height: 124,
+      child: ListView.separated(
+        scrollDirection: Axis.horizontal,
+        itemCount: 7,
+        separatorBuilder: (context, index) =>
+            const SizedBox(width: AppSpacing.sm),
+        itemBuilder: (context, index) {
+          final day = today.add(Duration(days: index));
+          final daySlots = slots
+              .where((slot) => _sameDay(slot.date, day))
+              .toList();
+          final isToday = index == 0;
+          return SizedBox(
+            width: 88,
+            child: Card(
+              child: Padding(
+                padding: const EdgeInsets.all(AppSpacing.sm),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      _weekdayLabels[day.weekday - 1],
+                      style: theme.textTheme.labelLarge?.copyWith(
+                        color: isToday ? accent : null,
+                      ),
+                    ),
+                    Text(
+                      '${day.day}',
+                      style: theme.textTheme.titleMedium,
+                    ),
+                    const SizedBox(height: AppSpacing.xs),
+                    Expanded(
+                      child: daySlots.isEmpty
+                          ? Text(
+                              '—',
+                              style: theme.textTheme.bodySmall,
+                            )
+                          : Text(
+                              [
+                                for (final slot in daySlots)
+                                  '${slot.startTime}–${slot.endTime}',
+                              ].join('\n'),
+                              style: theme.textTheme.labelSmall,
+                              maxLines: 3,
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          );
+        },
+      ),
+    );
+  }
+}
+
+class _TrainingLocationCard extends StatelessWidget {
+  const _TrainingLocationCard({required this.location});
+
+  final MockTrainingLocation location;
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    return Card(
+      child: Padding(
+        padding: AppSpacing.cardPadding,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            AppTag(
+              label: location.type,
+              highlight: location.type == MockTrainingLocation.typeNearby,
+            ),
+            const SizedBox(height: AppSpacing.xs),
+            Text(location.name, style: theme.textTheme.titleSmall),
+            Text(location.address, style: theme.textTheme.bodySmall),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _StudentResultCard extends StatelessWidget {
+  const _StudentResultCard({required this.result});
+
+  final MockStudentResult result;
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    return Card(
+      child: Padding(
+        padding: AppSpacing.cardPadding,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              children: [
+                Expanded(
+                  child: ClipRRect(
+                    borderRadius: AppSpacing.borderRadiusSm,
+                    child: AspectRatio(
+                      aspectRatio: 1,
+                      child: Image.asset(
+                        result.beforeImageUrl,
+                        fit: BoxFit.cover,
+                      ),
+                    ),
+                  ),
+                ),
+                const SizedBox(width: AppSpacing.sm),
+                Expanded(
+                  child: ClipRRect(
+                    borderRadius: AppSpacing.borderRadiusSm,
+                    child: AspectRatio(
+                      aspectRatio: 1,
+                      child: Image.asset(
+                        result.afterImageUrl,
+                        fit: BoxFit.cover,
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: AppSpacing.sm),
+            Text(result.studentLabel, style: theme.textTheme.titleSmall),
+            Text(result.summary, style: theme.textTheme.bodySmall),
+            const SizedBox(height: AppSpacing.sm),
+            Align(
+              alignment: Alignment.centerRight,
+              child: TextButton(
+                onPressed: () {
+                  Navigator.of(context).push(
+                    MaterialPageRoute<void>(
+                      builder: (_) =>
+                          StudentResultDetailScreen(result: result),
+                    ),
+                  );
+                },
+                child: const Text('Xem chi tiết'),
+              ),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }
