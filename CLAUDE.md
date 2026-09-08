@@ -142,6 +142,18 @@ Không support Web/Desktop.
 5. Human paste kết quả → Claude review
 6. Claude approve → tick checklist → qua CP tiếp theo
 
+### Prompt templates (giai đoạn DEMO & UI POLISH)
+
+Giai đoạn hiện tại = thêm tính năng demo + đổi style UI nhanh.
+**Dùng `docs/cursor_prompt_templates.md`**:
+- Template A: thêm tính năng demo
+- Template B: đổi style UI / theme
+- Template C: fix bug nhanh
+
+Mỗi prompt phải có: Context (project, file liên quan) + Yêu cầu cụ thể + Ràng buộc (không thêm package, không đổi architecture, style qua theme) + Definition of Done (analyze sạch, chạy được, screenshot, commit).
+
+Đổi style UI: **ưu tiên qua `lib/core/theme/`**, không hardcode màu trong widget. Tính năng demo: mock data đánh dấu `// DEMO DATA`, dễ xoá sau.
+
 ### Nguyên tắc
 
 - Cursor KHÔNG được tự quyết định thêm package mới
