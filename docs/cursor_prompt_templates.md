@@ -161,6 +161,19 @@ flutter run --dart-define=FLAVOR=$FLAVOR --dart-define=ENV=development --debug
 - [ ] Commit: perf: optimize dev build speed (CPxx)
 ```
 
+### ✅ KẾT QUẢ THỰC TẾ (08/09/2026 — iPhone 17 Pro simulator)
+
+| Giai đoạn | Trước (native compile đầy) | Sau (run_dev_fast.sh, không thêm package) |
+|---|---|---|
+| Xcode → app lên | 329s (~5.8 phút) | **21.4s** |
+| Tổng đến app lên | ~5.8 phút | **~40s** (kể cả pub get) |
+
+- Hot reload sau sửa Dart: **0.5–2 giây** (phím `r`)
+- Đổi DI/theme/global: **`R`** (hot restart)
+- Lần đầu máy mới / thêm native plugin vẫn ~5–6 phút (cache Xcode là chính, Gradle chỉ giúp Android)
+- Chạy: `./scripts/run_dev_fast.sh user` (hoặc `coach`)
+- Cursor KHÔNG được thêm native package khi demo — chỉ Dart + mock data → hot reload nhanh
+
 ---
 
 ## LUỒNG LÀM VIỆC CHUẨN (copy-paste)
