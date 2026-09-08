@@ -103,6 +103,66 @@
 
 ---
 
+## TEMPLATE D — TỐI ƯU BUILD / FLUTTER RUN NHANH
+
+```markdown
+# Task: Tối ưu build & flutter run nhanh hơn (demo phase)
+
+## Context
+- Project: PSgy (GymPS) — Flutter 3.41.7, Clean Architecture + Riverpod 2.0
+- Codebase: /Users/ruka/psgy (branch: main)
+- Vấn đề: thêm tính năng mới → build + flutter run lâu
+
+## Nguyên nhân build chậm (đã xác định)
+1. Nhiều native plugin nặng: firebase (core/firestore/auth/messaging/crashlytics/performance/storage) + google_maps_flutter + isar + geolocator
+2. android/gradle.properties CHƯA tối ưu: thiếu daemon/parallel/caching/configureondemand
+3. Mỗi lần thêm package native mới → pod install (iOS) + gradle rebuild (Android) = chậm nhất
+4. firebase_crashlytics + firebase_performance trong pubspec vẫn build vào native dù chưa dùng trong demo
+
+## Yêu cầu (làm theo thứ tự)
+
+### Bước 1 — Tối ưu Gradle (Android)
+Sửa `android/gradle.properties`, thêm:
+```
+org.gradle.daemon=true
+org.gradle.parallel=true
+org.gradle.caching=true
+org.gradle.configureondemand=true
+kotlin.incremental=true
+```
+
+### Bước 2 — Tạo script chạy nhanh cho dev
+Tạo `scripts/run_dev_fast.sh`:
+```bash
+#!/bin/bash
+# Chạy nhanh cho demo — debug mode, hot reload sẵn sàng
+# KHÔNG build native lại nếu không thêm package mới
+FLAVOR="${1:-user}"
+flutter run --dart-define=FLAVOR=$FLAVOR --dart-define=ENV=development --debug
+```
+- Nhớ `chmod +x scripts/run_dev_fast.sh`
+
+### Bước 3 — Tách crashlytics/performance khỏi dev build (nếu khả thi)
+- KHÔNG xoá khỏi pubspec (cần cho production)
+- Nếu có thể: comment 2 dòng `firebase_crashlytics` + `firebase_performance` trong pubspec.yaml, chạy `flutter pub get`, kiểm tra app chạy bình thường → ghi chú "uncomment khi build production"
+- Nếu comment làm hỏng code → bỏ qua, chỉ báo cáo
+
+### Bước 4 — Quy tắc cho Cursor (quan trọng nhất)
+- ✅ Khi thêm tính năng DEMO: CHỈ viết Dart code thuần + mock data
+- ❌ TUYỆT ĐỐI không thêm native package mới (firebase/maps/isar...) khi làm demo — phải báo Claude trước
+- ✅ Dart-only change → hot reload (phím `r` trong terminal flutter run) — KHÔNG cần build lại native, nhanh 5-10x
+- ✅ Chỉ cần `R` (hot restart) khi đổi state/DI/theme global
+
+## Definition of Done
+- [ ] gradle.properties tối ưu xong
+- [ ] scripts/run_dev_fast.sh chạy được (flutter run lên được)
+- [ ] Báo cáo: thời gian build TRƯỚC (flutter run lần đầu ~? phút) và SAU (~? phút)
+- [ ] Ghi rõ: hot reload sau khi sửa Dart code mất bao lâu
+- [ ] Commit: perf: optimize dev build speed (CPxx)
+```
+
+---
+
 ## LUỒNG LÀM VIỆC CHUẨN (copy-paste)
 
 ```
