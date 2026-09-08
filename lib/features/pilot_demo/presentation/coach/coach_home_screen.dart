@@ -6,6 +6,7 @@ import 'package:psgy/features/pilot_demo/data/mock_coach_session.dart';
 import 'package:psgy/features/pilot_demo/models/mock_booking_request.dart';
 import 'package:psgy/features/pilot_demo/presentation/coach/active_booking_screen.dart';
 import 'package:psgy/features/pilot_demo/presentation/coach/booking_request_detail_screen.dart';
+import 'package:psgy/features/pilot_demo/presentation/coach/coach_profile_edit_screen.dart';
 import 'package:psgy/features/pilot_demo/presentation/coach/coach_services_screen.dart';
 import 'package:psgy/features/pilot_demo/presentation/coach/coach_student_journal_screen.dart';
 import 'package:psgy/features/pilot_demo/presentation/booking_status_style.dart';
@@ -45,6 +46,13 @@ class CoachHomeScreen extends StatelessWidget {
                 AppConfig.showDevModeSwitcher ? kToolbarHeight : 72,
             foregroundColor: AppStatusColors.sheetTitle(theme.brightness),
             actions: [
+              IconButton(
+                tooltip: 'Chỉnh sửa hồ sơ',
+                onPressed: () {
+                  Navigator.of(context).push(CoachProfileEditScreen.route());
+                },
+                icon: const Icon(Icons.edit_outlined),
+              ),
               IconButton(
                 tooltip: 'Nhật ký học viên',
                 onPressed: () {
@@ -99,6 +107,16 @@ class CoachHomeScreen extends StatelessWidget {
                     ),
                   ),
                 ],
+              ),
+              Align(
+                alignment: Alignment.centerLeft,
+                child: TextButton.icon(
+                  onPressed: () {
+                    Navigator.of(context).push(CoachProfileEditScreen.route());
+                  },
+                  icon: const Icon(Icons.edit_outlined),
+                  label: const Text('Chỉnh sửa hồ sơ'),
+                ),
               ),
               const SizedBox(height: AppSpacing.md),
               Card(

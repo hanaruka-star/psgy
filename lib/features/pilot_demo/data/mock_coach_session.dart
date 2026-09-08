@@ -1,15 +1,18 @@
 import 'package:flutter/foundation.dart';
+import 'package:psgy/features/pilot_demo/data/mock_coaches.dart';
+import 'package:psgy/features/pilot_demo/models/mock_availability_slot.dart';
 import 'package:psgy/features/pilot_demo/models/mock_booking_request.dart';
 import 'package:psgy/features/pilot_demo/models/mock_coach_profile.dart';
 import 'package:psgy/features/pilot_demo/models/mock_journal_post.dart';
 import 'package:psgy/features/pilot_demo/models/mock_message.dart';
 import 'package:psgy/features/pilot_demo/models/mock_package.dart';
 import 'package:psgy/features/pilot_demo/models/mock_service.dart';
+import 'package:psgy/features/pilot_demo/models/mock_training_location.dart';
 
 /// In-memory coach session for the 22/08 pilot. Not persisted.
 class MockCoachSession extends ChangeNotifier {
   MockCoachSession._()
-      : profile = _seedProfile,
+      : profile = _seedProfileFromPublicCatalog(),
         bookings = List<MockBookingRequest>.of(_seedBookings),
         services = List<MockService>.of(_seedServices),
         packages = List<MockPackage>.of(_seedPackages),
@@ -70,6 +73,11 @@ class MockCoachSession extends ChangeNotifier {
     final current = _locationCycle.indexOf(profile.currentLocationLabel);
     final next = _locationCycle[(current + 1) % _locationCycle.length];
     profile = profile.copyWith(currentLocationLabel: next);
+    notifyListeners();
+  }
+
+  void updateProfile(MockCoachProfile next) {
+    profile = next;
     notifyListeners();
   }
 
@@ -140,20 +148,47 @@ class MockCoachSession extends ChangeNotifier {
   }
 }
 
-const _seedProfile = MockCoachProfile(
-  id: 'coach_01',
-  name: 'Nguyễn Văn Long',
-  avatarInitials: 'NL',
-  bio:
-      'HLV thể hình, tập trung tăng cơ và giảm mỡ. Từng làm việc tại California Fitness.',
-  yearsExperience: 8,
-  ratingAvg: 4.8,
-  ratingCount: 126,
-  isAvailableNow: true,
-  availableFrom: '17:00',
-  availableUntil: '20:00',
-  currentLocationLabel: 'Quận 2, TP.HCM',
-);
+/// Copy 1 lần từ catalog User ([mockCoaches] / MockCoach) lúc khởi tạo.
+/// Không sync sống 2 chiều — giới hạn bản mock, xem handoff mục 2.
+MockCoachProfile _seedProfileFromPublicCatalog() {
+  final public = mockCoaches.firstWhere((coach) => coach.id == 'coach_01');
+  return MockCoachProfile(
+    id: public.id,
+    name: public.name,
+    avatarInitials: public.initials,
+    bio: public.bio,
+    yearsExperience: public.yearsExperience,
+    ratingAvg: public.rating,
+    ratingCount: 126,
+    isAvailableNow: true,
+    availableFrom: '17:00',
+    availableUntil: '20:00',
+    currentLocationLabel: 'Quận 2, TP.HCM',
+    goals: List<String>.of(public.goals),
+    targetAudience: List<String>.of(public.targetAudience),
+    trainingFormats: List<String>.of(public.trainingFormats),
+    weeklyAvailability: [
+      for (final slot in public.weeklyAvailability)
+        MockAvailabilitySlot(
+          date: slot.date,
+          startTime: slot.startTime,
+          endTime: slot.endTime,
+        ),
+    ],
+    trainingLocations: [
+      for (final location in public.trainingLocations)
+        MockTrainingLocation(
+          name: location.name,
+          address: location.address,
+          type: location.type,
+        ),
+    ],
+    bookingCancellationPolicy: public.bookingCancellationPolicy,
+    certifications: List<String>.of(public.certifications),
+    gymFeeIncluded: public.gymFeeIncluded,
+    membershipFeeLabel: public.membershipFeeLabel,
+  );
+}
 
 const _seedServices = [
   MockService(
