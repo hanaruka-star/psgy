@@ -11,6 +11,7 @@ import 'package:psgy/features/pilot_demo/data/mock_gyms.dart';
 import 'package:psgy/features/pilot_demo/models/mock_coach.dart';
 import 'package:psgy/features/pilot_demo/models/mock_gym.dart';
 import 'package:psgy/features/pilot_demo/presentation/coach_detail_screen.dart';
+import 'package:psgy/features/pilot_demo/presentation/widgets/coach_avatar.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class PilotMapScreen extends StatefulWidget {
@@ -422,17 +423,7 @@ class _CoachCard extends StatelessWidget {
           padding: AppSpacing.cardPadding,
           child: Row(
             children: [
-              CircleAvatar(
-                radius: 28,
-                backgroundColor: theme.colorScheme.primaryContainer,
-                foregroundColor: theme.colorScheme.onPrimaryContainer,
-                child: Text(
-                  coach.initials,
-                  style: theme.textTheme.titleMedium?.copyWith(
-                    color: theme.colorScheme.onPrimaryContainer,
-                  ),
-                ),
-              ),
+              CoachAvatar.coach(coach),
               const SizedBox(width: AppSpacing.md),
               Expanded(
                 child: Column(

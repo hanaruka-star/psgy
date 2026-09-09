@@ -139,6 +139,13 @@ void main() {
 
     await tester.pumpWidget(_wrap(const PilotMapScreen()));
     await tester.pump();
+    await tester.runAsync(() async {
+      final context = tester.element(find.byType(MaterialApp));
+      for (final coach in mockCoaches) {
+        await precacheImage(AssetImage(coach.avatarAsset), context);
+      }
+    });
+    await tester.pump();
     await tester.pump(const Duration(milliseconds: 300));
 
     expect(find.byKey(const Key('map_chip_coach')), findsOneWidget);

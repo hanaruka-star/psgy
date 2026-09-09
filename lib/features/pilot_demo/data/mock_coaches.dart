@@ -84,6 +84,22 @@ List<MockAvailabilitySlot> _week(List<(int offset, String start, String end)> ro
 const _nearby = MockTrainingLocation.typeNearby;
 const _partner = MockTrainingLocation.typePartnerGym;
 
+MockCoach? mockCoachById(String? id) {
+  if (id == null || id.isEmpty) return null;
+  for (final coach in mockCoaches) {
+    if (coach.id == id) return coach;
+  }
+  return null;
+}
+
+MockCoach? mockCoachByName(String? name) {
+  if (name == null || name.isEmpty) return null;
+  for (final coach in mockCoaches) {
+    if (coach.name == name) return coach;
+  }
+  return null;
+}
+
 final List<MockCoach> mockCoaches = [
   MockCoach(
     id: 'coach_01',

@@ -4,6 +4,7 @@ import 'package:psgy/core/theme/app_status_colors.dart';
 import 'package:psgy/features/pilot_demo/data/mock_coaches.dart';
 import 'package:psgy/features/pilot_demo/models/mock_coach.dart';
 import 'package:psgy/features/pilot_demo/presentation/coach_detail_screen.dart';
+import 'package:psgy/features/pilot_demo/presentation/widgets/coach_avatar.dart';
 
 /// Danh sách Coach cho WEB demo — KHÔNG dùng Google Map (tránh cần API key).
 /// Thay thế PilotMapScreen trên web; trên iOS/Android vẫn dùng map thật.
@@ -42,17 +43,7 @@ class PilotListScreen extends StatelessWidget {
                 padding: AppSpacing.cardPadding,
                 child: Row(
                   children: [
-                    CircleAvatar(
-                      radius: 28,
-                      backgroundColor: theme.colorScheme.primaryContainer,
-                      foregroundColor: theme.colorScheme.onPrimaryContainer,
-                      child: Text(
-                        coach.initials,
-                        style: theme.textTheme.titleMedium?.copyWith(
-                          color: theme.colorScheme.onPrimaryContainer,
-                        ),
-                      ),
-                    ),
+                    CoachAvatar.coach(coach),
                     const SizedBox(width: AppSpacing.md),
                     Expanded(
                       child: Column(

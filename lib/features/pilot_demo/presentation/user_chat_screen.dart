@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:psgy/core/theme/app_shapes.dart';
 import 'package:psgy/core/theme/app_spacing.dart';
+import 'package:psgy/features/pilot_demo/data/mock_coaches.dart';
 import 'package:psgy/features/pilot_demo/data/mock_user_session.dart';
+import 'package:psgy/features/pilot_demo/models/mock_coach.dart';
 import 'package:psgy/features/pilot_demo/models/mock_message.dart';
+import 'package:psgy/features/pilot_demo/presentation/widgets/coach_avatar.dart';
 
 class UserChatScreen extends StatefulWidget {
   const UserChatScreen({
@@ -69,6 +72,14 @@ class _UserChatScreenState extends State<UserChatScreen> {
     return session.messagesFor(widget.bookingId!);
   }
 
+  MockCoach? _coach(MockUserSession session) {
+    var id = widget.inquiryCoachId;
+    if (id == null && widget.bookingId != null) {
+      id = session.bookingById(widget.bookingId!)?.coachId;
+    }
+    return mockCoachById(id) ?? mockCoachByName(widget.coachName);
+  }
+
   @override
   Widget build(BuildContext context) {
     final session = MockUserSession.instance;
@@ -78,11 +89,25 @@ class _UserChatScreenState extends State<UserChatScreen> {
       listenable: session,
       builder: (context, _) {
         final messages = _messages(session);
+        final coach = _coach(session);
 
         return Scaffold(
           backgroundColor: theme.scaffoldBackgroundColor,
           appBar: AppBar(
-            title: Text(widget.coachName),
+            title: Row(
+              children: [
+                if (coach != null) ...[
+                  CoachAvatar.coach(coach, radius: 16),
+                  const SizedBox(width: AppSpacing.sm),
+                ],
+                Expanded(
+                  child: Text(
+                    widget.coachName,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                ),
+              ],
+            ),
             bottom: _isInquiry
                 ? PreferredSize(
                     preferredSize: const Size.fromHeight(28),
@@ -106,51 +131,75 @@ class _UserChatScreenState extends State<UserChatScreen> {
                   itemBuilder: (context, index) {
                     final message = messages[index];
                     final isMine = !message.isFromCoach;
+                    final bubble = ConstrainedBox(
+                      constraints: BoxConstraints(
+                        maxWidth: MediaQuery.sizeOf(context).width * 0.72,
+                      ),
+                      child: Container(
+                        margin: const EdgeInsets.only(bottom: AppSpacing.sm),
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: AppSpacing.md,
+                          vertical: AppSpacing.sm + 2,
+                        ),
+                        decoration: ShapeDecoration(
+                          color: isMine
+                              ? theme.colorScheme.primaryContainer
+                              : theme.colorScheme.surfaceContainerHigh,
+                          shape: AppShapes.rect(radius: AppSpacing.radiusMd),
+                        ),
+                        child: Column(
+                          crossAxisAlignment: isMine
+                              ? CrossAxisAlignment.end
+                              : CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              message.text,
+                              style: theme.textTheme.bodyMedium?.copyWith(
+                                color: isMine
+                                    ? theme.colorScheme.onPrimaryContainer
+                                    : theme.colorScheme.onSurface,
+                              ),
+                            ),
+                            const SizedBox(height: AppSpacing.xs),
+                            Text(
+                              message.sentAtLabel,
+                              style: theme.textTheme.bodySmall?.copyWith(
+                                color: isMine
+                                    ? theme.colorScheme.onPrimaryContainer
+                                        .withValues(alpha: 0.7)
+                                    : theme.colorScheme.onSurfaceVariant,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    );
+                    if (isMine) {
+                      return Align(
+                        alignment: Alignment.centerRight,
+                        child: bubble,
+                      );
+                    }
+                    if (coach == null) {
+                      return Align(
+                        alignment: Alignment.centerLeft,
+                        child: bubble,
+                      );
+                    }
                     return Align(
-                      alignment:
-                          isMine ? Alignment.centerRight : Alignment.centerLeft,
-                      child: ConstrainedBox(
-                        constraints: BoxConstraints(
-                          maxWidth: MediaQuery.sizeOf(context).width * 0.76,
-                        ),
-                        child: Container(
-                          margin: const EdgeInsets.only(bottom: AppSpacing.sm),
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: AppSpacing.md,
-                            vertical: AppSpacing.sm + 2,
+                      alignment: Alignment.centerLeft,
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.only(
+                              right: AppSpacing.sm,
+                              bottom: AppSpacing.sm,
+                            ),
+                            child: CoachAvatar.coach(coach, radius: 16),
                           ),
-                          decoration: ShapeDecoration(
-                            color: isMine
-                                ? theme.colorScheme.primaryContainer
-                                : theme.colorScheme.surfaceContainerHigh,
-                            shape: AppShapes.rect(radius: AppSpacing.radiusMd),
-                          ),
-                          child: Column(
-                            crossAxisAlignment: isMine
-                                ? CrossAxisAlignment.end
-                                : CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                message.text,
-                                style: theme.textTheme.bodyMedium?.copyWith(
-                                  color: isMine
-                                      ? theme.colorScheme.onPrimaryContainer
-                                      : theme.colorScheme.onSurface,
-                                ),
-                              ),
-                              const SizedBox(height: AppSpacing.xs),
-                              Text(
-                                message.sentAtLabel,
-                                style: theme.textTheme.bodySmall?.copyWith(
-                                  color: isMine
-                                      ? theme.colorScheme.onPrimaryContainer
-                                          .withValues(alpha: 0.7)
-                                      : theme.colorScheme.onSurfaceVariant,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
+                          Flexible(child: bubble),
+                        ],
                       ),
                     );
                   },

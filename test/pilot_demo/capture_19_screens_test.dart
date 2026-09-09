@@ -131,6 +131,16 @@ Widget _wrap(Widget child) {
   );
 }
 
+Future<void> _precacheCoachAvatars(WidgetTester tester) async {
+  await tester.runAsync(() async {
+    final context = tester.element(find.byType(MaterialApp));
+    for (final coach in mockCoaches) {
+      await precacheImage(AssetImage(coach.avatarAsset), context);
+    }
+  });
+  await tester.pump();
+}
+
 /// Setup MockUserSession giống flow thật: profile + 1 booking + 1 journal post.
 void _seedUserSession() {
   final session = MockUserSession.instance;
@@ -182,6 +192,8 @@ void main() {
     await tester.binding.setSurfaceSize(const Size(390, 844));
     addTearDown(() => tester.binding.setSurfaceSize(null));
     await tester.pumpWidget(_wrap(const PilotListScreen()));
+    await tester.pump();
+    await _precacheCoachAvatars(tester);
     await tester.pumpAndSettle();
     await expectLater(
       find.byType(PilotListScreen),
@@ -276,6 +288,11 @@ void main() {
         ),
       ),
     );
+    await tester.pump();
+    await tester.runAsync(() async {
+      final context = tester.element(find.byType(MaterialApp));
+      await precacheImage(AssetImage(coach.avatarAsset), context);
+    });
     await tester.pumpAndSettle();
     await expectLater(
       find.byType(UserChatScreen),
@@ -362,6 +379,8 @@ void main() {
     await tester.binding.setSurfaceSize(const Size(390, 844));
     addTearDown(() => tester.binding.setSurfaceSize(null));
     await tester.pumpWidget(_wrap(const CoachHomeScreen()));
+    await tester.pump();
+    await _precacheCoachAvatars(tester);
     await tester.pumpAndSettle();
     await expectLater(
       find.byType(CoachHomeScreen),
@@ -436,6 +455,8 @@ void main() {
     await tester.binding.setSurfaceSize(const Size(390, 844));
     addTearDown(() => tester.binding.setSurfaceSize(null));
     await tester.pumpWidget(_wrap(const UserBookingHistoryScreen()));
+    await tester.pump();
+    await _precacheCoachAvatars(tester);
     await tester.pumpAndSettle();
     await expectLater(
       find.byType(UserBookingHistoryScreen),

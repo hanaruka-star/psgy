@@ -7,6 +7,7 @@ import 'package:psgy/features/pilot_demo/models/mock_coach.dart';
 import 'package:psgy/features/pilot_demo/models/mock_service.dart';
 import 'package:psgy/features/pilot_demo/presentation/booking_pending_screen.dart';
 import 'package:psgy/features/pilot_demo/presentation/booking_status_style.dart';
+import 'package:psgy/features/pilot_demo/presentation/widgets/coach_avatar.dart';
 
 class UserBookingHistoryScreen extends StatelessWidget {
   const UserBookingHistoryScreen({super.key});
@@ -87,6 +88,8 @@ class _HistoryCard extends StatelessWidget {
             children: [
               Row(
                 children: [
+                  CoachAvatar.coach(_coachFor(booking), radius: 20),
+                  const SizedBox(width: AppSpacing.sm),
                   Expanded(
                     child: Text(
                       booking.coachName.isEmpty ? 'Coach' : booking.coachName,

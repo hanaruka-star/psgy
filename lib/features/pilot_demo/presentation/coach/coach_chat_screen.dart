@@ -3,6 +3,7 @@ import 'package:psgy/core/theme/app_shapes.dart';
 import 'package:psgy/core/theme/app_spacing.dart';
 import 'package:psgy/core/theme/app_status_colors.dart';
 import 'package:psgy/features/pilot_demo/data/mock_coach_session.dart';
+import 'package:psgy/features/pilot_demo/presentation/widgets/coach_avatar.dart';
 
 class CoachChatScreen extends StatefulWidget {
   const CoachChatScreen({super.key, required this.bookingId});
@@ -49,6 +50,7 @@ class _CoachChatScreenState extends State<CoachChatScreen> {
       builder: (context, _) {
         final booking = session.bookingById(widget.bookingId);
         final messages = session.messagesFor(widget.bookingId);
+        final profile = session.profile;
 
         return Scaffold(
           backgroundColor: theme.scaffoldBackgroundColor,
@@ -67,51 +69,70 @@ class _CoachChatScreenState extends State<CoachChatScreen> {
                   itemBuilder: (context, index) {
                     final message = messages[index];
                     final isCoach = message.isFromCoach;
+                    final bubble = ConstrainedBox(
+                      constraints: BoxConstraints(
+                        maxWidth: MediaQuery.sizeOf(context).width * 0.72,
+                      ),
+                      child: Container(
+                        margin: const EdgeInsets.only(bottom: AppSpacing.sm),
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: AppSpacing.md,
+                          vertical: AppSpacing.sm + 2,
+                        ),
+                        decoration: ShapeDecoration(
+                          color: isCoach
+                              ? theme.colorScheme.primaryContainer
+                              : theme.colorScheme.surfaceContainerHigh,
+                          shape: AppShapes.rect(radius: AppSpacing.radiusMd),
+                        ),
+                        child: Column(
+                          crossAxisAlignment: isCoach
+                              ? CrossAxisAlignment.end
+                              : CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              message.text,
+                              style: theme.textTheme.bodyMedium?.copyWith(
+                                color: isCoach
+                                    ? theme.colorScheme.onPrimaryContainer
+                                    : theme.colorScheme.onSurface,
+                              ),
+                            ),
+                            const SizedBox(height: AppSpacing.xs),
+                            Text(
+                              message.sentAtLabel,
+                              style: theme.textTheme.bodySmall?.copyWith(
+                                color: isCoach
+                                    ? theme.colorScheme.onPrimaryContainer
+                                        .withValues(alpha: 0.7)
+                                    : theme.colorScheme.onSurfaceVariant,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    );
+                    if (!isCoach) {
+                      return Align(
+                        alignment: Alignment.centerLeft,
+                        child: bubble,
+                      );
+                    }
                     return Align(
-                      alignment:
-                          isCoach ? Alignment.centerRight : Alignment.centerLeft,
-                      child: ConstrainedBox(
-                        constraints: BoxConstraints(
-                          maxWidth: MediaQuery.sizeOf(context).width * 0.76,
-                        ),
-                        child: Container(
-                          margin: const EdgeInsets.only(bottom: AppSpacing.sm),
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: AppSpacing.md,
-                            vertical: AppSpacing.sm + 2,
+                      alignment: Alignment.centerRight,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        children: [
+                          Flexible(child: bubble),
+                          Padding(
+                            padding: const EdgeInsets.only(
+                              left: AppSpacing.sm,
+                              bottom: AppSpacing.sm,
+                            ),
+                            child: CoachAvatar.profile(profile, radius: 16),
                           ),
-                          decoration: ShapeDecoration(
-                            color: isCoach
-                                ? theme.colorScheme.primaryContainer
-                                : theme.colorScheme.surfaceContainerHigh,
-                            shape: AppShapes.rect(radius: AppSpacing.radiusMd),
-                          ),
-                          child: Column(
-                            crossAxisAlignment: isCoach
-                                ? CrossAxisAlignment.end
-                                : CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                message.text,
-                                style: theme.textTheme.bodyMedium?.copyWith(
-                                  color: isCoach
-                                      ? theme.colorScheme.onPrimaryContainer
-                                      : theme.colorScheme.onSurface,
-                                ),
-                              ),
-                              const SizedBox(height: AppSpacing.xs),
-                              Text(
-                                message.sentAtLabel,
-                                style: theme.textTheme.bodySmall?.copyWith(
-                                  color: isCoach
-                                      ? theme.colorScheme.onPrimaryContainer
-                                          .withValues(alpha: 0.7)
-                                      : theme.colorScheme.onSurfaceVariant,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
+                        ],
                       ),
                     );
                   },

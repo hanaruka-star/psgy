@@ -68,6 +68,8 @@ class MockCoachProfile {
 
   String get hoursLabel => '$availableFrom - $availableUntil';
 
+  String get avatarAsset => 'assets/avatars/$id.png';
+
   MockCoachProfile copyWith({
     String? bio,
     bool? isAvailableNow,

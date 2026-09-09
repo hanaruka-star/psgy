@@ -110,6 +110,14 @@ void main() {
         ),
       ),
     );
+    await tester.pump();
+    await tester.runAsync(() async {
+      final context = tester.element(find.byType(MaterialApp));
+      await precacheImage(
+        AssetImage(mockCoaches.first.avatarAsset),
+        context,
+      );
+    });
     await tester.pumpAndSettle();
 
     expect(find.text('Nguyễn Văn Long'), findsOneWidget);

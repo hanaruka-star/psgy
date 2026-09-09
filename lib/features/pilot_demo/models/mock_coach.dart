@@ -59,4 +59,7 @@ class MockCoach {
     this.bookingCancellationPolicy = '',
     this.weeklyAvailability = const [],
   });
+
+  /// Small circular Coach portrait. Slideshow photos stay on [photoUrls].
+  String get avatarAsset => 'assets/avatars/$id.png';
 }

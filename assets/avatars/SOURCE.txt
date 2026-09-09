@@ -1,0 +1,12 @@
+Coach circular avatars — mock portraits provided by Ruka
+
+These replace the previous Fluent Emoji 3D icons. Photos are
+bundled as local assets for demo; not third-party emoji.
+
+Mapping (by filename initials):
+  coach_01  Nguyen Van Long     NL
+  coach_02  Tran Thi Mai        TM
+  coach_03  Le Hoang Nam        LN
+  coach_04  Pham Minh Chau      PC
+  coach_05  Vo Thanh Dat        VD
+  coach_06  Hoang Thi Thu Ha    HH

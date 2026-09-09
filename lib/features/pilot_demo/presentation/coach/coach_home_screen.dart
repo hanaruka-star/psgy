@@ -10,6 +10,7 @@ import 'package:psgy/features/pilot_demo/presentation/coach/coach_profile_edit_s
 import 'package:psgy/features/pilot_demo/presentation/coach/coach_services_screen.dart';
 import 'package:psgy/features/pilot_demo/presentation/coach/coach_student_journal_screen.dart';
 import 'package:psgy/features/pilot_demo/presentation/booking_status_style.dart';
+import 'package:psgy/features/pilot_demo/presentation/widgets/coach_avatar.dart';
 import 'package:psgy/shared/widgets/header_logo.dart';
 
 class CoachHomeScreen extends StatelessWidget {
@@ -82,17 +83,7 @@ class CoachHomeScreen extends StatelessWidget {
             children: [
               Row(
                 children: [
-                  CircleAvatar(
-                    radius: 28,
-                    backgroundColor: theme.colorScheme.primaryContainer,
-                    foregroundColor: theme.colorScheme.onPrimaryContainer,
-                    child: Text(
-                      profile.avatarInitials,
-                      style: theme.textTheme.titleMedium?.copyWith(
-                        color: theme.colorScheme.onPrimaryContainer,
-                      ),
-                    ),
-                  ),
+                  CoachAvatar.profile(profile),
                   const SizedBox(width: AppSpacing.md),
                   Expanded(
                     child: Column(
