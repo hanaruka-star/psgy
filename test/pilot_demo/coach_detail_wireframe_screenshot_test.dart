@@ -52,6 +52,7 @@ void main() {
     expect(mockCoaches, hasLength(6));
     for (final coach in mockCoaches) {
       expect(coach.photoUrls, hasLength(5), reason: coach.id);
+      expect(coach.photoUrls.first, coach.avatarAsset, reason: coach.id);
       expect(coach.bio.length, inInclusiveRange(500, 800), reason: coach.id);
       expect(coach.totalBookings, greaterThan(0), reason: coach.id);
       expect(coach.goals, isNotEmpty, reason: coach.id);

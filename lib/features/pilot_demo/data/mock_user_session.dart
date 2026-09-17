@@ -162,6 +162,12 @@ class MockUserSession extends ChangeNotifier {
     notifyListeners();
   }
 
+  /// PT AI hoàn thành = 1 buổi tập cho streak, không tạo booking/journal.
+  void recordCompletedWorkout() {
+    _applyCompletionRewards();
+    notifyListeners();
+  }
+
   void addJournalPost({
     required String bookingId,
     required String coachId,

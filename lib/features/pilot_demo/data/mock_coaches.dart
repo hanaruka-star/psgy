@@ -84,6 +84,12 @@ List<MockAvailabilitySlot> _week(List<(int offset, String start, String end)> ro
 const _nearby = MockTrainingLocation.typeNearby;
 const _partner = MockTrainingLocation.typePartnerGym;
 
+/// DEMO DATA — slide đầu là portrait avatar; 4 tấm còn lại là ảnh journal mẫu.
+List<String> _profilePhotos(String coachId, List<String> rest) => [
+      'assets/avatars/$coachId.png',
+      ...rest,
+    ];
+
 MockCoach? mockCoachById(String? id) {
   if (id == null || id.isEmpty) return null;
   for (final coach in mockCoaches) {
@@ -117,13 +123,12 @@ final List<MockCoach> mockCoaches = [
       _nutrition.copyWith(promoLabel: 'Ưu đãi tháng này'),
     ],
     packages: [_pkgLong10, _pkgLong20],
-    photoUrls: [
-      mockJournalPhoto1,
+    photoUrls: _profilePhotos('coach_01', [
       mockJournalPhoto2,
       mockJournalPhoto3,
       mockJournalPhoto4,
       mockJournalPhoto1,
-    ],
+    ]),
     totalBookings: 214,
     goals: ['Tăng cơ', 'Giảm mỡ', 'Tăng sức bền'],
     targetAudience: ['Nam', 'Người mới bắt đầu', 'VĐV'],
@@ -222,13 +227,12 @@ final List<MockCoach> mockCoaches = [
         description: 'Phù hợp dinh dưỡng + tập cá nhân.',
       ),
     ],
-    photoUrls: [
-      mockJournalPhoto2,
+    photoUrls: _profilePhotos('coach_02', [
       mockJournalPhoto3,
       mockJournalPhoto4,
       mockJournalPhoto1,
       mockJournalPhoto2,
-    ],
+    ]),
     totalBookings: 186,
     goals: ['Giảm mỡ', 'Phục hồi sau chấn thương', 'Tăng sức bền'],
     targetAudience: ['Nữ', 'Người mới bắt đầu', 'Phục hồi chấn thương'],
@@ -312,13 +316,12 @@ final List<MockCoach> mockCoaches = [
         description: 'Tập cá nhân hoặc cặp đôi.',
       ),
     ],
-    photoUrls: [
-      mockJournalPhoto3,
+    photoUrls: _profilePhotos('coach_03', [
       mockJournalPhoto4,
       mockJournalPhoto1,
       mockJournalPhoto2,
       mockJournalPhoto3,
-    ],
+    ]),
     totalBookings: 97,
     goals: ['Tăng cơ', 'Tăng sức bền'],
     targetAudience: ['Nam', 'Nữ', 'VĐV'],
@@ -403,13 +406,12 @@ final List<MockCoach> mockCoaches = [
         description: 'Buổi sáng, kèm tư vấn dinh dưỡng.',
       ),
     ],
-    photoUrls: [
-      mockJournalPhoto4,
+    photoUrls: _profilePhotos('coach_04', [
       mockJournalPhoto1,
       mockJournalPhoto2,
       mockJournalPhoto3,
       mockJournalPhoto4,
-    ],
+    ]),
     totalBookings: 142,
     goals: ['Giảm mỡ', 'Tăng sức bền', 'Phục hồi sau chấn thương'],
     targetAudience: ['Nữ', 'Nam', 'Người mới bắt đầu'],
@@ -495,13 +497,12 @@ final List<MockCoach> mockCoaches = [
       _duo60,
     ],
     packages: const [],
-    photoUrls: [
-      mockJournalPhoto1,
+    photoUrls: _profilePhotos('coach_05', [
       mockJournalPhoto3,
       mockJournalPhoto2,
       mockJournalPhoto4,
       mockJournalPhoto1,
-    ],
+    ]),
     totalBookings: 48,
     goals: ['Tăng cơ', 'Tăng sức bền'],
     targetAudience: ['Nam', 'Người mới bắt đầu'],
@@ -579,13 +580,12 @@ final List<MockCoach> mockCoaches = [
         description: 'Lịch sáng, tập cá nhân 60 hoặc 90 phút.',
       ),
     ],
-    photoUrls: [
-      mockJournalPhoto2,
+    photoUrls: _profilePhotos('coach_06', [
       mockJournalPhoto4,
       mockJournalPhoto1,
       mockJournalPhoto3,
       mockJournalPhoto2,
-    ],
+    ]),
     totalBookings: 268,
     goals: ['Giảm mỡ', 'Tăng cơ', 'Phục hồi sau chấn thương'],
     targetAudience: ['Nữ', 'Nam', 'Phục hồi chấn thương', 'Người mới bắt đầu'],

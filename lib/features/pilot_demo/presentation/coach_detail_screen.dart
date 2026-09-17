@@ -470,6 +470,9 @@ class _PhotoSlideshow extends StatelessWidget {
                     return Image.asset(
                       photos[i],
                       fit: BoxFit.cover,
+                      alignment: photos[i] == coach.avatarAsset
+                          ? Alignment.topCenter
+                          : Alignment.center,
                       width: double.infinity,
                       height: double.infinity,
                       frameBuilder: (context, child, frame, wasSynchronouslyLoaded) {

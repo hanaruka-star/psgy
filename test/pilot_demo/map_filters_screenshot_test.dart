@@ -150,6 +150,7 @@ void main() {
 
     expect(find.byKey(const Key('map_chip_coach')), findsOneWidget);
     expect(find.byKey(const Key('map_chip_gym')), findsOneWidget);
+    expect(find.text('PT AI'), findsNothing);
     expect(find.text('Coach gần bạn'), findsOneWidget);
     expect(find.text('Hệ thống — đối tác PSgy'), findsNothing);
     expect(find.text('Chỉ đường'), findsNothing);

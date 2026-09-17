@@ -31,7 +31,7 @@
 		<key>LSRequiresIPhoneOS</key>
 		<true/>
 		<key>NSCameraUsageDescription</key>
-		<string>Ứng dụng cần truy cập camera để quét mã QR gửi/rời bãi và chụp ảnh phương tiện.</string>
+		<string>Ứng dụng cần camera để tập cùng PT AI và chọn ảnh hồ sơ.</string>
 		<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
 		<string>Ứng dụng cần truy cập vị trí của bạn để tìm bãi xe gần nhất và hiển thị bản đồ.</string>
 		<key>NSLocationWhenInUseUsageDescription</key>

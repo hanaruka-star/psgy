@@ -201,7 +201,7 @@ void main() {
     );
   });
 
-  testWidgets('04 MainShellScreen (bottom bar 4 tab)', (tester) async {
+  testWidgets('04 MainShellScreen (bottom bar + PT AI)', (tester) async {
     _seedUserSession();
     await tester.binding.setSurfaceSize(const Size(390, 844));
     addTearDown(() => tester.binding.setSurfaceSize(null));
@@ -225,6 +225,13 @@ void main() {
     await tester.pumpWidget(
       _wrap(CoachDetailScreen(coach: mockCoaches.first)),
     );
+    await tester.pump();
+    await tester.runAsync(() async {
+      final context = tester.element(find.byType(MaterialApp));
+      for (final url in mockCoaches.first.photoUrls) {
+        await precacheImage(AssetImage(url), context);
+      }
+    });
     await tester.pumpAndSettle();
     await expectLater(
       find.byType(CoachDetailScreen),

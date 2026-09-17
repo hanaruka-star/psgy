@@ -18,7 +18,8 @@ class MockCoach {
   final List<MockPackage> packages;
   final String bio;
 
-  /// Ảnh hồ sơ mock (5 tấm / Coach). Bản demo không tách
+  /// Ảnh hồ sơ mock (5 tấm / Coach). Tấm đầu = [avatarAsset];
+  /// 4 tấm sau là ảnh journal mẫu. Bản demo không tách
   /// "ảnh Admin upload" vs "ảnh Coach tự up" — backend làm khi có Admin tool.
   final List<String> photoUrls;
   final int totalBookings;
@@ -60,6 +61,6 @@ class MockCoach {
     this.weeklyAvailability = const [],
   });
 
-  /// Small circular Coach portrait. Slideshow photos stay on [photoUrls].
+  /// Circular portrait + first slideshow photo.
   String get avatarAsset => 'assets/avatars/$id.png';
 }

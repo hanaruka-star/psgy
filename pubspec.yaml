@@ -45,6 +45,7 @@ dependencies:
   flutter_local_notifications: ^18.0.1
   firebase_storage: ^12.4.10
   image_picker: ^1.1.2
+  camera: ^0.11.2
   google_fonts: ^6.2.1
   figma_squircle: ^0.6.3
 

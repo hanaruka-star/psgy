@@ -55,6 +55,13 @@ void main() {
     addTearDown(() => tester.binding.setSurfaceSize(null));
 
     await tester.pumpWidget(_wrap(CoachDetailScreen(coach: mockCoaches.first)));
+    await tester.pump();
+    await tester.runAsync(() async {
+      final context = tester.element(find.byType(MaterialApp));
+      for (final url in mockCoaches.first.photoUrls) {
+        await precacheImage(AssetImage(url), context);
+      }
+    });
     await tester.pumpAndSettle();
 
     expect(find.text('Về tôi'), findsOneWidget);
