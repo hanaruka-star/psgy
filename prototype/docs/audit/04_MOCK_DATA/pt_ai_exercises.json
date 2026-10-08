@@ -1,0 +1,176 @@
+[
+  {
+    "id": "ai_squat",
+    "name": "Squat",
+    "description": "Tập đùi và mông, đứng rộng bằng vai, hạ thấp như ngồi ghế.",
+    "durationSeconds": 45,
+    "thumbnailAsset": "assets/images/journal/seed_01.jpg",
+    "cues": [
+      {
+        "atSecond": 0,
+        "message": "Chuẩn bị... đứng rộng bằng vai"
+      },
+      {
+        "atSecond": 3,
+        "message": "Bắt đầu! Hạ thấp từ từ"
+      },
+      {
+        "atSecond": 15,
+        "message": "Tốt! Giữ lưng thẳng, đừng cong người"
+      },
+      {
+        "atSecond": 30,
+        "message": "Còn 15 giây, cố lên!"
+      },
+      {
+        "atSecond": 42,
+        "message": "Sắp xong, chậm lại và thở đều"
+      }
+    ]
+  },
+  {
+    "id": "ai_plank",
+    "name": "Plank",
+    "description": "Giữ thẳng lưng, siết bụng, chống khuỷu tay và mũi chân.",
+    "durationSeconds": 30,
+    "thumbnailAsset": "assets/images/journal/seed_02.jpg",
+    "cues": [
+      {
+        "atSecond": 0,
+        "message": "Chuẩn bị... chống khuỷu và mũi chân"
+      },
+      {
+        "atSecond": 3,
+        "message": "Bắt đầu! Siết bụng, lưng thẳng"
+      },
+      {
+        "atSecond": 12,
+        "message": "Tốt! Đừng võng lưng"
+      },
+      {
+        "atSecond": 20,
+        "message": "Còn 10 giây, thở đều"
+      },
+      {
+        "atSecond": 27,
+        "message": "Sắp xong, giữ vững"
+      }
+    ]
+  },
+  {
+    "id": "ai_lunge",
+    "name": "Lunge (Chùng chân)",
+    "description": "Bước dài về trước, hạ gối sau gần chạm sàn, đổi chân.",
+    "durationSeconds": 40,
+    "thumbnailAsset": "assets/images/journal/seed_03.jpg",
+    "cues": [
+      {
+        "atSecond": 0,
+        "message": "Chuẩn bị... đứng thẳng, hai chân rộng vừa"
+      },
+      {
+        "atSecond": 3,
+        "message": "Bước dài về trước, hạ gối sau"
+      },
+      {
+        "atSecond": 15,
+        "message": "Tốt! Gối trước không vượt mũi chân"
+      },
+      {
+        "atSecond": 28,
+        "message": "Đổi chân, giữ nhịp đều"
+      },
+      {
+        "atSecond": 37,
+        "message": "Sắp xong, đứng thẳng người"
+      }
+    ]
+  },
+  {
+    "id": "ai_pushup",
+    "name": "Hít đất (Push-up)",
+    "description": "Chống thẳng tay, hạ ngực gần sàn, đẩy lên đều.",
+    "durationSeconds": 30,
+    "thumbnailAsset": "assets/images/journal/seed_04.jpg",
+    "cues": [
+      {
+        "atSecond": 0,
+        "message": "Chuẩn bị... chống thẳng tay"
+      },
+      {
+        "atSecond": 3,
+        "message": "Hạ ngực gần sàn, đẩy lên đều"
+      },
+      {
+        "atSecond": 12,
+        "message": "Tốt! Khuỷu sát người, đừng võng lưng"
+      },
+      {
+        "atSecond": 22,
+        "message": "Còn 8 giây, giữ nhịp"
+      },
+      {
+        "atSecond": 27,
+        "message": "Sắp xong, thở đều"
+      }
+    ]
+  },
+  {
+    "id": "ai_crunch",
+    "name": "Gập bụng (Crunch)",
+    "description": "Nằm ngửa, gối co, nâng vai khỏi sàn, không kéo cổ.",
+    "durationSeconds": 40,
+    "thumbnailAsset": "assets/images/journal/seed_01.jpg",
+    "cues": [
+      {
+        "atSecond": 0,
+        "message": "Chuẩn bị... nằm ngửa, gối co"
+      },
+      {
+        "atSecond": 3,
+        "message": "Nâng vai khỏi sàn, thở ra khi gập"
+      },
+      {
+        "atSecond": 15,
+        "message": "Tốt! Đừng kéo cổ"
+      },
+      {
+        "atSecond": 28,
+        "message": "Còn 12 giây, siết bụng"
+      },
+      {
+        "atSecond": 37,
+        "message": "Sắp xong, hạ chậm"
+      }
+    ]
+  },
+  {
+    "id": "ai_wallsit",
+    "name": "Đứng tấn (Wall sit)",
+    "description": "Lưng tựa tường, đùi song song sàn, giữ nguyên tư thế.",
+    "durationSeconds": 30,
+    "thumbnailAsset": "assets/images/journal/seed_02.jpg",
+    "cues": [
+      {
+        "atSecond": 0,
+        "message": "Chuẩn bị... lưng tựa tường"
+      },
+      {
+        "atSecond": 3,
+        "message": "Hạ đùi song song sàn"
+      },
+      {
+        "atSecond": 12,
+        "message": "Tốt! Giữ gối vuông góc"
+      },
+      {
+        "atSecond": 22,
+        "message": "Còn 8 giây, đừng đứng dậy sớm"
+      },
+      {
+        "atSecond": 27,
+        "message": "Sắp xong, thở đều"
+      }
+    ]
+  }
+]

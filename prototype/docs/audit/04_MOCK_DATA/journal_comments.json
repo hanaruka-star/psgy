@@ -1,0 +1,42 @@
+[
+  {
+    "id": "jc_seed_01",
+    "postId": "jp_seed_01",
+    "authorId": "sample_user_02",
+    "authorName": "Ngô Thanh Hà",
+    "text": "Form chuẩn là tiến nhanh lắm. Cố lên Khoa!",
+    "createdAt": "2026-08-26T19:40:00.000"
+  },
+  {
+    "id": "jc_seed_02",
+    "postId": "jp_seed_01",
+    "authorId": "sample_user_03",
+    "authorName": "Đặng Quốc Việt",
+    "text": "Anh Long soi squat rất kỹ. Mình cũng đang tập với ảnh.",
+    "createdAt": "2026-08-26T20:05:00.000"
+  },
+  {
+    "id": "jc_seed_03",
+    "postId": "jp_seed_02",
+    "authorId": "sample_user_01",
+    "authorName": "Phạm Minh Khoa",
+    "text": "Xin thực đơn mẫu với Hà ơi.",
+    "createdAt": "2026-08-25T11:15:00.000"
+  },
+  {
+    "id": "jc_seed_04",
+    "postId": "jp_seed_03",
+    "authorId": "sample_user_02",
+    "authorName": "Ngô Thanh Hà",
+    "text": "Tập cặp vui hơn tập một mình thật.",
+    "createdAt": "2026-08-24T19:10:00.000"
+  },
+  {
+    "id": "jc_seed_05",
+    "postId": "jp_seed_04",
+    "authorId": "sample_user_01",
+    "authorName": "Phạm Minh Khoa",
+    "text": "Core của Nam là huyền thoại.",
+    "createdAt": "2026-08-22T08:00:00.000"
+  }
+]

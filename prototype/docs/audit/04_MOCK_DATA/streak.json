@@ -1,0 +1,17 @@
+{
+  "initial": {
+    "userId": "",
+    "currentStreak": 0,
+    "longestStreak": 0,
+    "lastCompletedDate": null
+  },
+  "rules": {
+    "onCreateProfile": "UserStreak(userId: profile.id)",
+    "onBookingCompleted": "cùng ngày → giữ streak; hôm qua → +1; còn lại → reset 1; cập nhật longestStreak. lastCompletedDate = date-only của DateTime.now()",
+    "badges": {
+      "completedCount==1": "badge_first_session",
+      "currentStreak==3": "badge_streak_3",
+      "currentStreak==7": "badge_streak_7"
+    }
+  }
+}

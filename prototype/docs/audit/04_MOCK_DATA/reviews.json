@@ -1,0 +1,66 @@
+[
+  {
+    "id": "rev_01",
+    "coachId": "coach_01",
+    "reviewerName": "Trần Minh Anh",
+    "rating": 5,
+    "comment": "Buổi tập rất rõ mục tiêu, Long chỉnh form kỹ. Mình thấy tiến bộ rõ sau 2 tuần.",
+    "date": "2026-09-03T00:00:00.000"
+  },
+  {
+    "id": "rev_02",
+    "coachId": "coach_01",
+    "reviewerName": "Lê Hoàng Phúc",
+    "rating": 4,
+    "comment": "Chuyên môn tốt, lịch linh hoạt. Muốn anh nói chậm hơn một chút khi hướng dẫn máy.",
+    "date": "2026-09-01T00:00:00.000"
+  },
+  {
+    "id": "rev_03",
+    "coachId": "coach_01",
+    "reviewerName": "Ngô Nhật Hà",
+    "rating": 5,
+    "comment": "Từng tập gym tự phát, giờ có giáo án giảm mỡ rõ ràng. Recommend.",
+    "date": "2026-08-28T00:00:00.000"
+  },
+  {
+    "id": "rev_04",
+    "coachId": "coach_01",
+    "reviewerName": "Phạm Quốc Huy",
+    "rating": 3,
+    "comment": "Tập ổn nhưng đôi lúc đến muộn khoảng 10 phút. Nội dung buổi thì ổn.",
+    "date": "2026-08-22T00:00:00.000"
+  },
+  {
+    "id": "rev_05",
+    "coachId": "coach_01",
+    "reviewerName": "Vũ Thanh Trúc",
+    "rating": 5,
+    "comment": "Kèm dinh dưỡng khá sát. Mình giữ được streak 3 tuần nhờ anh nhắc.",
+    "date": "2026-08-18T00:00:00.000"
+  },
+  {
+    "id": "rev_06",
+    "coachId": "coach_01",
+    "reviewerName": "Đặng Khoa",
+    "rating": 2,
+    "comment": "Buổi đầu hơi dồn bài, mình chưa kịp theo. Mong điều chỉnh nhịp cho người mới.",
+    "date": "2026-08-12T00:00:00.000"
+  },
+  {
+    "id": "rev_07",
+    "coachId": "coach_01",
+    "reviewerName": "Bùi Lan Phương",
+    "rating": 4,
+    "comment": "Tập cặp với bạn cũng ổn. Giá gói 10 buổi hợp lý hơn tập lẻ.",
+    "date": "2026-08-08T00:00:00.000"
+  },
+  {
+    "id": "rev_08",
+    "coachId": "coach_01",
+    "reviewerName": "Mai Đức Thịnh",
+    "rating": 5,
+    "comment": "Kinh nghiệm lâu năm thấy rõ. Nhắc form squat rất chi tiết, vai đỡ đau hơn.",
+    "date": "2026-08-03T00:00:00.000"
+  }
+]

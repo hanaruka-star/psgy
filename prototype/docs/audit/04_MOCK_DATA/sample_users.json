@@ -1,0 +1,23 @@
+[
+  {
+    "id": "sample_user_01",
+    "phone": "0901111111",
+    "name": "Phạm Minh Khoa",
+    "avatarPath": null,
+    "createdAt": "2026-06-12T00:00:00.000"
+  },
+  {
+    "id": "sample_user_02",
+    "phone": "0902222222",
+    "name": "Ngô Thanh Hà",
+    "avatarPath": null,
+    "createdAt": "2026-05-03T00:00:00.000"
+  },
+  {
+    "id": "sample_user_03",
+    "phone": "0903333333",
+    "name": "Đặng Quốc Việt",
+    "avatarPath": null,
+    "createdAt": "2026-04-20T00:00:00.000"
+  }
+]

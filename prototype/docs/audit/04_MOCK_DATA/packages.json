@@ -1,0 +1,59 @@
+{
+  "_note": "Gói theo Coach — MockPackage.coachId bắt buộc. Không còn ví hệ thống.",
+  "packages": [
+    {
+      "id": "pkg_long_10",
+      "coachId": "coach_01",
+      "name": "Gói 10 buổi",
+      "sessionCount": 10,
+      "totalPriceVnd": 2500000,
+      "priceLabel": "2.500.000đ",
+      "description": "Linh hoạt lịch trong 3 tháng, tiết kiệm so với tập lẻ."
+    },
+    {
+      "id": "pkg_long_20",
+      "coachId": "coach_01",
+      "name": "Gói 20 buổi",
+      "sessionCount": 20,
+      "totalPriceVnd": 4500000,
+      "priceLabel": "4.500.000đ",
+      "description": "Ưu đãi dài hạn, kèm 1 buổi tư vấn dinh dưỡng."
+    },
+    {
+      "id": "pkg_mai_5",
+      "coachId": "coach_02",
+      "name": "Gói 5 buổi",
+      "sessionCount": 5,
+      "totalPriceVnd": 1400000,
+      "priceLabel": "1.400.000đ",
+      "description": "Phù hợp dinh dưỡng + tập cá nhân."
+    },
+    {
+      "id": "pkg_nam_10",
+      "coachId": "coach_03",
+      "name": "Gói 10 buổi",
+      "sessionCount": 10,
+      "totalPriceVnd": 2700000,
+      "priceLabel": "2.700.000đ",
+      "description": "Tập cá nhân hoặc cặp đôi."
+    },
+    {
+      "id": "pkg_chau_8",
+      "coachId": "coach_04",
+      "name": "Gói 8 buổi",
+      "sessionCount": 8,
+      "totalPriceVnd": 2200000,
+      "priceLabel": "2.200.000đ",
+      "description": "Buổi sáng, kèm tư vấn dinh dưỡng."
+    },
+    {
+      "id": "pkg_ha_12",
+      "coachId": "coach_06",
+      "name": "Gói 12 buổi",
+      "sessionCount": 12,
+      "totalPriceVnd": 3200000,
+      "priceLabel": "3.200.000đ",
+      "description": "Lịch sáng, tập cá nhân 60 hoặc 90 phút."
+    }
+  ]
+}

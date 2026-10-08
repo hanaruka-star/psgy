@@ -1,0 +1,140 @@
+{
+  "_note": "Mỗi phần tử là dịch vụ gắn Coach (cùng id có thể khác promoLabel).",
+  "services": [
+    {
+      "id": "svc_personal_60",
+      "name": "Tập cá nhân 60 phút",
+      "priceVnd": 300000,
+      "priceLabel": "300.000đ",
+      "durationMinutes": 60,
+      "promoLabel": "Giảm 20%",
+      "coachId": "coach_01"
+    },
+    {
+      "id": "svc_duo_60",
+      "name": "Tập cặp đôi 60 phút",
+      "priceVnd": 500000,
+      "priceLabel": "500.000đ",
+      "durationMinutes": 60,
+      "promoLabel": null,
+      "coachId": "coach_01"
+    },
+    {
+      "id": "svc_nutrition",
+      "name": "Tư vấn dinh dưỡng",
+      "priceVnd": 150000,
+      "priceLabel": "150.000đ",
+      "durationMinutes": 45,
+      "promoLabel": "Ưu đãi tháng này",
+      "coachId": "coach_01"
+    },
+    {
+      "id": "svc_personal_60",
+      "name": "Tập cá nhân 60 phút",
+      "priceVnd": 300000,
+      "priceLabel": "300.000đ",
+      "durationMinutes": 60,
+      "promoLabel": null,
+      "coachId": "coach_02"
+    },
+    {
+      "id": "svc_nutrition",
+      "name": "Tư vấn dinh dưỡng",
+      "priceVnd": 150000,
+      "priceLabel": "150.000đ",
+      "durationMinutes": 45,
+      "promoLabel": "Ưu đãi tháng này",
+      "coachId": "coach_02"
+    },
+    {
+      "id": "svc_personal_60",
+      "name": "Tập cá nhân 60 phút",
+      "priceVnd": 300000,
+      "priceLabel": "300.000đ",
+      "durationMinutes": 60,
+      "promoLabel": "Giảm 20%",
+      "coachId": "coach_03"
+    },
+    {
+      "id": "svc_duo_60",
+      "name": "Tập cặp đôi 60 phút",
+      "priceVnd": 500000,
+      "priceLabel": "500.000đ",
+      "durationMinutes": 60,
+      "promoLabel": null,
+      "coachId": "coach_03"
+    },
+    {
+      "id": "svc_personal_90",
+      "name": "Tập cá nhân 90 phút",
+      "priceVnd": 420000,
+      "priceLabel": "420.000đ",
+      "durationMinutes": 90,
+      "promoLabel": "Giảm 20%",
+      "coachId": "coach_04"
+    },
+    {
+      "id": "svc_nutrition",
+      "name": "Tư vấn dinh dưỡng",
+      "priceVnd": 150000,
+      "priceLabel": "150.000đ",
+      "durationMinutes": 45,
+      "promoLabel": null,
+      "coachId": "coach_04"
+    },
+    {
+      "id": "svc_duo_60",
+      "name": "Tập cặp đôi 60 phút",
+      "priceVnd": 500000,
+      "priceLabel": "500.000đ",
+      "durationMinutes": 60,
+      "promoLabel": "Ưu đãi tháng này",
+      "coachId": "coach_04"
+    },
+    {
+      "id": "svc_personal_60",
+      "name": "Tập cá nhân 60 phút",
+      "priceVnd": 300000,
+      "priceLabel": "300.000đ",
+      "durationMinutes": 60,
+      "promoLabel": "Ưu đãi tháng này",
+      "coachId": "coach_05"
+    },
+    {
+      "id": "svc_duo_60",
+      "name": "Tập cặp đôi 60 phút",
+      "priceVnd": 500000,
+      "priceLabel": "500.000đ",
+      "durationMinutes": 60,
+      "promoLabel": null,
+      "coachId": "coach_05"
+    },
+    {
+      "id": "svc_personal_60",
+      "name": "Tập cá nhân 60 phút",
+      "priceVnd": 300000,
+      "priceLabel": "300.000đ",
+      "durationMinutes": 60,
+      "promoLabel": null,
+      "coachId": "coach_06"
+    },
+    {
+      "id": "svc_nutrition",
+      "name": "Tư vấn dinh dưỡng",
+      "priceVnd": 150000,
+      "priceLabel": "150.000đ",
+      "durationMinutes": 45,
+      "promoLabel": "Ưu đãi tháng này",
+      "coachId": "coach_06"
+    },
+    {
+      "id": "svc_personal_90",
+      "name": "Tập cá nhân 90 phút",
+      "priceVnd": 420000,
+      "priceLabel": "420.000đ",
+      "durationMinutes": 90,
+      "promoLabel": "Giảm 20%",
+      "coachId": "coach_06"
+    }
+  ]
+}

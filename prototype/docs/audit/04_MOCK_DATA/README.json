@@ -1,0 +1,9 @@
+{
+  "model": "Gói theo từng Coach (MockPackage.coachId). KHÔNG còn ví hệ thống / user_wallet_screen / mockSystemPackages / tab Ví.",
+  "generationRules": {
+    "weeklyAvailability": "date = DateTime(now.year, now.month, now.day).add(Duration(days: offsetDays))",
+    "userProfile.createdAt": "DateTime.now() khi createProfile()",
+    "purchasedPackage.purchasedAt": "DateTime.now() khi purchasePackage()",
+    "booking.id / journalPost.id / message.id": "prefix + DateTime.now().microsecondsSinceEpoch"
+  }
+}

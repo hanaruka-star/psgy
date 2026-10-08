@@ -1,0 +1,47 @@
+{
+  "_note": "Tin nhắn seed Coach theo bookingId. User inquiry/welcome sinh runtime — user_runtime.json.",
+  "byBookingId": {
+    "bk_pending": [
+      {
+        "id": "msg_p1",
+        "senderRole": "user",
+        "text": "Chào coach, em muốn tập buổi tối nay được không ạ?",
+        "sentAtLabel": "16:40"
+      }
+    ],
+    "bk_confirmed": [
+      {
+        "id": "msg_c1",
+        "senderRole": "user",
+        "text": "Chào coach, em book buổi 19h30 ạ.",
+        "sentAtLabel": "15:10"
+      },
+      {
+        "id": "msg_c2",
+        "senderRole": "coach",
+        "text": "Ok em, anh sẽ đến đúng giờ.",
+        "sentAtLabel": "15:12"
+      }
+    ],
+    "bk_in_progress": [
+      {
+        "id": "msg_i1",
+        "senderRole": "user",
+        "text": "Coach ơi, em đang ở sảnh tầng 1.",
+        "sentAtLabel": "16:55"
+      },
+      {
+        "id": "msg_i2",
+        "senderRole": "coach",
+        "text": "Ok anh, em xuống ngay.",
+        "sentAtLabel": "16:56"
+      },
+      {
+        "id": "msg_i3",
+        "senderRole": "user",
+        "text": "Em mặc áo xanh ạ.",
+        "sentAtLabel": "16:57"
+      }
+    ]
+  }
+}

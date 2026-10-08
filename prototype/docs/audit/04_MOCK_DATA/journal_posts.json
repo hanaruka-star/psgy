@@ -1,0 +1,74 @@
+[
+  {
+    "id": "jp_seed_01",
+    "userId": "sample_user_01",
+    "bookingId": "seed_bk_khoa_01",
+    "coachId": "coach_01",
+    "coachName": "Nguyễn Văn Long",
+    "serviceName": "Tập cá nhân 60 phút",
+    "durationMinutes": 60,
+    "caption": "Buổi đầu với anh Long khá căng nhưng form đúng hơn hẳn. Hẹn tuần sau!",
+    "mediaUrl": "assets/images/journal/seed_01.jpg",
+    "privacy": "public",
+    "createdAt": "2026-08-26T19:10:00.000",
+    "likeUserIds": [
+      "sample_user_02",
+      "sample_user_03"
+    ],
+    "commentCount": 2,
+    "reported": false
+  },
+  {
+    "id": "jp_seed_02",
+    "userId": "sample_user_02",
+    "bookingId": "seed_bk_ha_01",
+    "coachId": "coach_02",
+    "coachName": "Trần Thị Mai",
+    "serviceName": "Tư vấn dinh dưỡng",
+    "durationMinutes": 45,
+    "caption": "Chị Mai chỉnh lại thực đơn rất rõ. Bớt tinh bột tối, ngủ ngon hơn.",
+    "mediaUrl": "assets/images/journal/seed_02.jpg",
+    "privacy": "public",
+    "createdAt": "2026-08-25T10:30:00.000",
+    "likeUserIds": [
+      "sample_user_01"
+    ],
+    "commentCount": 1,
+    "reported": false
+  },
+  {
+    "id": "jp_seed_03",
+    "userId": "sample_user_03",
+    "bookingId": "seed_bk_viet_01",
+    "coachId": "coach_01",
+    "coachName": "Nguyễn Văn Long",
+    "serviceName": "Tập cặp đôi 60 phút",
+    "durationMinutes": 60,
+    "caption": "Tập cặp với bạn, anh Long keep tempo rất đều. Mồ hôi ướt áo.",
+    "mediaUrl": "assets/images/journal/seed_03.jpg",
+    "privacy": "public",
+    "createdAt": "2026-08-24T18:45:00.000",
+    "likeUserIds": [
+      "sample_user_01",
+      "sample_user_02"
+    ],
+    "commentCount": 1,
+    "reported": false
+  },
+  {
+    "id": "jp_seed_04",
+    "userId": "sample_user_03",
+    "bookingId": "seed_bk_viet_02",
+    "coachId": "coach_03",
+    "coachName": "Lê Hoàng Nam",
+    "serviceName": "Tập cá nhân 60 phút",
+    "durationMinutes": 60,
+    "caption": "Nam cho bài core mới. Ngày mai chắc đau nhưng đáng.",
+    "mediaUrl": "assets/images/journal/seed_04.jpg",
+    "privacy": "public",
+    "createdAt": "2026-08-22T07:20:00.000",
+    "likeUserIds": [],
+    "commentCount": 1,
+    "reported": false
+  }
+]

@@ -1,0 +1,9 @@
+{
+  "bookings": "[] lúc mở app. Được tạo bởi MockUserSession.placeBooking. id = bk_<microsecondsSinceEpoch>. requestedTimeLabel copy từ coach.nextSlotLabel. locationLabel cố định \"Coach đến chỗ bạn\".",
+  "purchasedPackages": "[] lúc mở app. purchasePackage(pkg) → remainingSessions = sessionCount, purchasedAt = DateTime.now().",
+  "messages": {
+    "welcomeOnPlaceBooking": "Chào bạn, mình đã nhận lịch. Nhắn mình nếu cần đổi giờ nhé. sentAtLabel = Bây giờ",
+    "inquiryOnEnsureCoachInquiry": "Chào bạn, mình trao đổi địa chỉ và lịch tập tại đây trước khi bạn đặt nhé. sentAtLabel = Bây giờ"
+  },
+  "otpDemo": "Mã demo: 123456 — mọi OTP 6 chữ số đều pass."
+}
