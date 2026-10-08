@@ -29,7 +29,6 @@
   --blur-card: 0px;
   --card-alpha: 1;
   --elev-nav: 0 2px 12px color-mix(in srgb, var(--shadow) 20%, transparent);
-  --map-tiles: "https://tile.openstreetmap.org/{z}/{x}/{y}.png";
 }
 
 /* —— Minimal light (default) —— */
@@ -68,7 +67,6 @@ html[data-style="minimal"][data-mode="light"] {
   --danger-on: #7f1d1d;
   --nav-bar: #ffffff;
   --status-bar: #f8fafc;
-  --map-tiles: "https://tile.openstreetmap.org/{z}/{x}/{y}.png";
 }
 
 html[data-style="minimal"][data-mode="dark"] {
@@ -106,7 +104,6 @@ html[data-style="minimal"][data-mode="dark"] {
   --danger-on: #fee2e2;
   --nav-bar: #1b1b21;
   --status-bar: #0f172a;
-  --map-tiles: "https://tile.openstreetmap.org/{z}/{x}/{y}.png";
 }
 
 /* Dark preset: deeper scaffold */
@@ -126,7 +123,6 @@ html[data-style="dark"] {
   --on-highlight: #14532d;
   --tab-active: #7baee0;
   --tab-inactive: #94a3b8;
-  --map-tiles: "https://tile.openstreetmap.org/{z}/{x}/{y}.png";
 }
 
 html[data-style="glass"] {
@@ -146,7 +142,6 @@ html[data-style="glass"] {
   --primary: #00a0e0;
   --on-primary: #0a2540;
   --primary-text: #0077a8;
-  --map-tiles: "https://tile.openstreetmap.org/{z}/{x}/{y}.png";
 }
 
 html[data-style="glass"][data-mode="dark"] {
@@ -156,7 +151,6 @@ html[data-style="glass"][data-mode="dark"] {
   --on-primary: #1a1840;
   --primary-text: #c3c1ff;
   --card: rgb(255 255 255 / 0.1);
-  --map-tiles: "https://tile.openstreetmap.org/{z}/{x}/{y}.png";
 }
 
 html[data-style="neumorph"] {
@@ -173,7 +167,6 @@ html[data-style="neumorph"] {
   --primary: #00a0e0;
   --on-primary: #0a2540;
   --primary-text: #0077a8;
-  --map-tiles: "https://tile.openstreetmap.org/{z}/{x}/{y}.png";
 }
 
 html[data-style="neumorph"][data-mode="dark"] {
@@ -185,7 +178,6 @@ html[data-style="neumorph"][data-mode="dark"] {
   --shadow-card: -6px -6px 16px #2a2a2a, 6px 6px 16px #0a0a0a;
   --primary: #9290fa;
   --on-primary: #1a1840;
-  --map-tiles: "https://tile.openstreetmap.org/{z}/{x}/{y}.png";
 }
 
 html,
@@ -288,18 +280,8 @@ html[data-style="glass"][data-mode="dark"] .phone-canvas {
   font-family: var(--font);
   z-index: 0 !important;
 }
-html[data-mode="light"] .leaflet-tile-pane {
-  filter: saturate(0.45) brightness(1.08) contrast(0.95);
-}
-html[data-mode="dark"] .leaflet-tile-pane,
-html[data-style="dark"] .leaflet-tile-pane {
-  filter: invert(1) hue-rotate(180deg) brightness(0.92) saturate(0.35);
-}
 .leaflet-control-attribution {
-  font-size: 9px !important;
-  background: color-mix(in srgb, var(--nav-bar) 88%, transparent) !important;
-  color: var(--on-surface-variant) !important;
-  max-width: 70%;
+  display: none;
 }
 .leaflet-control-attribution a {
   color: var(--primary-text) !important;

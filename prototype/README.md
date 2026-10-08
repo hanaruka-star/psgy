@@ -16,9 +16,16 @@ Mở http://localhost:5173
 
 **(a) Máy tính** — cửa sổ ≥ 900px: hai điện thoại cạnh nhau (User trái, Coach phải) + bảng điều khiển.
 
-**(b) iOS Simulator** — mở Safari trong Simulator → `http://localhost:5173` → nút Chia sẻ → **Thêm vào Màn hình chính**. Mở icon PSGymer (toàn màn hình, không thanh Safari).
+**(b) iOS Simulator** — `open -a Simulator` rồi Safari → `http://localhost:5173`.
 
-**(c) iPhone thật cùng Wi-Fi** — `http://<IP máy Mac>:5173` (IP xem bằng `ipconfig getifaddr en0`). Cũng có thể Thêm vào Màn hình chính.
+Thêm vào Màn hình chính (Ruka bấm tay):
+
+1. Safari đang mở prototype.
+2. Nút **Chia sẻ** (ô vuông + mũi tên lên) ở thanh dưới.
+3. **Thêm vào Màn hình chính** → **Thêm**.
+4. Về Home, mở icon **PSGymer** (toàn màn hình, không thanh Safari).
+
+**(c) iPhone thật cùng Wi-Fi** — `http://<IP máy Mac>:5173` (`ipconfig getifaddr en0`). Có thể Thêm vào Màn hình chính. Tile bản đồ trên IP LAN cần `VITE_MAP_TILE_KEY` (xem dưới).
 
 ## Thêm 1 màn
 
@@ -36,4 +43,30 @@ JSON trong `src/data/` (copy từ audit, đã chỉnh theo quyết định Ruka)
 
 Ảnh / logo: `public/assets/` — nguồn ghi trong `public/assets/SOURCE.md`.
 
-Bản đồ: CARTO Positron/Dark Matter raster hiện gắn watermark “API KEY REQUIRED” nếu không có key (2026). Prototype dùng OSM raster + filter gần Positron, ghi nguồn © OpenStreetMap. Khi có key CARTO, đổi `--map-tiles` trong `src/theme/tokens.css`.
+## Bản đồ
+
+Cấu hình: `src/config/map.ts` (URL sáng/tối + dòng ghi nguồn).
+
+Nhà cung cấp: **Stadia Maps — Alidade Smooth** (sáng) / **Alidade Smooth Dark** (tối). Tối giản: đường + tên đường/phường/quận, không POI.
+
+- Localhost: không cần key (Stadia cho phép Referer `localhost` / `127.0.0.1`).
+- Deploy / iPhone Wi-Fi: copy `.env.example` → `.env.local`, điền `VITE_MAP_TILE_KEY` (https://client.stadiamaps.com/). Không commit `.env.local`.
+
+Ghi nguồn bắt buộc: © Stadia Maps, © OpenMapTiles, © OpenStreetMap.
+
+## Thư viện + giấy phép
+
+**Runtime**
+- `react`, `react-dom` — MIT
+- `zustand` — MIT
+- `motion` — MIT
+- `leaflet` — BSD-2-Clause
+- `@fontsource/inter` — OFL-1.1
+- `@fontsource/material-symbols-outlined` — Apache-2.0
+
+**Dev**
+- `vite` — MIT
+- `typescript` — Apache-2.0
+- `tailwindcss`, `@tailwindcss/vite` — MIT
+- `@vitejs/plugin-react` — MIT
+- `@types/react`, `@types/react-dom`, `@types/leaflet` — MIT

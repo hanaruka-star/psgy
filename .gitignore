@@ -59,3 +59,4 @@ walkthrough/
 # Web prototype
 prototype/node_modules/
 prototype/dist/
+prototype/.env.local
