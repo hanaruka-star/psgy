@@ -94,8 +94,7 @@ class ModeSwitcherScreen extends ConsumerWidget {
             },
             icon: Icon(modeController.isUser ? Icons.person : Icons.engineering),
             label: Text(
-              modeController.isUser ? 'Chuyen sang Coach' : 'Chuyen sang User',
-              style: const TextStyle(color: Colors.white),
+              modeController.isUser ? 'Chuyển sang Coach' : 'Chuyển sang User',
             ),
           ),
         ],

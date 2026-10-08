@@ -52,6 +52,8 @@ class AppErrorView extends StatelessWidget {
     }
 
     return Center(
+      // Cuộn được: thông báo lỗi dài không còn bị tràn màn hình.
+      child: SingleChildScrollView(
       child: Padding(
         padding: AppSpacing.screenPadding,
         child: ConstrainedBox(
@@ -114,6 +116,7 @@ class AppErrorView extends StatelessWidget {
             ],
           ),
         ),
+      ),
       ),
     );
   }

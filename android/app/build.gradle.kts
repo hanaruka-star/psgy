@@ -62,7 +62,7 @@ android {
         create("user") {
             dimension = "default"
             applicationIdSuffix = ".user"
-            resValue("string", "app_name", "PSgy")
+            resValue("string", "app_name", "PSGymer User")
             signingConfig = signingConfigs.getByName(
                 if (keystorePropertiesFile.exists()) "release" else "debug"
             )
@@ -70,7 +70,7 @@ android {
         create("coach") {
             dimension = "default"
             applicationIdSuffix = ".coach"
-            resValue("string", "app_name", "PSgy Coach")
+            resValue("string", "app_name", "PSGymer Coach")
             signingConfig = signingConfigs.getByName(
                 if (keystorePropertiesFile.exists()) "release" else "debug"
             )

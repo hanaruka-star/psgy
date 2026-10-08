@@ -55,3 +55,6 @@ firestore_seed/serviceAccountKey.json
 # Test failure artifacts + web walkthrough artifact (không thuộc repo app)
 test/pilot_demo/failures/
 walkthrough/
+
+# Node dependencies — cài lại bằng `npm install`, không commit
+node_modules/

@@ -12,6 +12,7 @@ import 'package:psgy/core/di/isar_providers.dart';
 import 'package:psgy/core/messaging/fcm_background_handler.dart';
 import 'package:psgy/core/routes/app_navigator.dart';
 import 'package:psgy/core/theme/app_theme.dart';
+import 'package:psgy/core/theme/debug_theme_switcher.dart';
 import 'package:psgy/features/common/presentation/screens/app_root_screen.dart';
 import 'package:psgy/features/common/presentation/screens/fatal_error_screen.dart';
 import 'package:psgy/features/common/presentation/widgets/debug_menu_host.dart';
@@ -70,7 +71,11 @@ class PsgyApp extends StatelessWidget {
         navigatorKey: appNavigatorKey,
         theme: AppTheme.light,
         darkTheme: AppTheme.dark,
-        themeMode: ThemeMode.system,
+        themeMode:
+            kEnableDebugThemeSwitcher ? ThemeMode.light : ThemeMode.system,
+        builder: (context, child) {
+          return DebugThemeStyles.wrap(child ?? const SizedBox.shrink());
+        },
         home: FatalErrorScreen(
           error: bootstrap.error!,
           onRetry: () {
@@ -86,11 +91,14 @@ class PsgyApp extends StatelessWidget {
       navigatorKey: appNavigatorKey,
       theme: AppTheme.light,
       darkTheme: AppTheme.dark,
-      themeMode: ThemeMode.system,
+      themeMode:
+          kEnableDebugThemeSwitcher ? ThemeMode.light : ThemeMode.system,
       builder: (context, child) {
-        return SyncBootstrap(
-          child: DebugMenuHost(
-            child: child ?? const SizedBox.shrink(),
+        return DebugThemeStyles.wrap(
+          SyncBootstrap(
+            child: DebugMenuHost(
+              child: child ?? const SizedBox.shrink(),
+            ),
           ),
         );
       },

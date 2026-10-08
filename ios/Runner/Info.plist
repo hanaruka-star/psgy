@@ -33,11 +33,11 @@
 		<key>NSCameraUsageDescription</key>
 		<string>Ứng dụng cần camera để tập cùng PT AI và chọn ảnh hồ sơ.</string>
 		<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
-		<string>Ứng dụng cần truy cập vị trí của bạn để tìm bãi xe gần nhất và hiển thị bản đồ.</string>
+		<string>Ứng dụng cần truy cập vị trí của bạn để tìm gym và Coach gần bạn trên bản đồ.</string>
 		<key>NSLocationWhenInUseUsageDescription</key>
-		<string>Ứng dụng cần truy cập vị trí của bạn để tìm bãi xe gần nhất và hiển thị bản đồ.</string>
+		<string>Ứng dụng cần truy cập vị trí của bạn để tìm gym và Coach gần bạn trên bản đồ.</string>
 		<key>NSPhotoLibraryUsageDescription</key>
-		<string>Ứng dụng cần truy cập thư viện ảnh để chọn ảnh phương tiện khi đăng ký xe.</string>
+		<string>Ứng dụng cần truy cập thư viện ảnh để chọn ảnh đại diện và ảnh cho nhật ký tập luyện.</string>
 		<key>UIApplicationSceneManifest</key>
 		<dict>
 			<key>UIApplicationSupportsMultipleScenes</key>

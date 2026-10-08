@@ -41,6 +41,7 @@ flutter test
 - Central DI: `lib/core/di/`
 - State: Riverpod 2.0+
 - Multi-app strategy (current): single codebase, 2 mobile binaries via flavors (`user` / `coach`)
+- Ngoại lệ: `lib/features/pilot_demo/` là prototype demo — miễn Clean Architecture/Riverpod (xem mục 8)
 
 Folder structure (from constitution):
 
@@ -92,7 +93,7 @@ lib/
 ## 4. FIREBASE
 
 - Project: `psgy-app`
-- Flavors: `com.psgy.user` / `com.psgy.coach`
+- Flavors: `com.psgy.user` (tên hiển thị **PSGymer User**) / `com.psgy.coach` (**PSGymer Coach**)
 - Collections: do đội backend định nghĩa (gym / coach / booking) — xem `docs/handoff/`
 - Rules: local `firestore.rules` = nguồn thật (`docs/security/FIRESTORE_RULES.md`)
 - Authentication: Phone Auth (OTP). User app tạm mock OTP; `PhoneAuthScreen` thật được giữ.
@@ -117,62 +118,43 @@ Không support Web/Desktop.
 
 ## 8. TEAM WORKFLOW
 
-### Vai trò
+### Mục đích repo (chốt 29/09/2026)
 
-- **Claude** = Senior Dev / Tech Lead
-  - Giữ kiến trúc và hiến pháp
-  - Phân tích yêu cầu, phát hiện risk
-  - Sinh prompt chuẩn xác cho Cursor
-  - Review code Cursor tạo ra
-  - KHÔNG tự viết code trực tiếp
+Repo này là **bản demo sống**: app chạy được với dữ liệu giả để đội dev *nhìn thấy* hệ thống hoạt động thế nào, rồi ước lượng và xây platform thật.
+Ưu tiên: **sửa nhanh** + **thể hiện đúng nghiệp vụ**. Đây KHÔNG phải code production.
 
-- **Cursor** = Junior Dev
-  - Nhận prompt từ Claude
-  - Viết code Flutter/Dart
-  - Báo cáo kết quả lại cho Claude review
-  - KHÔNG tự quyết định kiến trúc
+### Vai trò (giai đoạn DEMO & UI POLISH)
 
+- **Claude** = Tech Lead + người sửa code demo
+  - Sửa code Dart **trực tiếp** trong repo (chủ yếu `lib/features/pilot_demo/`, theme, tài liệu)
+  - Giữ đúng nghiệp vụ trong demo — demo chính là spec cho đội dev
+  - Mỗi tính năng thêm/sửa → cập nhật mục tương ứng trong `docs/handoff/` (demo làm gì / bản thật cần gì / luật nghiệp vụ / ảnh màn hình)
+  - Soạn sẵn commit message; **KHÔNG tự commit/push**
 - **Human** = Product Owner
-  - Quyết định tính năng và ưu tiên
-  - Confirm roadmap
-  - Test thực tế trên simulator
+  - Nêu yêu cầu (lời, ảnh chụp, phác thảo), chạy app và xem
+  - Duyệt thay đổi và commit
+- **Cursor** = tuỳ chọn, khi Human muốn tự vibe code. **Không sửa cùng lúc với Claude.**
 
-### Quy trình mỗi checkpoint
+### Vòng làm việc
 
-1. Human mô tả yêu cầu
-2. Claude phân tích → đúng kiến trúc không?
-3. Claude sinh prompt chuẩn → Human paste vào Cursor
-4. Cursor viết code → báo cáo kết quả
-5. Human paste kết quả → Claude review
-6. Claude approve → tick checklist → qua CP tiếp theo
+1. Human chạy `./scripts/run_dev_fast.sh user` (hoặc `coach`) một lần
+2. Human nêu yêu cầu → Claude sửa code
+3. Human bấm `r` (hot reload) → xem → góp ý → lặp lại. Đổi DI/theme/state toàn cục → `R` (hot restart)
+4. Ổn → Claude soạn commit message → Human commit theo `docs/git_workflow.md`
 
-### Prompt templates (giai đoạn DEMO & UI POLISH)
+### Quy tắc demo
 
-Giai đoạn hiện tại = thêm tính năng demo + đổi style UI nhanh.
-**Dùng `docs/cursor_prompt_templates.md`**:
-- Template A: thêm tính năng demo
-- Template B: đổi style UI / theme
-- Template C: fix bug nhanh
+- `lib/features/pilot_demo/` là **prototype**: được miễn Clean Architecture/Riverpod. Singleton `MockUserSession` / `MockCoachSession` + `setState` là **chủ ý** để sửa nhanh. Đội dev KHÔNG coi đây là kiến trúc mẫu.
+- Chỉ Dart + mock data. Không thêm native package nếu không thật sự cần (phải build lại native — chậm nhất).
+- Mock data mới đánh dấu `// DEMO DATA` để dễ tìm và xoá sau.
+- Đổi style qua `lib/core/theme/`, không hardcode màu trong widget.
+- Sửa `Info.plist`, tên app, package native → phải build lại; hot reload không áp dụng.
+- Cursor (nếu dùng) tuân thủ `.cursor/rules/demo-dart-only.mdc` và `docs/cursor_prompt_templates.md` (Template A/B/C); không tự thêm package hay đổi kiến trúc — lệch quy tắc phải báo Claude trước.
 
-Mỗi prompt phải có: Context (project, file liên quan) + Yêu cầu cụ thể + Ràng buộc (không thêm package, không đổi architecture, style qua theme) + Definition of Done (analyze sạch, chạy được, screenshot, commit).
+### Khi sang giai đoạn backend thật
 
-Đổi style UI: **ưu tiên qua `lib/core/theme/`**, không hardcode màu trong widget. Tính năng demo: mock data đánh dấu `// DEMO DATA`, dễ xoá sau.
-
-### Demo phase — tốc độ build
-
-- Tính năng DEMO: **chỉ Dart + mock**. Không thêm native package (`firebase_*`, maps, isar, geolocator).
-- Dart-only → hot reload (`r`). Đổi DI/theme/global → hot restart (`R`). Không `flutter run` lại từ đầu.
-- Native package mới (nếu thật sự cần) phải báo Claude trước — `pod install` + Gradle là chỗ chậm nhất.
-
-### Nguyên tắc
-
-- Cursor KHÔNG được tự quyết định thêm package mới
-- Cursor KHÔNG được thay đổi architecture
-- Mọi deviation phải báo Claude trước khi làm
-- Claude là người duy nhất approve code
-- Tuân thủ `docs/constitution.md`
-- Commit format theo `docs/git_workflow.md`
-- Mỗi checkpoint nên commit riêng theo quy ước CP trong `docs/git_workflow.md`
+Quay lại mô hình: Claude = Tech Lead (phân tích, sinh prompt, review) → Cursor = Junior Dev (viết code) → Human = PO (duyệt, test).
+Tuân thủ `docs/constitution.md`; commit theo quy ước CP trong `docs/git_workflow.md`.
 
 ## 9. OPS
 

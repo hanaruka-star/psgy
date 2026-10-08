@@ -2,18 +2,25 @@
 
 Flutter app tìm gym + đặt lịch với PT/Coach tại TP.HCM.
 
+> **Repo này là bản demo** (dữ liệu giả, các tính năng chưa nối backend thật) để đội dev xem hệ thống chạy thế nào, từ đó ước lượng và xây platform thật. Cách làm việc: xem `CLAUDE.md` mục 8.
+
 Hai binary cùng codebase:
 
-- **User** — `com.psgy.user` (`--dart-define=FLAVOR=user`)
-- **Coach** — `com.psgy.coach` (`--dart-define=FLAVOR=coach`)
+- **PSGymer User** — `com.psgy.user` (`--flavor user`)
+- **PSGymer Coach** — `com.psgy.coach` (`--flavor coach`)
 
 Firebase project: `psgy-app`. Chỉ iOS + Android.
 
 ## Chạy
 
 ```bash
-flutter run --dart-define=FLAVOR=user --dart-define=ENV=development
-flutter run --dart-define=FLAVOR=coach --dart-define=ENV=development
+# Cách nhanh (khuyên dùng) — debug, hot reload sẵn
+./scripts/run_dev_fast.sh user
+./scripts/run_dev_fast.sh coach
+
+# Tương đương — --flavor và --dart-define=FLAVOR phải KHỚP nhau
+flutter run --flavor user --dart-define=FLAVOR=user --dart-define=ENV=development
+flutter run --flavor coach --dart-define=FLAVOR=coach --dart-define=ENV=development
 ```
 
 ## Test / analyze

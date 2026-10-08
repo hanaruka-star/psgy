@@ -45,13 +45,13 @@ class PrivacyConsentScreen extends ConsumerWidget {
                     _ConsentRow(
                       icon: Icons.location_on_outlined,
                       title: 'Vị trí',
-                      subtitle: 'Hiển thị bãi xe gần bạn trên bản đồ',
+                      subtitle: 'Hiển thị gym và Coach gần bạn trên bản đồ',
                     ),
                     Divider(height: AppSpacing.lg),
                     _ConsentRow(
                       icon: Icons.cloud_outlined,
-                      title: 'Dữ liệu bãi xe',
-                      subtitle: 'Đồng bộ tình trạng chỗ trống và bãi khảo sát',
+                      title: 'Dữ liệu tập luyện',
+                      subtitle: 'Đồng bộ lịch đặt, gói tập và nhật ký của bạn',
                     ),
                     Divider(height: AppSpacing.lg),
                     _ConsentRow(

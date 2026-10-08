@@ -15,11 +15,11 @@ class FlavorConfig {
 
     switch (f) {
       case AppFlavor.user:
-        appName = AppConfig.displayAppName('PSgy');
+        appName = AppConfig.displayAppName('PSGymer User');
         bundleId = 'com.psgy.user';
         break;
       case AppFlavor.coach:
-        appName = AppConfig.displayAppName('PSgy Coach');
+        appName = AppConfig.displayAppName('PSGymer Coach');
         bundleId = 'com.psgy.coach';
         break;
     }
