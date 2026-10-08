@@ -14,11 +14,23 @@
 
 :root {
   --font: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-scale: 1;
+  --text-display: 24px;
+  --text-display-weight: 700;
+  --text-title: 20px;
+  --text-title-weight: 700;
+  --text-subtitle: 16px;
+  --text-subtitle-weight: 600;
+  --text-body: 14px;
+  --text-body-weight: 400;
+  --text-caption: 12px;
+  --text-caption-weight: 400;
   --radius-sm: 12px;
   --radius-md: 16px;
   --radius-lg: 24px;
   --radius-xl: 28px;
   --radius-card: 16px;
+  --radius-scale: 1;
   --space-xs: 4px;
   --space-sm: 8px;
   --space-md: 16px;
@@ -29,6 +41,12 @@
   --blur-card: 0px;
   --card-alpha: 1;
   --elev-nav: 0 2px 12px color-mix(in srgb, var(--shadow) 20%, transparent);
+  --nav-height: 64px;
+  --nav-icon: 24px;
+  --fab-size: 60px;
+  --fab-lift: 16px;
+  --fab: var(--highlight);
+  --nav-pad-bottom: calc(var(--nav-height) + var(--fab-lift) + env(safe-area-inset-bottom, 0px));
 }
 
 /* —— Minimal light (default) —— */
@@ -256,6 +274,37 @@ button {
 .press:active {
   transform: scale(0.97);
   opacity: 0.82;
+}
+
+.type-display {
+  font-size: var(--text-display);
+  font-weight: var(--text-display-weight);
+  line-height: 1.25;
+  letter-spacing: -0.3px;
+}
+.type-title {
+  font-size: var(--text-title);
+  font-weight: var(--text-title-weight);
+  line-height: 1.3;
+}
+.type-subtitle {
+  font-size: var(--text-subtitle);
+  font-weight: var(--text-subtitle-weight);
+  line-height: 1.35;
+}
+.type-body {
+  font-size: var(--text-body);
+  font-weight: var(--text-body-weight);
+  line-height: 1.45;
+}
+.type-caption {
+  font-size: var(--text-caption);
+  font-weight: var(--text-caption-weight);
+  line-height: 1.35;
+}
+
+.pad-nav {
+  padding-bottom: var(--nav-pad-bottom);
 }
 
 .phone-canvas {

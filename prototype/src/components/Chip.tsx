@@ -20,7 +20,7 @@ export function Chip({
     color: fg ?? (selected ? 'var(--on-primary)' : 'var(--on-surface)'),
     ...style,
   };
-  const cls = `inline-flex items-center rounded-[var(--radius-sm)] px-3 py-1.5 text-[12px] font-semibold tracking-[0.03em] ${onClick ? 'press' : ''} ${className ?? ''}`;
+  const cls = `inline-flex items-center rounded-[var(--radius-sm)] px-3 py-1.5 type-caption font-semibold tracking-[0.03em] ${onClick ? 'press' : ''} ${className ?? ''}`;
   if (!onClick) {
     return (
       <span className={cls} style={colors}>

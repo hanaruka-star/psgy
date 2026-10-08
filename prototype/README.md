@@ -1,6 +1,6 @@
 # PSGymer — prototype web (Bước 2)
 
-Khung Vite + React để duyệt cảm giác giao diện. Không backend. Nguồn chuẩn: `docs/audit/`.
+Khung Vite + React để duyệt cảm giác giao diện. Không backend. Nguồn chuẩn: `docs/ux-v2/SITEMAP.md` (UX v2.2).
 
 ## Cách chạy
 
@@ -14,7 +14,7 @@ Mở http://localhost:5173
 
 ## Cách xem
 
-**(a) Máy tính** — cửa sổ ≥ 900px: hai điện thoại cạnh nhau (User trái, Coach phải) + bảng điều khiển.
+**(a) Máy tính** — cửa sổ ≥ 900px: hai điện thoại cạnh nhau (User trái, PT Center phải) + bảng điều khiển.
 
 **(b) iOS Simulator** — `open -a Simulator` rồi Safari → `http://localhost:5173`.
 
@@ -32,6 +32,10 @@ Thêm vào Màn hình chính (Ruka bấm tay):
 1. Tạo file `src/screens/user/U12_Chat.tsx` (hoặc `coach/C0x_...`), mã khớp audit.
 2. Trong `src/screens/registry.tsx`, gắn `component` vào đúng `id` (U01…U22 / C01…C07).
 3. Màn chưa dựng dùng chung Placeholder — mọi id đã có trong registry.
+
+## Tự chỉnh giao diện
+
+Mở prototype trên máy (≥900px, hai điện thoại + bảng điều khiển). Tab **Giao diện**: chọn font, cỡ chữ, màu, bo góc, kiểu bottom tab. Mọi chỉnh sửa gắn với style + sáng/tối đang chọn và hiện ngay trên cả hai máy. Trình duyệt tự lưu localStorage. Khi ưng, bấm **Lưu vào dự án** (`npm run dev` — ghi `src/theme/overrides.json`). Commit file đó để cả team mở prototype thấy đúng giao diện đã chốt. **Xuất bảng token cho đội dev** sinh `docs/DESIGN_TOKENS_FINAL.md`. **Khôi phục mặc định** trả về bản trong overrides.json.
 
 ## Bật/tắt 1 tính năng
 
@@ -61,7 +65,13 @@ Ghi nguồn bắt buộc: © Stadia Maps, © OpenMapTiles, © OpenStreetMap.
 - `zustand` — MIT
 - `motion` — MIT
 - `leaflet` — BSD-2-Clause
-- `@fontsource/inter` — OFL-1.1
+- `@fontsource/inter` — OFL-1.1 (subset tiếng Việt)
+- `@fontsource/be-vietnam-pro` — OFL-1.1 (subset tiếng Việt)
+- `@fontsource/nunito` — OFL-1.1 (subset tiếng Việt)
+- `@fontsource/montserrat` — OFL-1.1 (subset tiếng Việt)
+- `@fontsource/lexend` — OFL-1.1 (subset tiếng Việt)
+- `@fontsource/roboto` — Apache-2.0 (subset tiếng Việt)
+- Font hệ thống iOS (`-apple-system, system-ui`) — không đóng gói SF Pro
 - `@fontsource/material-symbols-outlined` — Apache-2.0
 
 **Dev**
