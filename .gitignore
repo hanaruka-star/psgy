@@ -55,3 +55,7 @@ firestore_seed/serviceAccountKey.json
 # Test failure artifacts + web walkthrough artifact (không thuộc repo app)
 test/pilot_demo/failures/
 walkthrough/
+
+# Web prototype
+prototype/node_modules/
+prototype/dist/

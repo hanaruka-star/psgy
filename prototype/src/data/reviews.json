@@ -1,0 +1,290 @@
+[
+  {
+    "id": "rev_01",
+    "coachId": "coach_01",
+    "reviewerName": "Trần Minh Anh",
+    "rating": 5,
+    "comment": "Buổi tập rất rõ mục tiêu, Long chỉnh form kỹ. Mình thấy tiến bộ rõ sau 2 tuần.",
+    "date": "2026-09-03T00:00:00.000"
+  },
+  {
+    "id": "rev_02",
+    "coachId": "coach_01",
+    "reviewerName": "Lê Hoàng Phúc",
+    "rating": 4,
+    "comment": "Chuyên môn tốt, lịch linh hoạt. Muốn anh nói chậm hơn một chút khi hướng dẫn máy.",
+    "date": "2026-09-01T00:00:00.000"
+  },
+  {
+    "id": "rev_03",
+    "coachId": "coach_01",
+    "reviewerName": "Ngô Nhật Hà",
+    "rating": 5,
+    "comment": "Từng tập gym tự phát, giờ có giáo án giảm mỡ rõ ràng. Recommend.",
+    "date": "2026-08-28T00:00:00.000"
+  },
+  {
+    "id": "rev_04",
+    "coachId": "coach_01",
+    "reviewerName": "Phạm Quốc Huy",
+    "rating": 3,
+    "comment": "Tập ổn nhưng đôi lúc đến muộn khoảng 10 phút. Nội dung buổi thì ổn.",
+    "date": "2026-08-22T00:00:00.000"
+  },
+  {
+    "id": "rev_05",
+    "coachId": "coach_01",
+    "reviewerName": "Vũ Thanh Trúc",
+    "rating": 5,
+    "comment": "Kèm dinh dưỡng khá sát. Mình giữ được streak 3 tuần nhờ anh nhắc.",
+    "date": "2026-08-18T00:00:00.000"
+  },
+  {
+    "id": "rev_06",
+    "coachId": "coach_01",
+    "reviewerName": "Đặng Khoa",
+    "rating": 2,
+    "comment": "Buổi đầu hơi dồn bài, mình chưa kịp theo. Mong điều chỉnh nhịp cho người mới.",
+    "date": "2026-08-12T00:00:00.000"
+  },
+  {
+    "id": "rev_07",
+    "coachId": "coach_01",
+    "reviewerName": "Bùi Lan Phương",
+    "rating": 4,
+    "comment": "Tập cặp với bạn cũng ổn. Giá gói 10 buổi hợp lý hơn tập lẻ.",
+    "date": "2026-08-08T00:00:00.000"
+  },
+  {
+    "id": "rev_08",
+    "coachId": "coach_01",
+    "reviewerName": "Mai Đức Thịnh",
+    "rating": 5,
+    "comment": "Kinh nghiệm lâu năm thấy rõ. Nhắc form squat rất chi tiết, vai đỡ đau hơn.",
+    "date": "2026-08-03T00:00:00.000"
+  },
+  {
+    "id": "rev_m01",
+    "coachId": "coach_02",
+    "reviewerName": "Lý Thu Trang",
+    "rating": 5,
+    "comment": "Chị Mai nói chuyện dễ hiểu, thực đơn không cực đoan. Mình giữ được 3 tuần liền.",
+    "date": "2026-09-20T00:00:00.000"
+  },
+  {
+    "id": "rev_m02",
+    "coachId": "coach_02",
+    "reviewerName": "Hoàng Nhật Nam",
+    "rating": 4,
+    "comment": "Buổi tối hợp lịch văn phòng. Muốn tăng tạ nhanh hơn một chút.",
+    "date": "2026-09-17T00:00:00.000"
+  },
+  {
+    "id": "rev_m03",
+    "coachId": "coach_02",
+    "reviewerName": "Đỗ Mỹ Linh",
+    "rating": 3,
+    "comment": "Dinh dưỡng ổn, tập hơi nhẹ so với mình kỳ vọng.",
+    "date": "2026-09-14T00:00:00.000"
+  },
+  {
+    "id": "rev_m04",
+    "coachId": "coach_02",
+    "reviewerName": "Trần Quốc Việt",
+    "rating": 5,
+    "comment": "Phục hồi vai rõ. Chị hỏi kỹ lịch sử đau trước khi cho bài.",
+    "date": "2026-09-11T00:00:00.000"
+  },
+  {
+    "id": "rev_m05",
+    "coachId": "coach_02",
+    "reviewerName": "Phạm Hà My",
+    "rating": 2,
+    "comment": "Mình muốn bài nặng hơn. Nhịp buổi hơi chậm.",
+    "date": "2026-09-08T00:00:00.000"
+  },
+  {
+    "id": "rev_m06",
+    "coachId": "coach_02",
+    "reviewerName": "Ngô Đức Anh",
+    "rating": 4,
+    "comment": "Online khi đi công tác vẫn ổn, nhắc form qua video rõ.",
+    "date": "2026-09-05T00:00:00.000"
+  },
+  {
+    "id": "rev_n01",
+    "coachId": "coach_03",
+    "reviewerName": "Bùi Minh Tuấn",
+    "rating": 5,
+    "comment": "Tập cặp vui, Nam chia bài công bằng. Sức bền chạy cải thiện.",
+    "date": "2026-09-02T00:00:00.000"
+  },
+  {
+    "id": "rev_n02",
+    "coachId": "coach_03",
+    "reviewerName": "Mai Phương",
+    "rating": 4,
+    "comment": "Compound rõ ràng. Nhạc hơi to lúc cao điểm.",
+    "date": "2026-08-30T00:00:00.000"
+  },
+  {
+    "id": "rev_n03",
+    "coachId": "coach_03",
+    "reviewerName": "Lê Gia Huy",
+    "rating": 5,
+    "comment": "Deadlift form được chỉnh rất kỹ, lưng đỡ mỏi.",
+    "date": "2026-08-27T00:00:00.000"
+  },
+  {
+    "id": "rev_n04",
+    "coachId": "coach_03",
+    "reviewerName": "Võ Thanh Tâm",
+    "rating": 3,
+    "comment": "Ổn nhưng đôi lúc kết buổi hơi vội.",
+    "date": "2026-08-24T00:00:00.000"
+  },
+  {
+    "id": "rev_n05",
+    "coachId": "coach_03",
+    "reviewerName": "Nguyễn Khánh",
+    "rating": 4,
+    "comment": "Nhóm cuối tuần hợp. Giá gói 10 buổi ổn.",
+    "date": "2026-08-21T00:00:00.000"
+  },
+  {
+    "id": "rev_c01",
+    "coachId": "coach_04",
+    "reviewerName": "Trịnh Bảo Ngọc",
+    "rating": 5,
+    "comment": "Buổi 7h sáng đúng gu. 90 phút đủ khởi động và nói ăn uống.",
+    "date": "2026-08-18T00:00:00.000"
+  },
+  {
+    "id": "rev_c02",
+    "coachId": "coach_04",
+    "reviewerName": "Phan Đình Khoa",
+    "rating": 4,
+    "comment": "Chị Châu kiên nhẫn với người mới. Membership phòng hơi cao.",
+    "date": "2026-08-15T00:00:00.000"
+  },
+  {
+    "id": "rev_c03",
+    "coachId": "coach_04",
+    "reviewerName": "Hà Minh Châu",
+    "rating": 5,
+    "comment": "Sau gối mổ, chị không ép chạy. Rất yên tâm.",
+    "date": "2026-08-12T00:00:00.000"
+  },
+  {
+    "id": "rev_c04",
+    "coachId": "coach_04",
+    "reviewerName": "Lương Nhật",
+    "rating": 2,
+    "comment": "Mình hay muộn 7h. Khung sáng khó giữ.",
+    "date": "2026-08-09T00:00:00.000"
+  },
+  {
+    "id": "rev_c05",
+    "coachId": "coach_04",
+    "reviewerName": "Đinh Thu Hà",
+    "rating": 4,
+    "comment": "Thực đơn bữa sáng dễ theo, không meal-prep tiếng Anh.",
+    "date": "2026-08-06T00:00:00.000"
+  },
+  {
+    "id": "rev_c06",
+    "coachId": "coach_04",
+    "reviewerName": "Kiều Anh",
+    "rating": 3,
+    "comment": "Tập ổn, muốn thêm bài máy.",
+    "date": "2026-08-03T00:00:00.000"
+  },
+  {
+    "id": "rev_d01",
+    "coachId": "coach_05",
+    "reviewerName": "Nguyễn Hoàng Long",
+    "rating": 5,
+    "comment": "Người mới như mình không bị la. Form squat tiến rõ.",
+    "date": "2026-07-31T00:00:00.000"
+  },
+  {
+    "id": "rev_d02",
+    "coachId": "coach_05",
+    "reviewerName": "Trần Nhật",
+    "rating": 4,
+    "comment": "Tối 20h hợp. Phòng không quá đông.",
+    "date": "2026-07-28T00:00:00.000"
+  },
+  {
+    "id": "rev_d03",
+    "coachId": "coach_05",
+    "reviewerName": "Lê Quang",
+    "rating": 3,
+    "comment": "Chưa có gói nhiều buổi, hơi tiếc.",
+    "date": "2026-07-25T00:00:00.000"
+  },
+  {
+    "id": "rev_d04",
+    "coachId": "coach_05",
+    "reviewerName": "Phạm Tuấn",
+    "rating": 5,
+    "comment": "Giải thích tạ để làm gì trước khi tập — dễ nhớ.",
+    "date": "2026-07-22T00:00:00.000"
+  },
+  {
+    "id": "rev_d05",
+    "coachId": "coach_05",
+    "reviewerName": "Vũ Minh",
+    "rating": 4,
+    "comment": "Đều 3 buổi/tuần nhờ lịch thật, không giáo án ảo.",
+    "date": "2026-07-19T00:00:00.000"
+  },
+  {
+    "id": "rev_h01",
+    "coachId": "coach_06",
+    "reviewerName": "Nguyễn Thị Lan",
+    "rating": 5,
+    "comment": "Chị Hà nói thẳng, không la. InBody giảm mỡ thấy số.",
+    "date": "2026-07-16T00:00:00.000"
+  },
+  {
+    "id": "rev_h02",
+    "coachId": "coach_06",
+    "reviewerName": "Đặng Hữu",
+    "rating": 4,
+    "comment": "Online lúc công tác giữ được. Membership Elite khá.",
+    "date": "2026-07-13T00:00:00.000"
+  },
+  {
+    "id": "rev_h03",
+    "coachId": "coach_06",
+    "reviewerName": "Phan Ngọc",
+    "rating": 5,
+    "comment": "Gối thoái hoá nhẹ vẫn tập 90 phút không sưng.",
+    "date": "2026-07-10T00:00:00.000"
+  },
+  {
+    "id": "rev_h04",
+    "coachId": "coach_06",
+    "reviewerName": "Bùi Thanh",
+    "rating": 3,
+    "comment": "Buổi sáng 9h đôi lúc kẹt họp.",
+    "date": "2026-07-07T00:00:00.000"
+  },
+  {
+    "id": "rev_h05",
+    "coachId": "coach_06",
+    "reviewerName": "Lý Hương",
+    "rating": 4,
+    "comment": "Dinh dưỡng ngắn cuối buổi, không bán thêm lung tung.",
+    "date": "2026-07-04T00:00:00.000"
+  },
+  {
+    "id": "rev_h06",
+    "coachId": "coach_06",
+    "reviewerName": "Trần Mỹ",
+    "rating": 5,
+    "comment": "12 năm kinh nghiệm thấy rõ. Nhịp vừa, không ego-lifting.",
+    "date": "2026-07-01T00:00:00.000"
+  }
+]

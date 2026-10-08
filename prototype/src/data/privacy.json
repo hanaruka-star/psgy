@@ -1,0 +1,12 @@
+{
+  "title": "Quyền riêng tư của bạn",
+  "intro": "PSgy dùng vị trí của bạn để tìm Coach và phòng gym gần nhất.",
+  "bullets": [
+    "Vị trí chính xác của bạn chỉ được chia sẻ cho Coach sau khi Coach xác nhận lịch đặt.",
+    "Số điện thoại dùng để đăng nhập và để Coach liên hệ khi bạn có lịch tập.",
+    "Ảnh và bài nhật ký bạn đăng: bạn tự chọn ai được xem — Riêng tư, Chỉ PT, hoặc Công khai."
+  ],
+  "cta": "Đồng ý và tiếp tục",
+  "policyLink": "Xem chính sách đầy đủ",
+  "note": "Đây là nội dung mẫu cho prototype — bản chính sách thật do đội pháp lý/dev hoàn thiện."
+}

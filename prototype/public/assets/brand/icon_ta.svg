@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg"
+     viewBox="0 0 24 24"
+     width="512"
+     height="512"
+     fill="none">
+  <!-- Icon ta gymPS  dumbbell + nhip ECG. Toa do 24x24, giong painter trong app. -->
+  <g id="dumbbell-pulse" fill="#1E3A8A" stroke="#1E3A8A">
+    <rect id="plate-left" x="2" y="8" width="3" height="8" rx="1"/>
+    <rect id="plate-right" x="19" y="8" width="3" height="8" rx="1"/>
+    <path id="pulse"
+          d="M5 12 H8 L10 8 L13 16 L15 12 H19"
+          fill="none"
+          stroke-width="2.5"
+          stroke-linecap="round"
+          stroke-linejoin="round"/>
+  </g>
+</svg>

@@ -1,0 +1,367 @@
+@import "leaflet/dist/leaflet.css";
+@import "@fontsource/inter/400.css";
+@import "@fontsource/inter/600.css";
+@import "@fontsource/inter/700.css";
+@import "@fontsource/inter/800.css";
+@import "@fontsource/inter/900.css";
+@import "@fontsource/material-symbols-outlined/index.css";
+
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+}
+
+:root {
+  --font: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --radius-sm: 12px;
+  --radius-md: 16px;
+  --radius-lg: 24px;
+  --radius-xl: 28px;
+  --radius-card: 16px;
+  --space-xs: 4px;
+  --space-sm: 8px;
+  --space-md: 16px;
+  --space-lg: 24px;
+  --space-xl: 32px;
+  --shadow-card: none;
+  --border-card: none;
+  --blur-card: 0px;
+  --card-alpha: 1;
+  --elev-nav: 0 2px 12px color-mix(in srgb, var(--shadow) 20%, transparent);
+  --map-tiles: "https://tile.openstreetmap.org/{z}/{x}/{y}.png";
+}
+
+/* —— Minimal light (default) —— */
+html[data-style="minimal"][data-mode="light"] {
+  --primary: #00a0e0;
+  --on-primary: #0a2540;
+  --primary-text: #0077a8;
+  --primary-container: #c7e7ff;
+  --on-primary-container: #004c6d;
+  --secondary-container: #d2e5f5;
+  --on-secondary-container: #384956;
+  --tertiary-container: #e9ddff;
+  --on-tertiary-container: #4b4263;
+  --error: #ba1a1a;
+  --on-error: #ffffff;
+  --surface: #f6fafe;
+  --on-surface: #181c20;
+  --on-surface-variant: #41484d;
+  --bg: #f8fafc;
+  --card: #eff3fa;
+  --outline: #71787e;
+  --outline-variant: #c1c7ce;
+  --shadow: #000000;
+  --tag: #eff3fa;
+  --highlight: #346b34;
+  --on-highlight: #ffffff;
+  --tab-active: #275f95;
+  --tab-inactive: #94a3b8;
+  --sheet: #def0f1;
+  --sheet-title: #2e2f2f;
+  --warning-container: #ffedd5;
+  --warning-on: #7c2d12;
+  --success-container: #dcfce7;
+  --success-on: #14532d;
+  --danger-container: #fee2e2;
+  --danger-on: #7f1d1d;
+  --nav-bar: #ffffff;
+  --status-bar: #f8fafc;
+  --map-tiles: "https://tile.openstreetmap.org/{z}/{x}/{y}.png";
+}
+
+html[data-style="minimal"][data-mode="dark"] {
+  --primary: #9290fa;
+  --on-primary: #1a1840;
+  --primary-text: #c3c1ff;
+  --primary-container: #424178;
+  --on-primary-container: #e2dfff;
+  --secondary-container: #464559;
+  --on-secondary-container: #e3e0f9;
+  --tertiary-container: #603c50;
+  --on-tertiary-container: #ffd8ea;
+  --error: #ffb4ab;
+  --on-error: #690005;
+  --surface: #131318;
+  --on-surface: #e5e1e9;
+  --on-surface-variant: #c8c5d0;
+  --bg: #0f172a;
+  --card: #36363b;
+  --outline: #928f9a;
+  --outline-variant: #47464f;
+  --shadow: #000000;
+  --tag: #2f2f34;
+  --highlight: #7bc17b;
+  --on-highlight: #14532d;
+  --tab-active: #7baee0;
+  --tab-inactive: #94a3b8;
+  --sheet: #1e2a2a;
+  --sheet-title: #e8e8e8;
+  --warning-container: #5c3d1a;
+  --warning-on: #ffedd5;
+  --success-container: #14532d;
+  --success-on: #dcfce7;
+  --danger-container: #7f1d1d;
+  --danger-on: #fee2e2;
+  --nav-bar: #1b1b21;
+  --status-bar: #0f172a;
+  --map-tiles: "https://tile.openstreetmap.org/{z}/{x}/{y}.png";
+}
+
+/* Dark preset: deeper scaffold */
+html[data-style="dark"] {
+  --bg: #121212;
+  --card: #1e1e1e;
+  --surface: #1e1e1e;
+  --nav-bar: #1e1e1e;
+  --status-bar: #121212;
+  --sheet: #1e1e1e;
+  --on-surface: #f2f2f2;
+  --tag: #2a2a2a;
+  --primary: #9290fa;
+  --on-primary: #1a1840;
+  --primary-text: #c3c1ff;
+  --highlight: #7bc17b;
+  --on-highlight: #14532d;
+  --tab-active: #7baee0;
+  --tab-inactive: #94a3b8;
+  --map-tiles: "https://tile.openstreetmap.org/{z}/{x}/{y}.png";
+}
+
+html[data-style="glass"] {
+  --bg: transparent;
+  --card: rgb(255 255 255 / 0.18);
+  --surface: rgb(255 255 255 / 0.18);
+  --nav-bar: rgb(255 255 255 / 0.22);
+  --status-bar: transparent;
+  --sheet: rgb(255 255 255 / 0.22);
+  --on-surface: #181c20;
+  --sheet-title: #2e2f2f;
+  --tag: rgb(255 255 255 / 0.28);
+  --radius-card: 30px;
+  --border-card: 1px solid rgb(255 255 255 / 0.35);
+  --blur-card: 12px;
+  --card-alpha: 0.18;
+  --primary: #00a0e0;
+  --on-primary: #0a2540;
+  --primary-text: #0077a8;
+  --map-tiles: "https://tile.openstreetmap.org/{z}/{x}/{y}.png";
+}
+
+html[data-style="glass"][data-mode="dark"] {
+  --on-surface: #e8e8e8;
+  --sheet-title: #e8e8e8;
+  --primary: #9290fa;
+  --on-primary: #1a1840;
+  --primary-text: #c3c1ff;
+  --card: rgb(255 255 255 / 0.1);
+  --map-tiles: "https://tile.openstreetmap.org/{z}/{x}/{y}.png";
+}
+
+html[data-style="neumorph"] {
+  --bg: #e0e5ec;
+  --card: #e0e5ec;
+  --surface: #e0e5ec;
+  --nav-bar: #e0e5ec;
+  --status-bar: #e0e5ec;
+  --sheet: #e0e5ec;
+  --on-surface: #181c20;
+  --radius-card: 24px;
+  --border-card: none;
+  --shadow-card: -6px -6px 16px #ffffff, 6px 6px 16px #bec3c9;
+  --primary: #00a0e0;
+  --on-primary: #0a2540;
+  --primary-text: #0077a8;
+  --map-tiles: "https://tile.openstreetmap.org/{z}/{x}/{y}.png";
+}
+
+html[data-style="neumorph"][data-mode="dark"] {
+  --bg: #121212;
+  --card: #1e1e1e;
+  --surface: #1e1e1e;
+  --nav-bar: #1e1e1e;
+  --on-surface: #f2f2f2;
+  --shadow-card: -6px -6px 16px #2a2a2a, 6px 6px 16px #0a0a0a;
+  --primary: #9290fa;
+  --on-primary: #1a1840;
+  --map-tiles: "https://tile.openstreetmap.org/{z}/{x}/{y}.png";
+}
+
+html,
+body,
+#root {
+  margin: 0;
+  min-height: 100%;
+  min-height: 100dvh;
+  font-family: var(--font);
+  background: var(--desk-bg, #0f172a);
+  color: var(--on-surface);
+}
+
+html[data-style="glass"] body {
+  background: linear-gradient(135deg, #c5e8f5, #d4d0f5, #e5f7f1);
+}
+
+.material-symbols-outlined {
+  font-family: "Material Symbols Outlined";
+  font-weight: 400;
+  font-style: normal;
+  font-size: 24px;
+  line-height: 1;
+  letter-spacing: normal;
+  text-transform: none;
+  display: inline-block;
+  white-space: nowrap;
+  direction: ltr;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  font-feature-settings: "liga";
+  font-variation-settings: "FILL" 0, "wght" 500, "GRAD" 0, "opsz" 24;
+  user-select: none;
+}
+
+.material-symbols-outlined.fill {
+  font-variation-settings: "FILL" 1, "wght" 500, "GRAD" 0, "opsz" 24;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+button {
+  font-family: inherit;
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  scrollbar-width: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+.app-card {
+  background: var(--card);
+  border-radius: var(--radius-card);
+  border: var(--border-card);
+  box-shadow: var(--shadow-card);
+  backdrop-filter: blur(var(--blur-card));
+  -webkit-backdrop-filter: blur(var(--blur-card));
+}
+
+.press {
+  transition: transform 80ms ease, opacity 80ms ease;
+}
+.press:active {
+  transform: scale(0.97);
+  opacity: 0.82;
+}
+
+.phone-canvas {
+  background: var(--bg);
+  color: var(--on-surface);
+}
+html[data-style="glass"] .phone-canvas {
+  background: linear-gradient(135deg, #c5e8f5, #d4d0f5, #e5f7f1);
+}
+html[data-style="glass"][data-mode="dark"] .phone-canvas {
+  background: linear-gradient(160deg, #1a2040, #2a2458, #123028);
+}
+
+.desk {
+  --desk-bg: #0b1220;
+  background: radial-gradient(1200px 600px at 20% 0%, #1e3a5f, #0b1220);
+  color: #e2e8f0;
+}
+
+.leaflet-container {
+  background: var(--bg);
+  font-family: var(--font);
+  z-index: 0 !important;
+}
+html[data-mode="light"] .leaflet-tile-pane {
+  filter: saturate(0.45) brightness(1.08) contrast(0.95);
+}
+html[data-mode="dark"] .leaflet-tile-pane,
+html[data-style="dark"] .leaflet-tile-pane {
+  filter: invert(1) hue-rotate(180deg) brightness(0.92) saturate(0.35);
+}
+.leaflet-control-attribution {
+  font-size: 9px !important;
+  background: color-mix(in srgb, var(--nav-bar) 88%, transparent) !important;
+  color: var(--on-surface-variant) !important;
+  max-width: 70%;
+}
+.leaflet-control-attribution a {
+  color: var(--primary-text) !important;
+}
+
+.coach-pin {
+  width: 40px;
+  height: 40px;
+  border-radius: 999px;
+  overflow: hidden;
+  border: 3px solid var(--primary);
+  background: var(--card);
+  box-shadow: 0 2px 8px rgb(0 0 0 / 0.28);
+}
+.coach-pin img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.gym-pin {
+  width: 26px;
+  height: 26px;
+  border-radius: 6px;
+  box-shadow: 0 2px 8px rgb(0 0 0 / 0.28);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+}
+.gym-pin.partner {
+  background: var(--highlight);
+  color: var(--on-highlight);
+}
+.gym-pin.collected {
+  background: var(--tab-inactive);
+  color: white;
+}
+
+.switch {
+  width: 48px;
+  height: 28px;
+  border-radius: 999px;
+  background: var(--outline-variant);
+  position: relative;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+}
+.switch.on {
+  background: color-mix(in srgb, var(--highlight) 55%, var(--outline-variant));
+}
+.switch i {
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 24px;
+  height: 24px;
+  border-radius: 999px;
+  background: white;
+  transition: transform 180ms ease;
+}
+.switch.on i {
+  transform: translateX(20px);
+  background: var(--highlight);
+}

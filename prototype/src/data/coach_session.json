@@ -1,0 +1,156 @@
+{
+  "profile": {
+    "id": "coach_01",
+    "name": "Nguyễn Văn Long",
+    "avatarInitials": "NL",
+    "ratingAvg": 4.8,
+    "ratingCount": 126,
+    "yearsExperience": 8,
+    "isAvailableNow": true,
+    "availableFrom": "17:00",
+    "availableUntil": "20:00",
+    "currentLocationLabel": "Quận 2, TP.HCM",
+    "hoursLabel": "17:00 - 20:00",
+    "bio": "Mình là HLV thể hình với 8 năm đứng sàn, từng làm việc tại California Fitness và đồng hành cùng hơn 200 học viên — từ người mới chưa biết cầm tạ tới người chuẩn bị lên sân thi. Cách kèm thiên về kỹ thuật và kỷ luật vừa phải: mỗi buổi có mục tiêu rõ, chỉnh form trước khi tăng tạ, luôn chừa 5–7 phút hỏi đáp cuối buổi. Giáo án xoay quanh tăng cơ, giảm mỡ và giữ thói quen ăn uống bền, không ép thực đơn cực đoan rồi bỏ cuộc sau 3 tuần. Học viên văn phòng thường 3 buổi/tuần; ai muốn thay đổi dáng nhanh hơn có thể lên 4–5 buổi. Mình có chứng chỉ ACE Personal Trainer, từng dẫn team thi Fitness Model quốc gia, và vẫn học thêm về phục hồi để học viên tập được lâu chứ không chỉ “căng” trong một tháng rồi mất form."
+  },
+  "locationCycle": [
+    "Quận 2, TP.HCM",
+    "Quận 1, TP.HCM",
+    "Quận 7, TP.HCM",
+    "Thủ Đức, TP.HCM"
+  ],
+  "bookings": [
+    {
+      "id": "bk_pending",
+      "userName": "Trần Minh Anh",
+      "userAvatarInitials": "TA",
+      "serviceName": "Tập cá nhân 60 phút",
+      "priceVnd": 300000,
+      "priceLabel": "300.000đ",
+      "requestedTimeLabel": "Hôm nay, 18:00",
+      "locationLabel": "Vincom Đồng Khởi, Quận 1",
+      "status": "pending",
+      "statusLabel": "Chờ xác nhận",
+      "cancelReason": null,
+      "paymentMethod": "cash",
+      "purchasedPackageId": null,
+      "purchasedPackageName": null,
+      "rating": null,
+      "reviewComment": null,
+      "coachId": "coach_01",
+      "coachName": "Nguyễn Văn Long"
+    },
+    {
+      "id": "bk_confirmed",
+      "userName": "Lê Thị Hương",
+      "userAvatarInitials": "LH",
+      "serviceName": "Tư vấn dinh dưỡng",
+      "priceVnd": 150000,
+      "priceLabel": "150.000đ",
+      "requestedTimeLabel": "Hôm nay, 19:30",
+      "locationLabel": "The Vista, Quận 2",
+      "status": "confirmed",
+      "statusLabel": "Đã xác nhận",
+      "cancelReason": null,
+      "paymentMethod": "cash",
+      "purchasedPackageId": null,
+      "purchasedPackageName": null,
+      "rating": null,
+      "reviewComment": null,
+      "coachId": "coach_01",
+      "coachName": "Nguyễn Văn Long"
+    },
+    {
+      "id": "bk_in_progress",
+      "userName": "Phạm Quốc Bảo",
+      "userAvatarInitials": "PB",
+      "serviceName": "Tập cặp đôi 60 phút",
+      "priceVnd": 500000,
+      "priceLabel": "500.000đ",
+      "requestedTimeLabel": "Hôm nay, 17:00",
+      "locationLabel": "Masteri Thảo Điền, Quận 2",
+      "status": "inProgress",
+      "statusLabel": "Đang tập",
+      "cancelReason": null,
+      "paymentMethod": "cash",
+      "purchasedPackageId": null,
+      "purchasedPackageName": null,
+      "rating": null,
+      "reviewComment": null,
+      "coachId": "coach_01",
+      "coachName": "Nguyễn Văn Long"
+    }
+  ],
+  "messages": {
+    "bk_pending": [
+      {
+        "id": "msg_p1",
+        "senderRole": "user",
+        "text": "Chào coach, em muốn tập buổi tối nay được không ạ?",
+        "sentAtLabel": "16:40"
+      }
+    ],
+    "bk_confirmed": [
+      {
+        "id": "msg_c1",
+        "senderRole": "user",
+        "text": "Chào coach, em book buổi 19h30 ạ.",
+        "sentAtLabel": "15:10"
+      },
+      {
+        "id": "msg_c2",
+        "senderRole": "coach",
+        "text": "Ok em, anh sẽ đến đúng giờ.",
+        "sentAtLabel": "15:12"
+      }
+    ],
+    "bk_in_progress": [
+      {
+        "id": "msg_i1",
+        "senderRole": "user",
+        "text": "Coach ơi, em đang ở sảnh tầng 1.",
+        "sentAtLabel": "16:55"
+      },
+      {
+        "id": "msg_i2",
+        "senderRole": "coach",
+        "text": "Ok anh, em xuống ngay.",
+        "sentAtLabel": "16:56"
+      },
+      {
+        "id": "msg_i3",
+        "senderRole": "user",
+        "text": "Em mặc áo xanh ạ.",
+        "sentAtLabel": "16:57"
+      }
+    ]
+  },
+  "studentJournalPosts": [
+    {
+      "id": "cjp_01",
+      "userId": "coach_student_01",
+      "bookingId": "bk_student_journal_01",
+      "coachId": "coach_01",
+      "coachName": "Nguyễn Văn Long",
+      "serviceName": "Tập cá nhân 60 phút",
+      "durationMinutes": 60,
+      "caption": "Buổi squat hôm nay form ổn hơn. Cảm ơn coach đã chỉnh lưng ạ.",
+      "mediaUrl": "assets/images/journal/seed_01.jpg",
+      "privacy": "coachOnly",
+      "createdAt": "2026-08-27T19:20:00.000"
+    },
+    {
+      "id": "cjp_02",
+      "userId": "coach_student_02",
+      "bookingId": "bk_student_journal_02",
+      "coachId": "coach_01",
+      "coachName": "Nguyễn Văn Long",
+      "serviceName": "Tư vấn dinh dưỡng",
+      "durationMinutes": 45,
+      "caption": "Thực đơn mới dễ theo. Giảm đồ ngọt tối, ngủ ngon hơn hẳn.",
+      "mediaUrl": "assets/images/journal/seed_02.jpg",
+      "privacy": "public",
+      "createdAt": "2026-08-26T10:15:00.000"
+    }
+  ]
+}
