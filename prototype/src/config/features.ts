@@ -1,29 +1,26 @@
 export type FeatureFlags = {
-  ptAi: boolean;
-  journal: boolean;
-  packages: boolean;
-  chat: boolean;
-  gymFilter: boolean;
+  monetization: boolean;
+  cameraAiPreview: boolean;
+  spa: boolean;
+  groupPackages: boolean;
   studentResults: boolean;
-  promoRibbon: boolean;
+  aiAssistant: boolean;
 };
 
 export const defaultFeatures: FeatureFlags = {
-  ptAi: true,
-  journal: true,
-  packages: true,
-  chat: true,
-  gymFilter: true,
+  monetization: true,
+  cameraAiPreview: false,
+  spa: true,
+  groupPackages: true,
   studentResults: true,
-  promoRibbon: true,
+  aiAssistant: true,
 };
 
 export const featureLabels: Record<keyof FeatureFlags, string> = {
-  ptAi: 'PT AI',
-  journal: 'Nhật ký + Cộng đồng',
-  packages: 'Gói',
-  chat: 'Chat',
-  gymFilter: 'Lọc Coach / Phòng gym',
+  monetization: 'Monetization (tài trợ / nổi bật / Boost)',
+  cameraAiPreview: 'PT AI kịch bản cũ',
+  spa: 'Spa trên bản đồ',
+  groupPackages: 'Gói nhóm',
   studentResults: 'Kết quả học viên',
-  promoRibbon: 'Ribbon khuyến mãi',
+  aiAssistant: 'Trợ lý AI',
 };

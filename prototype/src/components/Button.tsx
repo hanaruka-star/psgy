@@ -15,7 +15,7 @@ export function Button({
   ...rest
 }: Props) {
   const base =
-    'press inline-flex items-center justify-center gap-1.5 font-semibold text-[14px] tracking-[0.02em] disabled:opacity-40';
+    'press inline-flex items-center justify-center gap-1.5 font-semibold tracking-[0.02em] disabled:opacity-40 type-body';
   const styles = {
     primary:
       'h-12 px-5 rounded-[var(--radius-md)] bg-[var(--primary)] text-[var(--on-primary)]',

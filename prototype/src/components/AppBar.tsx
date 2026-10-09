@@ -29,7 +29,7 @@ export function AppBar({ title, onBack, backLabel = 'Quay lại', actions, logoS
         {logoSrc ? (
           <img src={logoSrc} alt="PSGymer" className="h-8 object-contain object-left" />
         ) : (
-          <div className="truncate text-[20px] font-bold leading-[1.3]">{title}</div>
+          <div className="type-title truncate">{title}</div>
         )}
       </div>
       <div className="flex items-center">{actions}</div>
