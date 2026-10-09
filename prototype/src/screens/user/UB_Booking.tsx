@@ -3,6 +3,7 @@ import { Chip } from '@/components/Chip';
 import { Screen } from '@/components/Screen';
 import { brand } from '@/config/brand';
 import { vnd, atDay } from '@/lib/format';
+import { completedCount } from '@/lib/progress';
 import { useAppStore, useNow } from '@/store/appStore';
 import { useEffect, useState } from 'react';
 
@@ -26,7 +27,9 @@ export function UB1({ params }: { params?: Record<string, string> }) {
   const pop = useAppStore((s) => s.pop);
   const features = useAppStore((s) => s.features);
   const existing = useAppStore((s) => s.contracts.find((c) => c.ptId === pt.id && c.status === 'active'));
+  const sessions = useAppStore((s) => s.sessions);
   const packs = pt.packages.filter((p) => features.groupPackages || p.kind === 'personal');
+  const remain = existing ? existing.sessions - completedCount(sessions, existing.id) : 0;
   return (
     <Screen title="Chọn gói tập" onBack={() => pop('user')}>
       <Bar n={1} onBack={() => pop('user')} />
@@ -38,7 +41,7 @@ export function UB1({ params }: { params?: Record<string, string> }) {
             className="app-card mt-3 w-full p-3 text-left"
             onClick={() => patch({ useExisting: true, packageId: existing.id })}
           >
-            Dùng gói đang có (còn {existing.sessions - existing.done}/{existing.sessions} buổi)
+            Dùng gói đang có (còn {remain}/{existing.sessions} buổi)
           </button>
         )}
         {packs.map((p) => (

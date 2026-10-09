@@ -1,6 +1,7 @@
 import { Button } from '@/components/Button';
 import { Chip } from '@/components/Chip';
 import { Screen } from '@/components/Screen';
+import { completedCount } from '@/lib/progress';
 import { ME, useAppStore } from '@/store/appStore';
 import { atFull, vnd } from '@/lib/format';
 
@@ -38,7 +39,7 @@ export function UPF1() {
             return (
               <button key={c.id} type="button" className="app-card w-56 shrink-0 p-3 text-left" onClick={() => jump('user', { id: 'UJ2', params: { contractId: c.id } })}>
                 <div className="font-bold">{pt?.name}</div>
-                <div>{c.packageName} · {c.done}/{c.sessions}</div>
+                <div>{c.packageName} · {completedCount(sessions, c.id)}/{c.sessions}</div>
                 <Chip>{c.status === 'pending' ? 'Chờ xác nhận' : 'Đang diễn ra'}</Chip>
               </button>
             );
@@ -132,6 +133,7 @@ export function UPF4() {
 
 export function UJ1() {
   const contracts = useAppStore((s) => s.contracts);
+  const sessions = useAppStore((s) => s.sessions);
   const jump = useAppStore((s) => s.jump);
   const pop = useAppStore((s) => s.pop);
   const tabs = ['active', 'completed', 'cancelled'] as const;
@@ -143,7 +145,7 @@ export function UJ1() {
             <div className="font-bold capitalize">{t}</div>
             {contracts.filter((c) => (t === 'active' ? c.status === 'active' || c.status === 'pending' : c.status === t)).map((c) => (
               <button key={c.id} type="button" className="app-card mt-1 w-full p-3 text-left" onClick={() => jump('user', { id: 'UJ2', params: { contractId: c.id } })}>
-                {c.packageName} · {c.done}/{c.sessions} · {c.status}
+                {c.packageName} · {completedCount(sessions, c.id)}/{c.sessions} · {c.status}
               </button>
             ))}
           </div>
@@ -162,7 +164,7 @@ export function UJ2({ params }: { params?: Record<string, string> }) {
   return (
     <Screen title="Chi tiết hợp đồng" onBack={() => pop('user')}>
       <div className="p-4">
-        <div className="type-title">{c.packageName} · {c.done}/{c.sessions}</div>
+        <div className="type-title">{c.packageName} · {completedCount(sessions, c.id)}/{c.sessions}</div>
         {sessions.map((s) => (
           <button key={s.id} type="button" className="app-card mt-2 w-full p-3 text-left" onClick={() => jump('user', { id: 'USS1', params: { sessionId: s.id } })}>
             Buổi {s.index} · {s.status} · {atFull(s.startAt)}

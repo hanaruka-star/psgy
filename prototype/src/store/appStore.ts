@@ -9,6 +9,7 @@ import {
   seedReviews,
   seedSessions,
   seedSpas,
+  seedVisits,
   seedWeights,
   ME,
 } from '@/data/seed';
@@ -93,6 +94,7 @@ type Persist = {
   streak: number;
   draft: BookingDraft | null;
   seenPopup: Record<string, boolean>;
+  muteTimedPopups: boolean;
 };
 
 function boot(now: number): Persist {
@@ -163,7 +165,7 @@ function boot(now: number): Persist {
     notis: [],
     saved: { pts: [], gyms: [], spas: [] },
     hiddenPts: [],
-    visits: [],
+    visits: seedVisits(now),
     userStack: [{ id: 'UD1' }],
     ptStack: [{ id: 'PO1' }],
     userTab: 'UD1',
@@ -181,6 +183,7 @@ function boot(now: number): Persist {
     streak: 6,
     draft: null,
     seenPopup: {},
+    muteTimedPopups: false,
   };
 }
 
@@ -193,7 +196,19 @@ function load(): Persist {
     const legacyRole = parsed.mobileRole as string | undefined;
     if (legacyRole === 'coach') parsed.mobileRole = 'pt';
     if (!parsed.ptStack && parsed.coachStack) parsed.ptStack = parsed.coachStack;
-    return { ...boot(now), ...parsed, mobileRole: parsed.mobileRole === 'pt' ? 'pt' : 'user' };
+    const base = boot(now);
+    const rawVisits = (parsed.visits ?? []) as Visit[];
+    const migrated = rawVisits.map((v) =>
+      v.userId ? v : { ...v, userId: 'u_minh', userName: ME.name },
+    );
+    const hasLeads = migrated.some((v) => v.userId === 'u_linh' || v.userId === 'u_hung');
+    return {
+      ...base,
+      ...parsed,
+      mobileRole: parsed.mobileRole === 'pt' ? 'pt' : 'user',
+      visits: hasLeads ? migrated : [...base.visits, ...migrated],
+      muteTimedPopups: parsed.muteTimedPopups ?? false,
+    };
   } catch {
     return boot(now);
   }
@@ -373,7 +388,7 @@ export const useAppStore = create<Store>((set, get) => {
     markFindWhat: () => commit({ findWhatSeen: true }),
     openPt: (ptId) => {
       const now = get().now();
-      const visits = [...get().visits, { ptId, at: now }];
+      const visits = [...get().visits, { ptId, userId: 'u_minh', userName: ME.name, at: now }];
       commit({ visits });
       get().push('user', { id: 'UP1', params: { ptId } });
     },
@@ -803,10 +818,58 @@ export const useAppStore = create<Store>((set, get) => {
     forceLastSession: () => {
       const ct = get().contracts.find((c) => c.id === 'ct_active');
       if (!ct) return;
+      const now = get().now();
+      const today = get().sessions.find((s) => s.id === 'ss_today');
+      const others = get().sessions.filter((s) => s.contractId !== 'ct_active');
+      const first = get().sessions.filter((s) => s.contractId === 'ct_active' && s.index <= 7);
+      const extra = [8, 9, 10, 11].map((i) => ({
+        id: `ss_done_${i}`,
+        contractId: 'ct_active',
+        ptId: 'pt_01',
+        userName: 'Minh',
+        index: i,
+        total: ct.sessions,
+        startAt: now - (12 - i) * 4 * 86400000,
+        durationMin: 60,
+        locationLabel: 'California Fitness Nguyễn Du',
+        gymId: 'gym_sys_01',
+        status: 'completed' as const,
+        completedAt: now - (12 - i) * 4 * 86400000 + 3600000,
+        summary: {
+          actualMin: 58,
+          muscles: ['Toàn thân'],
+          progress: 'up' as const,
+          nextNote: 'Giữ 3 buổi/tuần',
+        },
+      }));
+      const last = {
+        ...(today ?? extra[0]),
+        id: 'ss_today',
+        contractId: 'ct_active',
+        ptId: 'pt_01',
+        userName: 'Minh',
+        index: ct.sessions,
+        total: ct.sessions,
+        startAt: today?.startAt ?? now,
+        durationMin: 60,
+        locationLabel: today?.locationLabel ?? 'California Fitness Nguyễn Du',
+        gymId: 'gym_sys_01',
+        status: 'completed' as const,
+        completedAt: now,
+        summary: today?.summary ?? {
+          actualMin: 58,
+          muscles: ['Toàn thân'],
+          progress: 'up' as const,
+          nextNote: 'Gia hạn gói, giữ 3 buổi/tuần',
+        },
+      };
       commit({
-        contracts: get().contracts.map((c) => (c.id === 'ct_active' ? { ...c, done: 11 } : c)),
-        sessions: get().sessions.map((s) => (s.id === 'ss_today' ? { ...s, index: 12 } : s)),
+        contracts: get().contracts.map((c) =>
+          c.id === 'ct_active' ? { ...c, done: c.sessions, status: 'completed' } : c,
+        ),
+        sessions: [...others, ...first, ...extra, last],
       });
+      get().jump('user', { id: 'USE2', params: { sessionId: 'ss_today' } });
     },
     notify,
     tickTimeouts: () => {

@@ -2,7 +2,8 @@ import { Button } from '@/components/Button';
 import { Chip } from '@/components/Chip';
 import { Screen } from '@/components/Screen';
 import { cancelRefundPct } from '@/config/business';
-import { atFull, minutesBetween, vnd } from '@/lib/format';
+import { atDate, atFull, minutesBetween, vnd } from '@/lib/format';
+import { completedCount, PROGRESS_LABEL } from '@/lib/progress';
 import { sessionView, useAppStore, useNow } from '@/store/appStore';
 import { useState } from 'react';
 
@@ -192,15 +193,18 @@ export function UCN1({ params }: { params?: Record<string, string> }) {
 export function USE1({ params }: { params?: Record<string, string> }) {
   const s = currentSession(params);
   const ct = useAppStore((st) => st.contracts.find((c) => c.id === s.contractId));
+  const sessions = useAppStore((st) => st.sessions);
   const streak = useAppStore((st) => st.streak);
   const jump = useAppStore((st) => st.jump);
   const startBooking = useAppStore((st) => st.startBooking);
+  const done = ct ? completedCount(sessions, ct.id) : 0;
+  const total = ct?.sessions ?? s.total;
   return (
     <Screen title="Hoàn thành buổi">
       <div className="p-4 text-center space-y-3">
-        <div className="type-display">Hoàn thành buổi {ct?.done}/{ct?.sessions}</div>
+        <div className="type-display">Hoàn thành buổi {done}/{total}</div>
         <div className="h-2 rounded bg-[var(--tag)]">
-          <div className="h-full bg-[var(--highlight)]" style={{ width: `${((ct?.done ?? 0) / (ct?.sessions ?? 1)) * 100}%` }} />
+          <div className="h-full bg-[var(--highlight)]" style={{ width: `${(done / (total || 1)) * 100}%` }} />
         </div>
         <div>Streak +1 · đang {streak} tuần</div>
         <Button onClick={() => startBooking(s.ptId)}>Đặt buổi tiếp theo</Button>
@@ -214,13 +218,50 @@ export function USE1({ params }: { params?: Record<string, string> }) {
 
 export function USE2({ params }: { params?: Record<string, string> }) {
   const s = currentSession(params);
+  const ct = useAppStore((st) => st.contracts.find((c) => c.id === s.contractId));
+  const pt = useAppStore((st) => st.pts.find((p) => p.id === s.ptId));
+  const sessionsAll = useAppStore((st) => st.sessions);
+  const weights = useAppStore((st) => st.weights);
   const startBooking = useAppStore((st) => st.startBooking);
+  const jump = useAppStore((st) => st.jump);
+  const pack = sessionsAll.filter((x) => x.contractId === s.contractId);
+  const doneSess = pack.filter((x) => x.status === 'completed');
+  const hours = doneSess.reduce((a, x) => a + (x.summary?.actualMin ?? x.durationMin), 0) / 60;
+  const from = ct?.createdAt ?? pack.reduce((a, x) => Math.min(a, x.startAt), s.startAt);
+  const to = doneSess.reduce((a, x) => Math.max(a, x.completedAt ?? x.startAt), from);
+  const inPkg = weights.filter((w) => w.at >= from && w.at <= to + 86400000);
+  const firstW = (inPkg[0] ?? weights[0])?.kg;
+  const lastW = (inPkg[inPkg.length - 1] ?? weights[weights.length - 1])?.kg;
+  const dW = firstW != null && lastW != null ? lastW - firstW : 0;
+  const notes = doneSess
+    .map((x) => x.summary)
+    .filter(Boolean)
+    .map((sum) => `${sum!.muscles.join(', ')} · ${PROGRESS_LABEL[sum!.progress]}${sum!.nextNote ? ` — ${sum!.nextNote}` : ''}`);
   return (
     <Screen title="Hoàn thành gói">
-      <div className="p-4 text-center space-y-3">
-        <div className="type-display">Bạn đã hoàn thành gói!</div>
-        <p>Tổng buổi · tổng giờ · cân nặng đã cập nhật trong Profile.</p>
-        <Button onClick={() => startBooking(s.ptId)}>Gia hạn / mua gói mới</Button>
+      <div className="p-4 space-y-3">
+        <div className="type-display text-center">Bạn đã hoàn thành gói!</div>
+        <div className="app-card p-3 space-y-1 text-left">
+          <div className="font-bold">{pt?.name}</div>
+          <div>Thời gian gói: {atDate(from)} – {atDate(to)}</div>
+          <div>Số buổi: {doneSess.length}/{ct?.sessions ?? s.total}</div>
+          <div>Tổng giờ tập: {hours.toFixed(1)} giờ</div>
+          <div>
+            Cân nặng: {firstW?.toFixed(1)} → {lastW?.toFixed(1)} kg ({dW >= 0 ? '+' : ''}
+            {dW.toFixed(1)} kg)
+          </div>
+        </div>
+        <div className="app-card p-3 text-left">
+          <div className="font-bold mb-1">Nhận xét tổng hợp của PT</div>
+          {notes.length === 0 && <p className="type-caption">Chưa có tổng kết buổi.</p>}
+          {notes.slice(0, 5).map((n, i) => (
+            <p key={i} className="type-caption">• {n}</p>
+          ))}
+        </div>
+        <Button block onClick={() => startBooking(s.ptId)}>Gia hạn / mua gói mới với PT này</Button>
+        <Button variant="outline" block onClick={() => jump('user', { id: 'UR2', params: { sessionId: s.id } })}>
+          Đánh giá cả gói
+        </Button>
       </div>
     </Screen>
   );

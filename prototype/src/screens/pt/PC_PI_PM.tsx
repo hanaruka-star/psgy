@@ -2,6 +2,7 @@ import { Button } from '@/components/Button';
 import { Chip } from '@/components/Chip';
 import { Screen } from '@/components/Screen';
 import { vnd } from '@/lib/format';
+import { completedCount, interestedLeads } from '@/lib/progress';
 import { moneyCheck, useAppStore, useNow } from '@/store/appStore';
 import { useState } from 'react';
 
@@ -9,11 +10,13 @@ export function PC1() {
   const [tab, setTab] = useState<'msg' | 'wait' | 'interest'>('msg');
   const greetings = useAppStore((s) => s.greetings);
   const visitsAll = useAppStore((s) => s.visits);
-  const visits = visitsAll.filter((v) => v.ptId === 'pt_01');
   const contracts = useAppStore((s) => s.contracts);
   const pending = contracts.filter((c) => c.status === 'pending');
   const jump = useAppStore((s) => s.jump);
-  const interested = visits.length >= 2;
+  const now = useNow();
+  const minRevisit = useAppStore((s) => s.business.quick_action_revisit);
+  const days = useAppStore((s) => s.business.quick_action_days);
+  const leads = interestedLeads(visitsAll, 'pt_01', minRevisit, days, now);
   return (
     <Screen title="Chat" padNav>
       <div className="flex gap-2 px-4">
@@ -49,12 +52,12 @@ export function PC1() {
         {tab === 'interest' && (
           <>
             <p className="type-caption">Những người dùng đã xem profile từ 2 lần trở lên.</p>
-            {interested && (
-              <div className="app-card p-3">
-                Minh · Đã xem profile {visits.length} lần
+            {leads.map((u) => (
+              <div key={u.userId} className="app-card p-3">
+                {u.userName} · Đã xem profile {u.times} lần
                 <Button className="mt-2" onClick={() => jump('pt', { id: 'PC3' })}>Chào hỏi</Button>
               </div>
-            )}
+            ))}
           </>
         )}
       </div>
@@ -88,10 +91,13 @@ export function PC2() {
   const sendText = useAppStore((s) => s.sendText);
   const pop = useAppStore((s) => s.pop);
   const me = useAppStore((s) => s.pts.find((p) => p.id === 'pt_01')!);
+  const ct = useAppStore((s) => s.contracts.find((c) => c.id === 'ct_active'));
+  const sessions = useAppStore((s) => s.sessions);
+  const done = ct ? completedCount(sessions, ct.id) : 0;
   const [t, setT] = useState('');
   return (
     <Screen title="Minh" onBack={() => pop('pt')}>
-      <div className="px-4 type-caption">Gói 12 buổi · Đã tập 7 · Đã chấp nhận</div>
+      <div className="px-4 type-caption">{ct ? `${ct.packageName} · Đã tập ${done}` : ''} · Đã chấp nhận</div>
       <div className="flex-1 space-y-2 overflow-y-auto p-3">
         {msgs.map((m) => (
           <div key={m.id} className={`max-w-[80%] rounded-xl p-2 ${m.from === 'pt' ? 'ml-auto bg-[var(--primary)] text-[var(--on-primary)]' : 'bg-[var(--tag)]'}`}>
@@ -376,14 +382,18 @@ export function PM8() {
 export function PM9() {
   const visitsAll = useAppStore((s) => s.visits);
   const visits = visitsAll.filter((v) => v.ptId === 'pt_01');
+  const now = useNow();
+  const minRevisit = useAppStore((s) => s.business.quick_action_revisit);
+  const days = useAppStore((s) => s.business.quick_action_days);
+  const leads = interestedLeads(visitsAll, 'pt_01', minRevisit, days, now);
   const pop = useAppStore((s) => s.pop);
   return (
     <Screen title="Thống kê hồ sơ" onBack={() => pop('pt')}>
       <div className="p-4 grid grid-cols-2 gap-2">
         <div className="app-card p-3">Hiện Discovery 120</div>
         <div className="app-card p-3">Mở hồ sơ {visits.length}</div>
-        <div className="app-card p-3">Quay lại {Math.max(0, visits.length - 1)}</div>
-        <div className="app-card p-3">Khách quan tâm {visits.length >= 2 ? 1 : 0}</div>
+        <div className="app-card p-3">Quay lại {Math.max(0, visits.length - leads.length)}</div>
+        <div className="app-card p-3">Khách quan tâm {leads.length}</div>
       </div>
     </Screen>
   );

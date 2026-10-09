@@ -25,6 +25,7 @@ export function DemoPanel({ compact }: { compact?: boolean }) {
   const commit = useAppStore((s) => s.commit);
   const emptyWallet = useAppStore((s) => s.emptyWallet);
   const forceLast = useAppStore((s) => s.forceLastSession);
+  const muteTimedPopups = useAppStore((s) => s.muteTimedPopups);
   const frozenNow = useAppStore((s) => s.frozenNow);
   const offsetMs = useAppStore((s) => s.offsetMs);
   const ledger = useAppStore((s) => s.ledger);
@@ -117,6 +118,13 @@ export function DemoPanel({ compact }: { compact?: boolean }) {
               </button>
             ))}
             <div className="h-px bg-white/10" />
+            <button
+              type="button"
+              className={`w-full rounded py-2 ${muteTimedPopups ? 'bg-amber-400 text-slate-950' : 'bg-white/10'}`}
+              onClick={() => commit({ muteTimedPopups: !muteTimedPopups })}
+            >
+              Tạm tắt popup thời điểm: {muteTimedPopups ? 'đang tắt' : 'đang bật'}
+            </button>
             <button type="button" className="w-full rounded bg-white/10 py-2" onClick={() => useAppStore.getState().openPt('pt_01')}>User xem lại hồ sơ PT Long</button>
             <button type="button" className="w-full rounded bg-white/10 py-2" onClick={() => commit({ aiTrialLeftDays: 0 })}>Hết dùng thử AI</button>
             <button type="button" className="w-full rounded bg-white/10 py-2" onClick={() => setRankingWhy(!rankingWhy)}>Hiện lý do xếp hạng: {rankingWhy ? 'bật' : 'tắt'}</button>

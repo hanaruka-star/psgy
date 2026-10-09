@@ -251,4 +251,4 @@ export type PushToast = {
 
 export type WeightPoint = { at: number; kg: number };
 
-export type Visit = { ptId: string; at: number };
+export type Visit = { ptId: string; userId: string; userName: string; at: number };

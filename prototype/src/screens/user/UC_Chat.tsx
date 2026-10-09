@@ -2,6 +2,7 @@ import { Button } from '@/components/Button';
 import { Screen } from '@/components/Screen';
 import { brand } from '@/config/brand';
 import { vnd } from '@/lib/format';
+import { completedCount } from '@/lib/progress';
 import { useAppStore } from '@/store/appStore';
 import { useState } from 'react';
 
@@ -84,10 +85,12 @@ export function UC2({ params }: { params?: Record<string, string> }) {
   const pop = useAppStore((s) => s.pop);
   const [t, setT] = useState('');
   const ct = useAppStore((s) => s.contracts.find((c) => c.ptId === 'pt_01' && c.status !== 'cancelled'));
+  const sessions = useAppStore((s) => s.sessions);
+  const done = ct ? completedCount(sessions, ct.id) : 0;
   return (
     <Screen title="Nguyễn Văn Long" onBack={() => pop('user')}>
       <div className="flex h-full flex-col">
-        <div className="px-4 type-caption">{ct ? `${ct.packageName} · đã tập ${ct.done}` : ''}</div>
+        <div className="px-4 type-caption">{ct ? `${ct.packageName} · đã tập ${done}` : ''}</div>
         <div className="no-scrollbar flex-1 space-y-2 overflow-y-auto p-3">
           {msgs.map((m) => {
             const packId = m.card?.type === 'package' ? m.card.packageId : undefined;

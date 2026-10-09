@@ -11,6 +11,11 @@ export function atDay(ms: number) {
   return `${pad(d.getDate())}/${pad(d.getMonth() + 1)}`;
 }
 
+export function atDate(ms: number) {
+  const d = new Date(ms);
+  return `${pad(d.getDate())}/${pad(d.getMonth() + 1)}/${d.getFullYear()}`;
+}
+
 export function atTime(ms: number) {
   const d = new Date(ms);
   return `${pad(d.getHours())}:${pad(d.getMinutes())}`;

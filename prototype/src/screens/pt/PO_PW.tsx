@@ -1,7 +1,9 @@
 import { Button } from '@/components/Button';
 import { Chip } from '@/components/Chip';
 import { Screen } from '@/components/Screen';
+import { PT_MONTH_STATS } from '@/data/seed';
 import { atFull, atTime, minutesBetween, vnd } from '@/lib/format';
+import { deltaPct, interestedLeads } from '@/lib/progress';
 import { moneyCheck, sessionView, useAppStore, useNow } from '@/store/appStore';
 import { useState } from 'react';
 
@@ -17,13 +19,17 @@ export function PO1() {
   const setAccepting = useAppStore((s) => s.setAccepting);
   const jump = useAppStore((s) => s.jump);
   const sendGreeting = useAppStore((s) => s.sendGreeting);
+  const cfgDays = useAppStore((s) => s.business.quick_action_days);
+  const minRevisit = useAppStore((s) => s.business.quick_action_revisit);
+  const leads = interestedLeads(visits, 'pt_01', minRevisit, cfgDays, now);
   const today = sessions.filter((s) => {
     const d = new Date(s.startAt);
     const n = new Date(now);
     return d.toDateString() === n.toDateString();
   });
-  const interest = visits.filter((v) => v.ptId === 'pt_01').length >= useAppStore.getState().business.quick_action_revisit;
   const mc = moneyCheck(useAppStore.getState());
+  const tm = PT_MONTH_STATS.thisMonth;
+  const lm = PT_MONTH_STATS.lastMonth;
   return (
     <Screen padNav>
       <div className="bg-[#1a1a1a] px-4 py-4 text-white">
@@ -64,12 +70,23 @@ export function PO1() {
           <div className="app-card p-3">Xác nhận hoàn thành {sessions.filter((s) => s.status === 'awaitingUserComplete').length}</div>
           <div className="app-card p-3">Hợp đồng {pendingCt.length}</div>
         </div>
-        {interest && (
-          <div className="app-card p-3">
-            Minh vừa xem lại hồ sơ của bạn lần thứ 2
-            <Button className="mt-2" onClick={() => sendGreeting(`Chào ${'Minh'}, mình là Long — mình có thể giúp lịch tập giảm mỡ 3 buổi/tuần.`)}>
-              Chào hỏi
-            </Button>
+        {leads.length > 0 && (
+          <div className="space-y-2">
+            <div className="font-bold">Khách quan tâm</div>
+            {leads.map((u) => (
+              <div key={u.userId} className="app-card p-3">
+                {u.userName} vừa xem lại hồ sơ của bạn lần thứ {u.times}
+                <Button
+                  className="mt-2"
+                  onClick={() => {
+                    sendGreeting(`Chào ${u.userName}, mình là Long — mình có thể giúp lịch tập giảm mỡ 3 buổi/tuần.`);
+                    jump('pt', { id: 'PC3' });
+                  }}
+                >
+                  Chào hỏi
+                </Button>
+              </div>
+            ))}
           </div>
         )}
         <div className="app-card p-3">
@@ -78,9 +95,12 @@ export function PO1() {
           <Button variant="text" onClick={() => jump('pt', { id: 'PI3' })}>Rút tiền</Button>
         </div>
         <div className="app-card p-3">GOLD PT · Còn 7 buổi để lên PLATINUM</div>
+        <div className="font-bold">Hoạt động tháng này</div>
         <div className="grid grid-cols-2 gap-2">
-          <div className="app-card p-3">Buổi dạy 18</div>
-          <div className="app-card p-3">Khách đang tập 4</div>
+          <MonthStat label="Buổi dạy" value={String(tm.taught)} curr={tm.taught} prev={lm.taught} />
+          <MonthStat label="Khách đang tập" value={String(tm.clients)} curr={tm.clients} prev={lm.clients} />
+          <MonthStat label="Đánh giá TB" value={tm.rating.toFixed(1)} curr={tm.rating} prev={lm.rating} />
+          <MonthStat label="Thu nhập" value={vnd(tm.income)} curr={tm.income} prev={lm.income} />
         </div>
       </div>
     </Screen>
@@ -322,6 +342,29 @@ export function PSE1({ params }: { params?: Record<string, string> }) {
         </Button>
       </div>
     </Screen>
+  );
+}
+
+function MonthStat({
+  label,
+  value,
+  curr,
+  prev,
+}: {
+  label: string;
+  value: string;
+  curr: number;
+  prev: number;
+}) {
+  const d = deltaPct(curr, prev);
+  return (
+    <div className="app-card p-3">
+      <div className="type-caption">{label}</div>
+      <div className="font-bold">{value}</div>
+      <div className={`type-caption ${d.up ? 'text-emerald-600' : 'text-red-600'}`}>
+        {d.up ? '↑' : '↓'} {Math.abs(d.pct)}% so với tháng trước
+      </div>
+    </div>
   );
 }
 

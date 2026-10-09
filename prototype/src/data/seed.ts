@@ -1,4 +1,4 @@
-import type { Gym, PT, Spa, AlbumPhoto, PtPackage, Contract, Session, Review, WeightPoint } from '@/domain/types';
+import type { Gym, PT, Spa, AlbumPhoto, PtPackage, Contract, Session, Review, WeightPoint, Visit } from '@/domain/types';
 import type { PtTier } from '@/config/business';
 
 const GYM_IMG = [
@@ -228,6 +228,32 @@ export function seedContracts(now: number): Contract[] {
   ];
 }
 
+const SESSION_SUMMARIES: NonNullable<Session['summary']>[] = [
+  { actualMin: 58, muscles: ['Ngực', 'Tay'], progress: 'up', nextNote: 'Tăng tạ ngực nhẹ' },
+  { actualMin: 60, muscles: ['Lưng'], progress: 'up', nextNote: 'Giữ form deadlift' },
+  { actualMin: 55, muscles: ['Chân'], progress: 'same', nextNote: 'Thêm 1 hiệp squat' },
+  { actualMin: 62, muscles: ['Vai', 'Tay'], progress: 'up', nextNote: 'Overhead press chậm hơn' },
+  { actualMin: 50, muscles: ['Cardio'], progress: 'try', nextNote: 'Giữ nhịp 20 phút liên tục' },
+  { actualMin: 60, muscles: ['Bụng', 'Toàn thân'], progress: 'up', nextNote: 'Plank 45s × 3' },
+  { actualMin: 58, muscles: ['Ngực', 'Lưng'], progress: 'up', nextNote: 'Superset kéo-đẩy' },
+];
+
+export const PT_MONTH_STATS = {
+  thisMonth: { taught: 18, clients: 4, rating: 4.8, income: 6_300_000 },
+  lastMonth: { taught: 15, clients: 5, rating: 4.6, income: 5_400_000 },
+};
+
+export function seedVisits(now: number): Visit[] {
+  const day = 86400000;
+  return [
+    { ptId: 'pt_01', userId: 'u_linh', userName: 'Linh', at: now - 5 * day },
+    { ptId: 'pt_01', userId: 'u_linh', userName: 'Linh', at: now - 2 * day },
+    { ptId: 'pt_01', userId: 'u_linh', userName: 'Linh', at: now - 4 * 3600000 },
+    { ptId: 'pt_01', userId: 'u_hung', userName: 'Hùng', at: now - 6 * day },
+    { ptId: 'pt_01', userId: 'u_hung', userName: 'Hùng', at: now - 1 * day },
+  ];
+}
+
 export function seedSessions(now: number): Session[] {
   const start = now + 45 * 60000;
   const done: Session[] = Array.from({ length: 7 }, (_, i) => ({
@@ -243,6 +269,7 @@ export function seedSessions(now: number): Session[] {
     gymId: 'gym_sys_01',
     status: 'completed',
     completedAt: now - (8 - i) * 4 * 86400000 + 3600000,
+    summary: SESSION_SUMMARIES[i],
   }));
   return [
     ...done,
@@ -258,6 +285,7 @@ export function seedSessions(now: number): Session[] {
       locationLabel: 'California Fitness Nguyễn Du',
       gymId: 'gym_sys_01',
       status: 'scheduled',
+      summary: { actualMin: 58, muscles: ['Ngực'], progress: 'up', nextNote: 'Tăng tạ nhẹ, giữ nhịp thở' },
     },
   ];
 }

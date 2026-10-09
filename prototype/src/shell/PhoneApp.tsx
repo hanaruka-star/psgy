@@ -56,7 +56,7 @@ export function PhoneApp({ role, framed }: Props) {
   }, [role, pendingApproval, current.id]);
 
   return (
-    <div className="phone-canvas relative flex h-full min-h-0 flex-col overflow-hidden" onTouchStart={onEdgeSwipe}>
+    <div data-phone={role} className="phone-canvas relative flex h-full min-h-0 flex-col overflow-hidden" onTouchStart={onEdgeSwipe}>
       {!framed && <StatusBarSafe />}
       <PushBanner role={role} />
       <div className="relative min-h-0 flex-1 overflow-hidden">
@@ -116,13 +116,14 @@ export function PhoneApp({ role, framed }: Props) {
 }
 
 function SessionPop() {
+  const mute = useAppStore((st) => st.muteTimedPopups);
   const now = useNow();
   const cfg = useAppStore((s) => s.business);
   const s = useAppStore((st) => st.sessions.find((x) => x.id === 'ss_today'));
   const seen = useAppStore((st) => st.seenPopup);
   const commit = useAppStore((st) => st.commit);
   const jump = useAppStore((st) => st.jump);
-  if (!s) return null;
+  if (mute || !s) return null;
   const view = sessionView(s, now, cfg);
   const key = `${s.id}_${view}`;
   if (seen[key]) return null;
@@ -162,13 +163,14 @@ function SessionPop() {
 }
 
 function PtSoonPop() {
+  const mute = useAppStore((st) => st.muteTimedPopups);
   const now = useNow();
   const cfg = useAppStore((s) => s.business);
   const s = useAppStore((st) => st.sessions.find((x) => x.id === 'ss_today'));
   const seen = useAppStore((st) => st.seenPopup);
   const commit = useAppStore((st) => st.commit);
   const jump = useAppStore((st) => st.jump);
-  if (!s) return null;
+  if (mute || !s) return null;
   const view = sessionView(s, now, cfg);
   const key = `pt_${s.id}_${view}`;
   if (seen[key] || (view !== 'upcoming' && view !== 'due')) return null;

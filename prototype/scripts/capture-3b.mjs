@@ -41,6 +41,7 @@ async function main() {
   if (!hasStore) {
     throw new Error('window.__psgy missing — App did not mount');
   }
+  await page.evaluate(() => window.__psgy.getState().commit({ muteTimedPopups: true }));
 
   const screens = [
     ['PO1', 'pt', 'PO1'],
@@ -64,6 +65,17 @@ async function main() {
     ['UW1', 'user', 'UW1'],
   ];
   for (const [file, role, id] of screens) {
+    if (id === 'PO1') {
+      await jump(page, 'pt', 'PO1');
+      await shot(page, 'PO1');
+      await page.evaluate(() => {
+        const sc = document.querySelector('[data-phone="pt"] .overflow-y-auto');
+        if (sc) sc.scrollTop = sc.scrollHeight;
+      });
+      await page.waitForTimeout(200);
+      await shot(page, 'PO1_month');
+      continue;
+    }
     if (id === 'PW1') {
       await jump(page, 'pt', 'PW1');
       await shot(page, 'PW1_today');
@@ -113,6 +125,30 @@ async function main() {
       });
       await page.waitForTimeout(200);
       await shot(page, 'PI1_wd');
+      continue;
+    }
+    if (id === 'USE1') {
+      await page.evaluate(() => {
+        const s = window.__psgy.getState();
+        s.confirmComplete('ss_today');
+        s.jump('user', { id: 'USE1', params: { sessionId: 'ss_today' } });
+      });
+      await page.waitForTimeout(400);
+      await shot(page, file);
+      continue;
+    }
+    if (id === 'USE2') {
+      await page.evaluate(() => window.__psgy.getState().forceLastSession());
+      await page.waitForTimeout(400);
+      await shot(page, file);
+      continue;
+    }
+    if (id === 'PL2') {
+      await page.evaluate(() => window.__psgy.getState().commit({ ptPendingApproval: true }));
+      await jump(page, 'pt', 'PL2');
+      await shot(page, file);
+      await page.evaluate(() => window.__psgy.getState().commit({ ptPendingApproval: false }));
+      await jump(page, 'pt', 'PO1');
       continue;
     }
     await jump(page, role, id);
