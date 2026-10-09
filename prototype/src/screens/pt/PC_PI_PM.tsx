@@ -370,7 +370,11 @@ export function PM8() {
     <Screen title="Cấp PT" onBack={() => pop('pt')}>
       <div className="p-4 space-y-2">
         {(['bronze', 'silver', 'gold', 'platinum'] as const).map((t) => (
-          <div key={t} className="app-card p-3">
+          <div
+            key={t}
+            className="app-card p-3"
+            style={{ boxShadow: `inset 0 0 0 2px var(--tier-${t})` }}
+          >
             {cfg.tier_names[t]} · phí {cfg.fee_pct[t]}%
           </div>
         ))}

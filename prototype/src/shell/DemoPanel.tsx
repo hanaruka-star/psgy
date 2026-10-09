@@ -6,6 +6,7 @@ import { moneyCheck, useAppStore } from '@/store/appStore';
 import type { ClockJump } from '@/store/clock';
 import type { Role } from '@/domain/types';
 import { vnd } from '@/lib/format';
+import { AppearancePanel } from './AppearancePanel';
 
 export function DemoPanel({ compact }: { compact?: boolean }) {
   const mobileRole = useAppStore((s) => s.mobileRole);
@@ -34,7 +35,7 @@ export function DemoPanel({ compact }: { compact?: boolean }) {
   const now = (frozenNow ?? Date.now()) + offsetMs;
   const mc = moneyCheck({ ...useAppStore.getState(), ledger, walletTx, withdrawn });
   const [q, setQ] = useState('');
-  const [tab, setUi] = useState<'nav' | 'time' | 'cfg'>('nav');
+  const [tab, setUi] = useState<'nav' | 'time' | 'cfg' | 'look'>('nav');
 
   const users = useMemo(
     () => screens.filter((s) => s.role === 'user' && s.id.toLowerCase().includes(q.toLowerCase()) || (s.role === 'user' && s.name.toLowerCase().includes(q.toLowerCase()))),
@@ -66,10 +67,10 @@ export function DemoPanel({ compact }: { compact?: boolean }) {
         <div className="text-[11px] font-bold uppercase tracking-wider text-sky-300">Bảng điều khiển</div>
         <div className="text-lg font-bold">{brand.appName}</div>
         <div className="type-caption text-slate-400">{new Date(now).toLocaleString('vi')}</div>
-        <div className="mt-2 grid grid-cols-3 gap-1 rounded-lg bg-white/5 p-1">
-          {(['nav', 'time', 'cfg'] as const).map((t) => (
-            <button key={t} type="button" className={`rounded py-1 text-[11px] ${tab === t ? 'bg-sky-500 text-slate-950' : ''}`} onClick={() => setUi(t)}>
-              {t === 'nav' ? 'Màn' : t === 'time' ? 'Tua giờ' : 'Config'}
+        <div className="mt-2 grid grid-cols-4 gap-1 rounded-lg bg-white/5 p-1">
+          {(['nav', 'time', 'cfg', 'look'] as const).map((t) => (
+            <button key={t} type="button" className={`rounded py-1 text-[11px] ${tab === t ? 'bg-teal-400 text-slate-950' : ''}`} onClick={() => setUi(t)}>
+              {t === 'nav' ? 'Màn' : t === 'time' ? 'Tua giờ' : t === 'cfg' ? 'Config' : 'Giao diện'}
             </button>
           ))}
         </div>
@@ -187,6 +188,7 @@ export function DemoPanel({ compact }: { compact?: boolean }) {
             <button type="button" className="mt-2 w-full rounded bg-white/10 py-2" onClick={reset}>Reset dữ liệu</button>
           </div>
         )}
+        {tab === 'look' && <AppearancePanel />}
       </div>
     </aside>
   );
@@ -194,7 +196,7 @@ export function DemoPanel({ compact }: { compact?: boolean }) {
 
 function Btn({ active, onClick, children }: { active: boolean; onClick: () => void; children: string }) {
   return (
-    <button type="button" onClick={onClick} className={`rounded py-2 text-[12px] font-semibold ${active ? 'bg-sky-500 text-slate-950' : 'bg-white/10'}`}>
+    <button type="button" onClick={onClick} className={`rounded py-2 text-[12px] font-semibold ${active ? 'bg-teal-400 text-slate-950' : 'bg-white/10'}`}>
       {children}
     </button>
   );

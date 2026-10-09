@@ -16,8 +16,9 @@ export function Chip({
   ...rest
 }: Props) {
   const colors: CSSProperties = {
-    background: bg ?? (selected ? 'var(--primary)' : 'var(--tag)'),
-    color: fg ?? (selected ? 'var(--on-primary)' : 'var(--on-surface)'),
+    background: bg ?? (selected ? 'var(--brand-soft)' : 'var(--tag)'),
+    color: fg ?? (selected ? 'var(--brand-text)' : 'var(--on-surface)'),
+    boxShadow: selected && !bg ? 'inset 0 0 0 1.5px var(--brand)' : undefined,
     ...style,
   };
   const cls = `inline-flex items-center rounded-[var(--radius-sm)] px-3 py-1.5 type-caption font-semibold tracking-[0.03em] ${onClick ? 'press' : ''} ${className ?? ''}`;

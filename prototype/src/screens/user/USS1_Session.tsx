@@ -4,6 +4,7 @@ import { Screen } from '@/components/Screen';
 import { cancelRefundPct } from '@/config/business';
 import { atDate, atFull, minutesBetween, vnd } from '@/lib/format';
 import { completedCount, PROGRESS_LABEL } from '@/lib/progress';
+import { sessionChipStyle } from '@/theme/status';
 import { sessionView, useAppStore, useNow } from '@/store/appStore';
 import { useState } from 'react';
 
@@ -28,7 +29,9 @@ export function USS1({ params }: { params?: Record<string, string> }) {
   return (
     <Screen title="Buổi tập" onBack={() => pop('user')}>
       <div className="p-4 space-y-3">
-        <Chip>{String(view)}</Chip>
+        <Chip bg={sessionChipStyle(String(view)).bg} fg={sessionChipStyle(String(view)).fg}>
+          {String(view)}
+        </Chip>
         <div className="type-title">{pt.name}</div>
         <div>{atFull(s.startAt)} · Buổi {s.index}/{s.total}</div>
         <div className="app-card p-3">{s.locationLabel}</div>

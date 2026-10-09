@@ -21,7 +21,7 @@ export function UM1_Map() {
   const push = useAppStore((s) => s.push);
   const [cluster, setCluster] = useState<string | null>(null);
   const [pick, setPick] = useState<PT | null>(null);
-  const palette = mode === 'dark' || style === 'dark' ? 'dark' : 'light';
+  const palette = mode === 'dark' || style === 'night' ? 'dark' : 'light';
   const tiles = tilesFor(palette);
 
   const visiblePts = pts.filter((p) => p.approved && !hidden.includes(p.id) && !(pending && p.id === 'pt_01'));
@@ -117,7 +117,11 @@ export function UM1_Map() {
           </div>
           <div className="mt-2 flex gap-1 overflow-x-auto">
             <Chip>Bán kính 3 km ▾</Chip>
-            {tab === 'pt' && <Chip>Còn lịch hôm nay</Chip>}
+            {tab === 'pt' && (
+              <Chip bg="var(--success-container)" fg="var(--success-on)">
+                Còn lịch hôm nay
+              </Chip>
+            )}
             {tab === 'gym' && <Chip>Còn chỗ trống</Chip>}
           </div>
         </div>
@@ -133,7 +137,7 @@ export function UM1_Map() {
       {cluster && (
         <button
           type="button"
-          className="absolute left-1/2 top-40 z-30 -translate-x-1/2 rounded-full bg-[var(--nav-bar)] px-4 py-2 text-[13px] shadow"
+          className="absolute left-1/2 top-40 z-30 -translate-x-1/2 rounded-full bg-[var(--nav-bar)] px-4 py-2 type-body shadow-[var(--shadow-card)]"
           onClick={() => setCluster(null)}
         >
           {cluster}
@@ -142,7 +146,7 @@ export function UM1_Map() {
       {pick && (
         <div className="absolute inset-x-3 bottom-40 z-30 app-card p-3">
           {features.monetization && pick.featured && (
-            <div className="mb-1 text-[11px] font-bold text-[var(--primary-text)]">Nổi bật</div>
+            <div className="mb-1"><span className="pill-featured">Nổi bật</span></div>
           )}
           <div className="font-bold">{pick.name} · ★ {pick.stars.toFixed(1)}</div>
           <div className="type-caption">{pick.distanceKm} km · Hoạt động quanh khu vực này</div>
@@ -164,7 +168,7 @@ export function UM1_Map() {
               {pick.accepting ? 'Đặt lịch' : 'Tạm ngưng'}
             </button>
           </div>
-          <button type="button" className="mt-1 text-[12px]" onClick={() => setPick(null)}>
+          <button type="button" className="mt-1 type-caption" onClick={() => setPick(null)}>
             Đóng
           </button>
         </div>
@@ -181,7 +185,7 @@ export function UM1_Map() {
                 >
                   <img src={p.avatar} alt="" className="h-24 w-full rounded-[var(--radius-sm)] object-cover" />
                   {features.monetization && p.featured && (
-                    <div className="type-caption text-[var(--primary-text)]">Nổi bật</div>
+                    <div className="mt-1"><span className="pill-featured">Nổi bật</span></div>
                   )}
                   <div className="font-semibold">{p.name}</div>
                   <div className="type-caption">★ {p.stars.toFixed(1)} · {p.distanceKm} km</div>

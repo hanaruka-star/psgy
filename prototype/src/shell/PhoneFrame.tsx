@@ -3,6 +3,7 @@ import type { ReactNode } from 'react';
 type Props = {
   title: string;
   children: ReactNode;
+  frame?: 'user' | 'pt';
 };
 
 function StatusBar() {
@@ -36,13 +37,14 @@ function StatusBar() {
   );
 }
 
-export function PhoneFrame({ title, children }: Props) {
+export function PhoneFrame({ title, children, frame }: Props) {
   return (
     <div className="flex flex-col items-center">
       <div className="mb-2 text-[13px] font-semibold tracking-wide text-slate-300">
         {title}
       </div>
       <div
+        data-frame={frame}
         className="relative overflow-hidden rounded-[44px] bg-black p-[10px] shadow-[0_24px_60px_rgb(0_0_0/0.45)]"
         style={{ width: 390, height: 844 }}
       >

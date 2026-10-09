@@ -40,7 +40,7 @@ export function DraggableSheet({ title, children }: Props) {
 
   return (
     <div
-      className="absolute inset-x-0 bottom-0 z-20 flex flex-col overflow-hidden rounded-t-[var(--radius-xl)] bg-[var(--sheet)] shadow-[0_-8px_24px_rgb(0_0_0/0.12)] pad-nav"
+      className="absolute inset-x-0 bottom-0 z-20 flex flex-col overflow-hidden rounded-t-[var(--radius-xl)] bg-[var(--sheet)] shadow-[var(--shadow-sheet)] pad-nav"
       style={{ height: `${snap * 100}%` }}
     >
       <div

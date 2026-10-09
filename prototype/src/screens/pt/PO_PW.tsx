@@ -32,7 +32,7 @@ export function PO1() {
   const lm = PT_MONTH_STATS.lastMonth;
   return (
     <Screen padNav>
-      <div className="bg-[#1a1a1a] px-4 py-4 text-white">
+      <div className="px-4 py-4" style={{ background: 'var(--header-bg)', color: 'var(--header-fg)' }}>
         <div className="flex justify-between">
           <div className="flex gap-3">
             <img src={me.avatar} alt="" className="h-14 w-14 rounded-full object-cover" />
@@ -361,7 +361,7 @@ function MonthStat({
     <div className="app-card p-3">
       <div className="type-caption">{label}</div>
       <div className="font-bold">{value}</div>
-      <div className={`type-caption ${d.up ? 'text-emerald-600' : 'text-red-600'}`}>
+      <div className="type-caption" style={{ color: d.up ? 'var(--success)' : 'var(--danger)' }}>
         {d.up ? '↑' : '↓'} {Math.abs(d.pct)}% so với tháng trước
       </div>
     </div>

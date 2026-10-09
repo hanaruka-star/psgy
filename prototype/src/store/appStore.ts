@@ -171,7 +171,7 @@ function boot(now: number): Persist {
     userTab: 'UD1',
     ptTab: 'PO1',
     mobileRole: 'user',
-    style: 'minimal',
+    style: 'fresh',
     mode: 'light',
     mapTab: 'pt',
     onboardingDone: true,
@@ -202,9 +202,15 @@ function load(): Persist {
       v.userId ? v : { ...v, userId: 'u_minh', userName: ME.name },
     );
     const hasLeads = migrated.some((v) => v.userId === 'u_linh' || v.userId === 'u_hung');
+    const styleRaw = (parsed as { style?: string }).style;
+    const style =
+      styleRaw === 'fresh' || styleRaw === 'soft' || styleRaw === 'night' ? styleRaw : 'fresh';
+    const mode = style === 'night' ? 'dark' : 'light';
     return {
       ...base,
       ...parsed,
+      style,
+      mode,
       mobileRole: parsed.mobileRole === 'pt' ? 'pt' : 'user',
       visits: hasLeads ? migrated : [...base.visits, ...migrated],
       muteTimedPopups: parsed.muteTimedPopups ?? false,
@@ -360,7 +366,7 @@ export const useAppStore = create<Store>((set, get) => {
       else commit({ ptTab: id, ptStack: [{ id }] });
     },
     setMobileRole: (mobileRole) => commit({ mobileRole }),
-    setStyle: (style) => commit({ style }),
+    setStyle: (style) => commit({ style, mode: style === 'night' ? 'dark' : 'light' }),
     setMode: (mode) => commit({ mode }),
     setFeature: (k, v) => commit({ features: { ...get().features, [k]: v } }),
     setBusiness: (p) => commit({ business: { ...get().business, ...p } }),

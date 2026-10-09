@@ -26,7 +26,16 @@ function mergeSlices(base: AppearanceSlices, over: AppearanceSlices): Appearance
   (Object.keys(out) as (keyof AppearanceSlices)[]).forEach((style) => {
     (['light', 'dark'] as const).forEach((mode) => {
       const src = over?.[style]?.[mode];
-      if (src) out[style][mode] = { ...out[style][mode], ...src, colors: { ...out[style][mode].colors, ...src.colors }, type: { ...out[style][mode].type, ...src.type }, tab: { ...out[style][mode].tab, ...src.tab } };
+      if (src) {
+        out[style][mode] = {
+          ...out[style][mode],
+          ...src,
+          colors: { ...out[style][mode].colors, ...src.colors },
+          type: { ...out[style][mode].type, ...src.type },
+          tab: { ...out[style][mode].tab, ...src.tab },
+          shadowStrength: src.shadowStrength ?? out[style][mode].shadowStrength,
+        };
+      }
     });
   });
   return out;

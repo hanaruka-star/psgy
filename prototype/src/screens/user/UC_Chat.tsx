@@ -61,7 +61,9 @@ export function UC1() {
           ))}
         {features.monetization && (
           <div>
-            <div className="type-caption mt-4">Đề xuất PT gần bạn · Được tài trợ</div>
+            <div className="type-caption mt-4 flex items-center gap-2">
+              Đề xuất PT gần bạn <span className="pill-sponsored">Được tài trợ</span>
+            </div>
             <div className="flex gap-2 overflow-x-auto">
               {pts.slice(0, 4).map((p) => (
                 <div key={p.id} className="app-card w-28 p-2">
@@ -140,13 +142,13 @@ export function UAI1() {
     <Screen title="Trợ lý AI · Online" onBack={() => pop('user')}>
       <div className="p-3 space-y-2">
         {msgs.map((m) => (
-          <div key={m.id} className={`rounded-[var(--radius-md)] p-3 ${m.from === 'ai' ? 'bg-[var(--tag)]' : 'bg-[var(--primary-container)]'}`}>
+          <div key={m.id} className={`rounded-[var(--radius-md)] p-3 ${m.from === 'ai' ? 'bg-[var(--tag)]' : 'bg-[var(--brand-soft)]'}`}>
             {m.text}
           </div>
         ))}
         {features.monetization && (
           <div className="app-card p-3">
-            <div className="type-caption">Được tài trợ</div>
+            <span className="pill-sponsored">Được tài trợ</span>
             <div>Gói protein XYZ — giá minh hoạ 390.000đ</div>
           </div>
         )}
@@ -158,7 +160,7 @@ export function UAI1() {
           ))}
         </div>
         {trial > 0 && !useAppStore.getState().aiSubscribed && (
-          <button type="button" className="w-full rounded-xl bg-[var(--primary-container)] p-3" onClick={() => jump('user', { id: 'UAI2' })}>
+          <button type="button" className="w-full rounded-xl bg-[var(--brand-soft)] p-3" onClick={() => jump('user', { id: 'UAI2' })}>
             Còn {trial} ngày dùng thử
           </button>
         )}

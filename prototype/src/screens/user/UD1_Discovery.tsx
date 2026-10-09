@@ -42,7 +42,9 @@ export function UD1_Discovery() {
     <div className="relative h-full bg-black">
       <div ref={scroller} className="h-full snap-y snap-mandatory overflow-y-auto">
         {sponsored && (
-          <div className="px-4 py-2 text-center text-[11px] text-white/80">Được tài trợ</div>
+          <div className="flex justify-center px-4 py-2">
+            <span className="pill-sponsored">Được tài trợ</span>
+          </div>
         )}
         {feed.map((pt) => {
           const photos = visiblePhotos(pt, now);
@@ -59,7 +61,7 @@ export function UD1_Discovery() {
                   <span
                     key={idx}
                     className="h-1 w-6 rounded-full"
-                    style={{ background: idx === i ? 'white' : 'rgb(255 255 255 / 0.35)' }}
+                    style={{ background: idx === i ? 'var(--card)' : 'color-mix(in srgb, var(--card) 35%, transparent)' }}
                   />
                 ))}
               </div>
@@ -86,10 +88,14 @@ export function UD1_Discovery() {
                     <div className="flex items-center gap-1 font-bold">
                       {pt.name} {pt.verified && <Icon name="verified" size={16} />}
                     </div>
-                    <div className="text-[12px] opacity-80">PT · {pt.distanceKm} km</div>
+                    <div className="type-caption opacity-80">PT · {pt.distanceKm} km</div>
                   </div>
                 </button>
-                {rankingWhy && <div className="mt-2 text-[11px] text-lime-200">{why}</div>}
+                {rankingWhy && (
+                  <div className="mt-2 type-caption" style={{ color: 'var(--warning)' }}>
+                    {why}
+                  </div>
+                )}
                 {!pt.accepting && (
                   <Chip className="mt-2" bg="var(--danger-container)" fg="var(--danger-on)">
                     Tạm ngưng nhận khách
@@ -99,7 +105,7 @@ export function UD1_Discovery() {
               <div className="absolute bottom-24 right-3 flex flex-col gap-3 text-white">
                 <button type="button" onClick={() => toggleSavePt(pt.id)}>
                   <Icon name="favorite" filled={saved.includes(pt.id)} size={28} />
-                  <div className="text-[10px]">Lưu PT</div>
+                  <div className="type-caption">Lưu PT</div>
                 </button>
                 <button type="button" onClick={() => setMenu(pt.id)}>
                   <Icon name="more_vert" size={28} />

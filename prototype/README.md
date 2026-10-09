@@ -35,7 +35,7 @@ Thêm vào Màn hình chính (Ruka bấm tay):
 
 ## Tự chỉnh giao diện
 
-Mở prototype trên máy (≥900px, hai điện thoại + bảng điều khiển). Tab **Giao diện**: chọn font, cỡ chữ, màu, bo góc, kiểu bottom tab. Mọi chỉnh sửa gắn với style + sáng/tối đang chọn và hiện ngay trên cả hai máy. Trình duyệt tự lưu localStorage. Khi ưng, bấm **Lưu vào dự án** (`npm run dev` — ghi `src/theme/overrides.json`). Commit file đó để cả team mở prototype thấy đúng giao diện đã chốt. **Xuất bảng token cho đội dev** sinh `docs/DESIGN_TOKENS_FINAL.md`. **Khôi phục mặc định** trả về bản trong overrides.json.
+Mở prototype trên máy (≥900px, hai điện thoại + bảng điều khiển). Tab **Giao diện**: chọn biến thể A Teal tươi / B Teal mềm / C Teal tối, rồi chỉnh font, cỡ chữ 5 cấp, màu từng vai trò (có tỉ lệ tương phản), bo góc, bóng, bottom tab. Cả hai app đổi ngay; trình duyệt tự lưu localStorage. Khi ưng, bấm **Lưu vào dự án** (`npm run dev` — ghi `src/theme/overrides.json`) rồi commit file đó. **Xuất bảng token cho đội dev** sinh `docs/DESIGN_TOKENS_FINAL.md`. **Khôi phục mặc định** trả về bản trong overrides.json.
 
 ## Bật/tắt 1 tính năng
 

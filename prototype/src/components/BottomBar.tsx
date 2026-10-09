@@ -40,7 +40,7 @@ type Props = {
 export function BottomBar({ features, activeId, onSelect }: Props) {
   const style = useAppStore((s) => s.style);
   const mode = useAppStore((s) => s.mode);
-  const tab = useAppearance((s) => s.slices[style][mode].tab);
+  const tab = useAppearance((s) => s.slices[style]?.[mode]?.tab ?? s.slices.fresh.light.tab);
   const tabs = tabsFor(features, tab.order);
   const mid = Math.floor(tabs.length / 2);
   const showLabel = tab.label === 'iconText';
@@ -72,7 +72,7 @@ export function BottomBar({ features, activeId, onSelect }: Props) {
               style={{ top: 'calc(var(--fab-lift) * -1)' }}
             >
               <span
-                className="grid place-items-center rounded-full text-[var(--on-highlight)] shadow-[0_4px_12px_rgb(0_0_0/0.25)]"
+                className="grid place-items-center rounded-full text-[var(--on-highlight)] shadow-[var(--shadow-pin)]"
                 style={{
                   width: 'var(--fab-size)',
                   height: 'var(--fab-size)',

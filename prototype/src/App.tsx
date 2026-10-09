@@ -51,12 +51,13 @@ export default function App() {
   const mobileRole = useAppStore((s) => s.mobileRole);
   const style = useAppStore((s) => s.style);
   const mode = useAppStore((s) => s.mode);
+  const slice = useAppearance((s) => s.slices[style]?.[mode] ?? s.slices.fresh.light);
 
   useEffect(() => {
     applyTheme(style, mode);
-    applyAppearance(useAppearance.getState().slices[style][mode]);
+    applyAppearance(slice);
     (window as unknown as { __psgy: typeof useAppStore }).__psgy = useAppStore;
-  }, [style, mode]);
+  }, [style, mode, slice]);
 
   if (narrow) {
     return (
@@ -72,10 +73,10 @@ export default function App() {
   return (
     <ErrorBoundary>
       <div className="desk flex min-h-dvh flex-nowrap items-start justify-center gap-6 overflow-auto p-6">
-        <PhoneFrame title="PSGymer User">
+        <PhoneFrame title="PSGymer User" frame="user">
           <PhoneApp role="user" framed />
         </PhoneFrame>
-        <PhoneFrame title="PSGymer PT Center">
+        <PhoneFrame title="PSGymer PT Center" frame="pt">
           <PhoneApp role="pt" framed />
         </PhoneFrame>
         <DemoPanel />

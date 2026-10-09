@@ -1,34 +1,27 @@
 import { useState } from 'react';
-import { featureLabels, type FeatureFlags } from '@/config/features';
 import { useAppearance } from '@/store/appearanceStore';
 import { useAppStore } from '@/store/appStore';
 import {
-  FAB_ICONS,
+  COLOR_ROLES,
   FONT_OPTIONS,
-  TAB_SLOTS,
   TYPE_LEVELS,
   contrastPairs,
   contrastRatio,
   formatContrast,
   generateDesignTokensMarkdown,
+  roleContrastPair,
   type AppearanceColors,
   type FontId,
   type NavBg,
   type TabLabelMode,
-  type TabLayout,
 } from '@/theme/appearance';
-import { Icon } from '@/components/Icon';
-
-const TAB_FEATURES: Partial<Record<string, keyof FeatureFlags>> = {
-  UCA1: 'cameraAiPreview',
-};
+import { styles as styleList } from '@/theme/presets';
 
 export function AppearancePanel() {
   const style = useAppStore((s) => s.style);
   const mode = useAppStore((s) => s.mode);
-  const features = useAppStore((s) => s.features);
-  const setFeature = useAppStore((s) => s.setFeature);
-  const slice = useAppearance((s) => s.slices[style][mode]);
+  const setStyle = useAppStore((s) => s.setStyle);
+  const slice = useAppearance((s) => s.slices[style]?.[mode] ?? s.slices.fresh.light);
   const patchCurrent = useAppearance((s) => s.patchCurrent);
   const restoreDefaults = useAppearance((s) => s.restoreDefaults);
   const markProjectSaved = useAppearance((s) => s.markProjectSaved);
@@ -87,10 +80,24 @@ export function AppearancePanel() {
   return (
     <div className="space-y-5 text-[13px]">
       <p className="rounded-lg bg-white/5 px-3 py-2 text-[12px] leading-relaxed text-slate-300">
-        Đang sửa <b className="text-sky-300">{style}</b> ×{' '}
-        <b className="text-sky-300">{mode === 'light' ? 'sáng' : 'tối'}</b>. Hai điện
-        thoại đổi ngay.
+        Đang sửa <b className="text-teal-300">{styleList.find((s) => s.id === style)?.label ?? style}</b>.
+        Cả hai điện thoại đổi ngay.
       </p>
+      <div className="grid grid-cols-1 gap-1.5">
+        {styleList.map((s) => (
+          <button
+            key={s.id}
+            type="button"
+            onClick={() => setStyle(s.id)}
+            className={`rounded-lg px-3 py-2 text-left text-[12px] ${
+              style === s.id ? 'bg-teal-400 text-slate-950' : 'bg-white/10'
+            }`}
+          >
+            <div className="font-semibold">{s.label}</div>
+            <div className={style === s.id ? 'opacity-80' : 'text-slate-400'}>{s.hint}</div>
+          </button>
+        ))}
+      </div>
 
       <section>
         <H>Chữ</H>
@@ -160,47 +167,50 @@ export function AppearancePanel() {
             );
           })}
         </div>
-        <div className="mt-3 space-y-2">
-          {pairs.map((p) => (
-            <ColorRow
-              key={p.key}
-              label={p.label}
-              value={slice.colors[p.key]}
-              contrastFg={p.fg}
-              contrastBg={p.bg}
-              onChange={(hex) =>
-                patchCurrent({ colors: { [p.key]: hex } as Partial<AppearanceColors> })
-              }
-            />
-          ))}
+      </section>
+
+      <section>
+        <H>Màu</H>
+        <div className="mt-2 space-y-2">
+          {COLOR_ROLES.map((role) => {
+            const pair = roleContrastPair(role.key, slice.colors);
+            return (
+              <ColorRow
+                key={role.key}
+                label={role.label}
+                value={slice.colors[role.key]}
+                contrastFg={pair?.fg}
+                contrastBg={pair?.bg}
+                onChange={(hex) =>
+                  patchCurrent({ colors: { [role.key]: hex } as Partial<AppearanceColors> })
+                }
+              />
+            );
+          })}
+        </div>
+        <div className="mt-3 space-y-1.5 rounded-lg bg-white/5 p-2">
+          <div className="text-[11px] font-semibold text-slate-300">Tương phản chữ/nền</div>
+          {pairs.map((p) => {
+            const ratio = contrastRatio(p.fg, p.bg);
+            const warn = ratio != null && ratio < 4.5;
+            return (
+              <div key={`${p.label}-${p.fg}`} className="flex justify-between gap-2 text-[11px]">
+                <span className="truncate text-slate-400">{p.label}</span>
+                <span className={`font-mono ${warn ? 'font-bold text-red-400' : 'text-emerald-300'}`}>
+                  {formatContrast(ratio)}
+                  {warn ? ' ✗' : ''}
+                </span>
+              </div>
+            );
+          })}
         </div>
       </section>
 
       <section>
-        <H>Màu & hình khối</H>
-        <div className="mt-2 space-y-2">
-          {(
-            [
-              ['primary', 'Màu chính'],
-              ['highlight', 'Màu nhấn'],
-              ['bg', 'Nền app'],
-              ['card', 'Nền card'],
-              ['tag', 'Nền tag'],
-            ] as const
-          ).map(([key, label]) => (
-            <ColorRow
-              key={key}
-              label={label}
-              value={slice.colors[key]}
-              onChange={(hex) =>
-                patchCurrent({ colors: { [key]: hex } as Partial<AppearanceColors> })
-              }
-            />
-          ))}
-        </div>
+        <H>Hình khối</H>
         <label className="mt-3 flex items-center justify-between text-[12px] text-slate-400">
           Bo góc
-          <span className="font-mono text-sky-300">{Math.round(slice.radiusScale * 100)}%</span>
+          <span className="font-mono text-teal-300">{Math.round(slice.radiusScale * 100)}%</span>
         </label>
         <input
           type="range"
@@ -211,6 +221,19 @@ export function AppearancePanel() {
           onChange={(e) => patchCurrent({ radiusScale: Number(e.target.value) / 100 })}
           className="mt-1 w-full"
         />
+        <label className="mt-3 flex items-center justify-between text-[12px] text-slate-400">
+          Độ đậm bóng
+          <span className="font-mono text-teal-300">{Math.round((slice.shadowStrength ?? 1) * 100)}%</span>
+        </label>
+        <input
+          type="range"
+          min={0}
+          max={200}
+          step={5}
+          value={Math.round((slice.shadowStrength ?? 1) * 100)}
+          onChange={(e) => patchCurrent({ shadowStrength: Number(e.target.value) / 100 })}
+          className="mt-1 w-full"
+        />
       </section>
 
       <section>
@@ -219,22 +242,8 @@ export function AppearancePanel() {
         <div className="mt-1 grid grid-cols-2 gap-1.5">
           {(
             [
-              ['raised', '5 tab, nút giữa nổi'],
-              ['flat', '5 tab phẳng'],
-            ] as [TabLayout, string][]
-          ).map(([id, label]) => (
-            <Mini
-              key={id}
-              active={slice.tab.layout === id}
-              onClick={() => patchCurrent({ tab: { layout: id } })}
-            >
-              {label}
-            </Mini>
-          ))}
-          {(
-            [
-              ['iconOnly', 'chỉ icon'],
               ['iconText', 'icon + chữ'],
+              ['iconOnly', 'chỉ icon'],
             ] as [TabLabelMode, string][]
           ).map(([id, label]) => (
             <Mini
@@ -245,28 +254,6 @@ export function AppearancePanel() {
               {label}
             </Mini>
           ))}
-        </div>
-        <div className="mt-3 space-y-2">
-          <ColorRow
-            label="Tab đang chọn"
-            value={slice.colors.tabActive}
-            onChange={(hex) => patchCurrent({ colors: { tabActive: hex } })}
-          />
-          <ColorRow
-            label="Tab không chọn"
-            value={slice.colors.tabInactive}
-            onChange={(hex) => patchCurrent({ colors: { tabInactive: hex } })}
-          />
-          <ColorRow
-            label="Nền thanh"
-            value={slice.colors.navBar}
-            onChange={(hex) => patchCurrent({ colors: { navBar: hex } })}
-          />
-          <ColorRow
-            label="Nút giữa"
-            value={slice.colors.fab}
-            onChange={(hex) => patchCurrent({ colors: { fab: hex } })}
-          />
         </div>
         <label className="mt-3 block text-[12px] text-slate-400">Nền thanh</label>
         <div className="mt-1 grid grid-cols-3 gap-1.5">
@@ -288,7 +275,7 @@ export function AppearancePanel() {
         </div>
         <label className="mt-3 flex items-center justify-between text-[12px] text-slate-400">
           Chiều cao thanh
-          <span className="font-mono text-sky-300">{slice.tab.height}px</span>
+          <span className="font-mono text-teal-300">{slice.tab.height}px</span>
         </label>
         <input
           type="range"
@@ -301,7 +288,7 @@ export function AppearancePanel() {
         />
         <label className="mt-2 flex items-center justify-between text-[12px] text-slate-400">
           Cỡ icon
-          <span className="font-mono text-sky-300">{slice.tab.iconSize}px</span>
+          <span className="font-mono text-teal-300">{slice.tab.iconSize}px</span>
         </label>
         <input
           type="range"
@@ -312,80 +299,6 @@ export function AppearancePanel() {
           onChange={(e) => patchCurrent({ tab: { iconSize: Number(e.target.value) } })}
           className="mt-1 w-full"
         />
-        <label className="mt-3 block text-[12px] text-slate-400">Icon nút giữa</label>
-        <div className="mt-1 grid grid-cols-6 gap-1">
-          {FAB_ICONS.map((name) => (
-            <button
-              key={name}
-              type="button"
-              title={name}
-              onClick={() => patchCurrent({ tab: { fabIcon: name } })}
-              className={`grid h-9 place-items-center rounded-lg ${
-                slice.tab.fabIcon === name ? 'bg-sky-500 text-slate-950' : 'bg-white/10'
-              }`}
-            >
-              <Icon name={name} size={18} />
-            </button>
-          ))}
-        </div>
-        <div className="mt-3 text-[12px] text-slate-400">Thứ tự tab</div>
-        <div className="mt-1 space-y-1">
-          {slice.tab.order.map((id, i) => {
-            const meta = TAB_SLOTS.find((t) => t.id === id);
-            const flag = TAB_FEATURES[id];
-            return (
-              <div
-                key={id}
-                className="flex items-center gap-2 rounded-lg bg-white/5 px-2 py-1.5"
-              >
-                <span className="w-8 font-mono text-[11px] text-sky-300">{id}</span>
-                <span className="flex-1 truncate">{meta?.label ?? id}</span>
-                {flag && (
-                  <span className="text-[10px] text-slate-500">
-                    {features[flag] ? 'bật' : 'tắt'}
-                  </span>
-                )}
-                <button
-                  type="button"
-                  disabled={i === 0}
-                  className="px-1 disabled:opacity-30"
-                  onClick={() => {
-                    const order = [...slice.tab.order];
-                    [order[i - 1], order[i]] = [order[i], order[i - 1]];
-                    patchCurrent({ tab: { order } });
-                  }}
-                >
-                  ↑
-                </button>
-                <button
-                  type="button"
-                  disabled={i === slice.tab.order.length - 1}
-                  className="px-1 disabled:opacity-30"
-                  onClick={() => {
-                    const order = [...slice.tab.order];
-                    [order[i + 1], order[i]] = [order[i], order[i + 1]];
-                    patchCurrent({ tab: { order } });
-                  }}
-                >
-                  ↓
-                </button>
-              </div>
-            );
-          })}
-        </div>
-        <div className="mt-2 space-y-1 text-[12px]">
-          <div className="text-slate-400">Bật/tắt tab (cùng cờ features.ts)</div>
-          {(['cameraAiPreview', 'aiAssistant', 'spa'] as const).map((k) => (
-            <label key={k} className="flex items-center justify-between">
-              <span>{featureLabels[k]}</span>
-              <input
-                type="checkbox"
-                checked={features[k]}
-                onChange={(e) => setFeature(k, e.target.checked)}
-              />
-            </label>
-          ))}
-        </div>
       </section>
 
       <section className="space-y-2">
@@ -394,7 +307,7 @@ export function AppearancePanel() {
           <button
             type="button"
             onClick={saveProject}
-            className="press w-full rounded-xl bg-sky-500 py-2.5 font-semibold text-slate-950"
+            className="press w-full rounded-xl bg-teal-400 py-2.5 font-semibold text-slate-950"
           >
             Lưu vào dự án
           </button>
@@ -453,7 +366,7 @@ function Mini({
       type="button"
       onClick={onClick}
       className={`press rounded-lg px-2 py-2 text-[11px] font-semibold leading-tight ${
-        active ? 'bg-sky-500 text-slate-950' : 'bg-white/10'
+        active ? 'bg-teal-400 text-slate-950' : 'bg-white/10'
       }`}
     >
       {children}

@@ -2,6 +2,7 @@ import { Button } from '@/components/Button';
 import { Chip } from '@/components/Chip';
 import { Screen } from '@/components/Screen';
 import { completedCount } from '@/lib/progress';
+import { sessionChipStyle } from '@/theme/status';
 import { ME, useAppStore } from '@/store/appStore';
 import { atFull, vnd } from '@/lib/format';
 
@@ -18,7 +19,7 @@ export function UPF1() {
   const firstW = weights[0];
   return (
     <Screen title=" " padNav>
-      <div className="bg-[var(--primary)] px-4 pb-6 pt-4 text-[var(--on-primary)]">
+      <div className="px-4 pb-6 pt-4" style={{ background: 'var(--header-bg)', color: 'var(--header-fg)' }}>
         <div className="flex justify-between">
           <div>
             <div className="type-title">{ME.name}, {ME.age}</div>
@@ -40,7 +41,9 @@ export function UPF1() {
               <button key={c.id} type="button" className="app-card w-56 shrink-0 p-3 text-left" onClick={() => jump('user', { id: 'UJ2', params: { contractId: c.id } })}>
                 <div className="font-bold">{pt?.name}</div>
                 <div>{c.packageName} · {completedCount(sessions, c.id)}/{c.sessions}</div>
-                <Chip>{c.status === 'pending' ? 'Chờ xác nhận' : 'Đang diễn ra'}</Chip>
+                <Chip bg={sessionChipStyle(c.status).bg} fg={sessionChipStyle(c.status).fg}>
+                  {c.status === 'pending' ? 'Chờ xác nhận' : 'Đang diễn ra'}
+                </Chip>
               </button>
             );
           })}
